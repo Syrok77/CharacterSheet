@@ -11,4 +11,10 @@
     <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="character_info_class_format">Level %1$d %2$s</string>
+
+    <string-array name="classes" >
+        <item>Rogue</item>
+    </string-array>
 </resources>

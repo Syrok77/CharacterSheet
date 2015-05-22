@@ -1,26 +1,28 @@
-package com.paragonfervour.charactersheet;
+package com.paragonfervour.charactersheet.activity;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+
+import com.paragonfervour.charactersheet.drawer.NavigationDrawerFragment;
+import com.paragonfervour.charactersheet.R;
+
+import roboguice.inject.InjectView;
 
 
-public class OffenseActivity extends ActionBarActivity
+public class OffenseActivity extends BaseToolbarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    @InjectView(R.id.activity_toolbar)
+    private Toolbar mToolbar;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -56,6 +58,11 @@ public class OffenseActivity extends ActionBarActivity
                 .commit();
     }
 
+    @Override
+    public Toolbar getToolbar() {
+        return mToolbar;
+    }
+
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
@@ -71,10 +78,8 @@ public class OffenseActivity extends ActionBarActivity
     }
 
     public void restoreActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
+        mToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        mToolbar.setTitle(mTitle);
     }
 
 
@@ -134,8 +139,7 @@ public class OffenseActivity extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_offense, container, false);
-            return rootView;
+            return inflater.inflate(R.layout.fragment_offense, container, false);
         }
 
         @Override
