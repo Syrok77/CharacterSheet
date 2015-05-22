@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Primary color pallette -->
+    <color name="brand_primary">#ff00d4c6</color> 00BCD4
+    <color name="brand_secondary">#ff149480</color>
+    <color name="brand_bright">#ff7eeae2</color>
+
+    <!-- Secondary color palette -->
+    <color name="secondary_500">#795548</color>
+    <color name="secondary_700">#5D4037</color>
+    <color name="secondary_200">#BCAAA4</color>
+
+    <!-- Other colors -->
+    <color name="background">#FDFDFD</color>
+
+
+
+</resources>
