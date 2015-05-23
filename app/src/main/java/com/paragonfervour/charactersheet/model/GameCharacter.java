@@ -22,6 +22,7 @@ public class GameCharacter {
         GameCharacter maldalair = new GameCharacter();
         maldalair.mInfo = CharacterInfo.createDefault();
         maldalair.mDefenseStats = DefenseStats.createDefault();
+        maldalair.mOffenseStats = OffenseStats.createDefault();
         maldalair.mBioInfo = BioInfo.createDefault();
         return maldalair;
     }

@@ -29,7 +29,8 @@ public class Damage {
      * @return i.e. "2D4 + 2"
      */
     public String toString() {
-        return String.valueOf(mDiceQuantity) + mDiceType.toString() + " + " + mModifier;
+        String quantity = mDiceQuantity > 1 ? String.valueOf(mDiceQuantity) : "";   // Do not show "1D4", should show "D4"
+        return quantity + mDiceType.toString() + " + " + mModifier;
     }
 
     public Dice getDiceType() {

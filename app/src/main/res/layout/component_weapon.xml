@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="16dp"
+              android:layout_marginStart="16dp"
+              android:layout_marginRight="16dp"
+              android:layout_marginEnd="16dp"
+              android:background="?attr/selectableItemBackground">
+
+    <!-- TODO: Make this look good -->
+    <ImageView
+        android:id="@+id/weapon_icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/cd_weapon_icon"
+        android:src="@drawable/abc_ic_menu_copy_mtrl_am_alpha"
+        android:background="@color/secondary_text_default_material_light"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/component_weapon_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                android:textSize="@dimen/text_large"
+                android:textStyle="bold"
+                tools:text="Rapier"/>
+
+            <TextView
+                android:id="@+id/component_weapon_separator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/single_dash"/>
+
+            <TextView
+                android:id="@+id/component_weapon_properties"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                android:textSize="@dimen/text_medium"
+                tools:text="Finesse, Light"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/component_weapon_damage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                android:textSize="@dimen/text_medium"
+                tools:text="D8 + 2"/>
+
+            <TextView
+                android:id="@+id/component_weapon_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                android:textSize="@dimen/text_medium"
+                tools:text="25gp"/>
+
+            <TextView
+                android:id="@+id/component_weapon_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_medium"
+                tools:text="2lb"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,8 +1,5 @@
 package com.paragonfervour.charactersheet.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Model representing a Weapon, with a name (i.e. Rapier), damage, value, weight, and properties
  */
@@ -15,7 +12,7 @@ public class Weapon {
 
     private Damage mDamage;
 
-    private List<String> mProperties;
+    private String mProperties;
 
     public static Weapon createDefault() {
         Weapon w = new Weapon();
@@ -23,7 +20,7 @@ public class Weapon {
         w.mValue = 25;
         w.mWeight = 2;
         w.mDamage = Damage.createDefaultWeapon();
-        w.mProperties = new ArrayList<>();
+        w.mProperties = "Finesse, Light";
         return w;
     }
 
@@ -68,11 +65,11 @@ public class Weapon {
         mDamage = damage;
     }
 
-    public List<String> getProperties() {
+    public String getProperties() {
         return mProperties;
     }
 
-    public void setProperties(List<String> properties) {
+    public void setProperties(String properties) {
         mProperties = properties;
     }
 }

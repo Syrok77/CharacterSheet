@@ -7,6 +7,10 @@
         <item name="colorPrimaryDark">@color/brand_secondary</item>
         <item name="colorAccent">@color/secondary_500</item>
 
+        <item name="android:textColorPrimary">@color/primary_text_default_material_light</item>
+    </style>
+
+    <style name="ToolbarAppTheme" parent="AppTheme">
         <item name="android:textColorPrimary">@color/default_white</item>
     </style>
 

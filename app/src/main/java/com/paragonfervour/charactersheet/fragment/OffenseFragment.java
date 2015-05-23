@@ -5,13 +5,16 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.model.GameCharacter;
+import com.paragonfervour.charactersheet.view.WeaponComponent;
 
 import roboguice.fragment.RoboFragment;
+import roboguice.inject.InjectView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -19,6 +22,12 @@ public class OffenseFragment extends RoboFragment {
 
     @Inject
     private CharacterDAO mCharacterDAO;
+
+    @InjectView(R.id.offense_main_weapon)
+    private WeaponComponent mMainHand;
+
+    @InjectView(R.id.offense_offhand_weapon)
+    private WeaponComponent mOffHand;
 
     public OffenseFragment() {
         super();
@@ -46,9 +55,21 @@ public class OffenseFragment extends RoboFragment {
                         updateUI(character);
                     }
                 });
+
+        mMainHand.setOnClickListener(new EditWeaponComponentClickListener());
+        mOffHand.setOnClickListener(new EditWeaponComponentClickListener());
     }
 
     private void updateUI(GameCharacter character) {
+        mMainHand.applyWeaponModel(character.getOffenseStats().getMainHand());
+        mOffHand.applyWeaponModel(character.getOffenseStats().getOffHand());
+    }
 
+    private class EditWeaponComponentClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            WeaponComponent comp = (WeaponComponent)v;
+            Toast.makeText(getActivity(), "Edit " + comp.getWeaponName() + ": unimplemented", Toast.LENGTH_SHORT).show();
+        }
     }
 }

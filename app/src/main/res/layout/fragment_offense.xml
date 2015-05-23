@@ -6,4 +6,40 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".OffenseActivity$PlaceholderFragment">
 
+    <TextView
+        android:id="@+id/offense_main_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_large"
+        android:text="@string/offense_main_hand"/>
+
+    <com.paragonfervour.charactersheet.view.WeaponComponent
+        android:id="@+id/offense_main_weapon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:padding="4dp"
+        android:layout_below="@+id/offense_main_title"/>
+
+    <TextView
+        android:id="@+id/offense_offhand_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/offense_main_weapon"
+        android:layout_marginBottom="8dp"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_large"
+        android:text="@string/offense_off_hand"/>
+
+    <com.paragonfervour.charactersheet.view.WeaponComponent
+        android:id="@+id/offense_offhand_weapon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:layout_below="@+id/offense_offhand_title"/>
+
+
+
 </RelativeLayout>
