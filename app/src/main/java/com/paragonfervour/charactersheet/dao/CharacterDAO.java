@@ -12,11 +12,12 @@ import rx.Observable;
 @Singleton
 public class CharacterDAO {
 
-    public CharacterDAO() {
+    private GameCharacter mActiveCharacter = GameCharacter.createDefaultCharacter();
 
+    public CharacterDAO() {
     }
 
     public Observable<GameCharacter> getActiveCharacter() {
-        return Observable.just(GameCharacter.createDefaultCharacter());
+        return Observable.just(mActiveCharacter);
     }
 }
