@@ -18,11 +18,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.drawer.DrawerRecyclerAdapter;
+import com.paragonfervour.charactersheet.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.model.GameCharacter;
 
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -30,6 +35,9 @@ import roboguice.inject.InjectView;
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
 public class NavigationDrawerFragment extends RoboFragment {
+
+    @Inject
+    private CharacterDAO mCharacterDAO;
 
     /**
      * Remember the position of the selected item.
@@ -57,6 +65,7 @@ public class NavigationDrawerFragment extends RoboFragment {
 
     private DrawerLayout mDrawerLayout;
     private View mFragmentContainerView;
+    private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
@@ -106,8 +115,21 @@ public class NavigationDrawerFragment extends RoboFragment {
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
 
-        DrawerRecyclerAdapter adapter = new DrawerRecyclerAdapter();
-        mRecyclerView.setAdapter(adapter);
+        mCompositeSubscription.add(mCharacterDAO.getActiveCharacter()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<GameCharacter>() {
+                    @Override
+                    public void call(GameCharacter character) {
+                        DrawerRecyclerAdapter adapter = new DrawerRecyclerAdapter(character);
+                        mRecyclerView.setAdapter(adapter);
+                    }
+                }));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mCompositeSubscription.unsubscribe();
     }
 
     public boolean isDrawerOpen() {

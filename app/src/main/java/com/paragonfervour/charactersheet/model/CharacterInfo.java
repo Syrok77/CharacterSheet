@@ -1,12 +1,30 @@
 package com.paragonfervour.charactersheet.model;
 
 
-public class CharacterInfo {
-    private String mCharacterClass; // TODO: Create a CharacterClass model
-    private int level;
+import com.google.gson.annotations.SerializedName;
 
-    private String name;
-    private int xp;
+public class CharacterInfo {
+
+    @SerializedName("CharacterClass")
+    private String mCharacterClass; // TODO: Create a CharacterClass model?
+    @SerializedName("Race")
+    private String mRace;
+    @SerializedName("Level")
+    private int mLevel;
+    @SerializedName("Name")
+    private String mName;
+    @SerializedName("XP")
+    private int mXp;
+
+    public static CharacterInfo createDefault() {
+        CharacterInfo info = new CharacterInfo();
+        info.mCharacterClass = "Rogue";
+        info.mRace = "Elf";
+        info.mLevel = 4;
+        info.mName = "Maldalair";
+        info.mXp = 4500;
+        return info;
+    }
 
 
     public String getCharacterClass() {
@@ -17,27 +35,35 @@ public class CharacterInfo {
         this.mCharacterClass = mCharacterClass;
     }
 
+    public String getRace() {
+        return mRace;
+    }
+
+    public void setRace(String mRace) {
+        this.mRace = mRace;
+    }
+
     public int getLevel() {
-        return level;
+        return mLevel;
     }
 
     public void setLevel(int level) {
-        this.level = level;
+        this.mLevel = level;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
     }
 
     public int getXp() {
-        return xp;
+        return mXp;
     }
 
     public void setXp(int xp) {
-        this.xp = xp;
+        this.mXp = xp;
     }
 }

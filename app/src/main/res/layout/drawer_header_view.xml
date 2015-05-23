@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="128dp"
-    android:background="@color/brand_secondary">
+    android:background="@color/secondary_500">
 
     <!-- Subtitle -->
     <LinearLayout

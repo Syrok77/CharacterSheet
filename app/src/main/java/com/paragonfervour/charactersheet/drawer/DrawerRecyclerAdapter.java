@@ -8,12 +8,19 @@ import android.widget.TextView;
 
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.model.CharacterInfo;
+import com.paragonfervour.charactersheet.model.GameCharacter;
 import com.paragonfervour.charactersheet.widget.RecycleViewHolder;
 
 
 public class DrawerRecyclerAdapter extends RecyclerView.Adapter<RecycleViewHolder> {
 
     private static final int ViewTypeHeader = R.layout.drawer_header_view;
+
+    private GameCharacter mCharacter;
+
+    public DrawerRecyclerAdapter(GameCharacter character) {
+        mCharacter = character;
+    }
 
     @Override
     public RecycleViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -29,14 +36,7 @@ public class DrawerRecyclerAdapter extends RecyclerView.Adapter<RecycleViewHolde
         int viewType = getItemViewType(position);
         if (viewType == ViewTypeHeader) {
             HeaderViewHolder header = (HeaderViewHolder)viewHolder;
-
-            // todo: supply this information
-            CharacterInfo info = new CharacterInfo();
-            info.setLevel(4);
-            info.setCharacterClass("Rogue");
-            info.setName("Maldalair");
-
-            header.bindToView(info);
+            header.bindToView(mCharacter.getInfo());
         }
     }
 
