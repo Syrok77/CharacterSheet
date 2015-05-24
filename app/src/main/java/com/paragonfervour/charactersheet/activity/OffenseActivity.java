@@ -45,6 +45,7 @@ public class OffenseActivity extends BaseToolbarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
+        // TODO: Implement this for the different stats views
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, OffenseFragment.newInstance())
@@ -56,12 +57,6 @@ public class OffenseActivity extends BaseToolbarActivity
         return mToolbar;
     }
 
-//    public void setupActionBar() {
-//        mToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-//        mToolbar.setTitle(mTitle);
-//    }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
@@ -69,7 +64,6 @@ public class OffenseActivity extends BaseToolbarActivity
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.offense, menu);
-//            setupActionBar();
             return true;
         }
         return super.onCreateOptionsMenu(menu);

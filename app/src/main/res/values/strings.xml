@@ -12,12 +12,17 @@
     <string name="standard_weight">lb</string>
     <string name="standard_distance">feet</string>
 
+    <!-- Navigation -->
+    <string name="nav_offense_activity">Offensive stats</string>
+
     <!-- Offense page -->
     <string name="offense_main_hand">Main Hand</string>
     <string name="offense_off_hand">Off Hand</string>
+    <string name="offense_spells">Spells</string>
 
     <!-- Content descriptions -->
     <string name="cd_weapon_icon">Weapon Icon</string>
+    <string name="cd_navigatoin">Navigation</string>
 
     <string name="character_info_class_format">Level %1$d %2$s</string>
 

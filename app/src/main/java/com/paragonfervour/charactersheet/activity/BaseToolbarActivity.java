@@ -10,5 +10,4 @@ public abstract class BaseToolbarActivity extends RoboActionBarActivity {
     public abstract Toolbar getToolbar();
 
     // Navigation functionality
-
 }

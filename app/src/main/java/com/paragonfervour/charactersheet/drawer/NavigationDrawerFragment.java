@@ -119,7 +119,7 @@ public class NavigationDrawerFragment extends RoboFragment {
                 .subscribe(new Action1<GameCharacter>() {
                     @Override
                     public void call(GameCharacter character) {
-                        DrawerRecyclerAdapter adapter = new DrawerRecyclerAdapter(character);
+                        DrawerRecyclerAdapter adapter = new DrawerRecyclerAdapter(character, getActivity());
                         mRecyclerView.setAdapter(adapter);
                     }
                 }));
