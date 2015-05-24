@@ -13,6 +13,7 @@
 
     <!-- Other colors -->
     <color name="default_white">#FDFDFD</color>
+    <color name="default_background_gray">#CECECE</color>
 
 
 

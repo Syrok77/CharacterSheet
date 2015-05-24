@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            android:elevation="8dp"
             android:theme="@style/ToolbarAppTheme"/>
 
         <FrameLayout

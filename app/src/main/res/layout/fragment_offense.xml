@@ -1,45 +1,87 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".OffenseActivity$PlaceholderFragment">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/default_background_gray"
+    tools:context=".OffenseActivity" >
 
-    <TextView
-        android:id="@+id/offense_main_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:textStyle="bold"
-        android:textSize="@dimen/text_large"
-        android:text="@string/offense_main_hand"/>
-
-    <com.paragonfervour.charactersheet.view.WeaponComponent
-        android:id="@+id/offense_main_weapon"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:padding="4dp"
-        android:layout_below="@+id/offense_main_title"/>
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:background="@color/default_white"
+        android:elevation="8dp">
 
-    <TextView
-        android:id="@+id/offense_offhand_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/offense_main_weapon"
-        android:layout_marginBottom="8dp"
-        android:textStyle="bold"
-        android:textSize="@dimen/text_large"
-        android:text="@string/offense_off_hand"/>
+        <TextView
+            android:id="@+id/offense_main_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textStyle="bold"
+            android:textColor="@color/secondary_500"
+            android:textSize="@dimen/text_large"
+            android:text="@string/offense_main_hand"/>
 
-    <com.paragonfervour.charactersheet.view.WeaponComponent
-        android:id="@+id/offense_offhand_weapon"
+        <com.paragonfervour.charactersheet.view.WeaponComponent
+            android:id="@+id/offense_main_weapon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:padding="4dp"
+            android:layout_below="@+id/offense_main_title"
+            android:background="?attr/selectableItemBackground"/>
+
+        <TextView
+            android:id="@+id/offense_offhand_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/offense_main_weapon"
+            android:layout_marginBottom="8dp"
+            android:textStyle="bold"
+            android:textColor="@color/secondary_500"
+            android:textSize="@dimen/text_large"
+            android:text="@string/offense_off_hand"/>
+
+        <com.paragonfervour.charactersheet.view.WeaponComponent
+            android:id="@+id/offense_offhand_weapon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:layout_below="@+id/offense_offhand_title"
+            android:background="?attr/selectableItemBackground"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:background="@android:color/transparent"/>
+
+    <!-- TODO: Spell list! -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:layout_below="@+id/offense_offhand_title"/>
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:background="@color/default_white"
+        android:elevation="8dp">
+
+        <TextView
+            android:id="@+id/offense_spells_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:textStyle="bold"
+            android:textColor="@color/secondary_500"
+            android:textSize="@dimen/text_large"
+            android:text="@string/offense_main_hand"/>
 
 
+    </RelativeLayout>
 
-</RelativeLayout>
+</LinearLayout>
