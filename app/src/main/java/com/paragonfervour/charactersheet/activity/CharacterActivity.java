@@ -15,7 +15,7 @@ import android.view.View;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.drawer.NavTarget;
 import com.paragonfervour.charactersheet.drawer.NavigationDrawerFragment;
-import com.paragonfervour.charactersheet.fragment.BiographyFragment;
+import com.paragonfervour.charactersheet.fragment.BiographyFragmented;
 import com.paragonfervour.charactersheet.fragment.DefenseFragment;
 import com.paragonfervour.charactersheet.fragment.OffenseFragment;
 
@@ -112,7 +112,7 @@ public class CharacterActivity extends BaseToolbarActivity
                             fragment = DefenseFragment.newInstance();
                             break;
                         case BIOGRAPHY:
-                            fragment = BiographyFragment.newInstance();
+                            fragment = BiographyFragmented.newInstance();
                             break;
                         default:
                             // All cases should have already been covered.
