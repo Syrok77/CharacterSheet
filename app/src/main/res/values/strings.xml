@@ -13,7 +13,9 @@
     <string name="standard_distance">feet</string>
 
     <!-- Navigation -->
-    <string name="nav_offense_activity">Offensive stats</string>
+    <string name="nav_offense_title">Offensive stats</string>
+    <string name="nav_defense_title">Defensive stats</string>
+    <string name="nav_bio_title">Biography</string>
 
     <!-- Offense page -->
     <string name="offense_main_hand">Main Hand</string>

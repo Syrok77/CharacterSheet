@@ -27,6 +27,6 @@
         android:layout_gravity="center_vertical"
         android:textSize="@dimen/abc_text_size_small_material"
         tools:textColor="@color/primary_text_default_material_light"
-        tools:text="@string/nav_offense_activity"/>
+        tools:text="@string/nav_offense_title"/>
 
 </LinearLayout>

@@ -2,7 +2,6 @@ package com.paragonfervour.charactersheet.drawer;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.activity.OffenseActivity;
 import com.paragonfervour.charactersheet.model.CharacterInfo;
 import com.paragonfervour.charactersheet.model.GameCharacter;
 import com.paragonfervour.charactersheet.widget.RecycleViewHolder;
@@ -30,11 +28,13 @@ public class DrawerRecyclerAdapter extends RecyclerView.Adapter<RecycleViewHolde
     private GameCharacter mCharacter;
     private List<NavTarget> mNavTargets = new ArrayList<>();
     private Class<? extends Activity> mCurrentTarget;
+    private NavigationDrawerFragment.NavigationDrawerCallbacks mCallbacks;
 
-    public DrawerRecyclerAdapter(GameCharacter character, Activity currentTarget) {
+    public DrawerRecyclerAdapter(GameCharacter character, Activity currentTarget, NavigationDrawerFragment.NavigationDrawerCallbacks listener) {
         mContext = currentTarget;
         mCharacter = character;
         mCurrentTarget = currentTarget.getClass();
+        mCallbacks = listener;
         initializeTargets();
     }
 
@@ -69,7 +69,7 @@ public class DrawerRecyclerAdapter extends RecyclerView.Adapter<RecycleViewHolde
         else if (viewHolder instanceof NavTargetViewHolder) {
             NavTargetViewHolder holder = (NavTargetViewHolder)viewHolder;
             NavTarget target = mNavTargets.get(position - 1);
-            holder.bindToView(target, mCurrentTarget.equals(target.mTarget));
+            holder.bindToView(target, mCurrentTarget.equals(target));
         }
     }
 
@@ -93,19 +93,9 @@ public class DrawerRecyclerAdapter extends RecyclerView.Adapter<RecycleViewHolde
     }
 
     private void initializeTargets() {
-        mNavTargets.add(new NavTarget(R.drawable.abc_ic_menu_cut_mtrl_alpha, mContext.getString(R.string.nav_offense_activity), OffenseActivity.class));
-    }
-
-    private class NavTarget {
-        private int mTargetIcon;
-        private String mTargetTitle;
-        private Class<? extends Activity> mTarget;
-
-        public NavTarget(int targetIcon, String targetTitle, Class<? extends Activity> target) {
-            mTargetIcon = targetIcon;
-            mTargetTitle = targetTitle;
-            mTarget = target;
-        }
+        mNavTargets.add(NavTarget.OFFENSE);
+        mNavTargets.add(NavTarget.DEFENSE);
+        mNavTargets.add(NavTarget.BIOGRAPHY);
     }
 
     private class NavTargetClickListener implements View.OnClickListener {
@@ -115,8 +105,7 @@ public class DrawerRecyclerAdapter extends RecyclerView.Adapter<RecycleViewHolde
         }
         @Override
         public void onClick(View v) {
-            Intent i = new Intent(mContext, mTarget.mTarget);
-            mContext.startActivity(i);
+            mCallbacks.onNavigationOptionSelected(mTarget);
         }
     }
 
@@ -159,16 +148,15 @@ public class DrawerRecyclerAdapter extends RecyclerView.Adapter<RecycleViewHolde
             mText = (TextView) itemView.findViewById(R.id.drawer_nav_target_text);
         }
 
-        public void bindToView(NavTarget target, boolean isCurrent) {
-            mIcon.setImageResource(target.mTargetIcon);
-            mText.setText(target.mTargetTitle);
+        public void bindToView(final NavTarget target, boolean isCurrent) {
+            mIcon.setImageResource(target.getIconRes());
+            mText.setText(target.getTitleRes());
             if (isCurrent) {
                 itemView.setBackgroundColor(mContext.getResources().getColor(R.color.default_background_gray));
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO: Close drawer. Might have to forward these click events into a
-                        // TODO: listener in the fragment in order to get this to work cleanly.
+                        mCallbacks.onNavigationOptionSelected(target);
                     }
                 });
             }
