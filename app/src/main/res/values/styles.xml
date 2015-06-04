@@ -1,19 +1,32 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Base theme (overridden for following reasons -->
+    </style>
 
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="AppTheme.Base">
+        <item name="android:windowBackground">@color/default_background_gray</item>
         <item name="colorPrimary">@color/brand_primary</item>
-        <item name="colorPrimaryDark">@color/brand_secondary</item>
+        <item name="colorPrimaryDark">@color/brand_secondary_translucent</item>
         <item name="colorAccent">@color/secondary_500</item>
-        <item name="android:windowBackground">@color/default_white</item>
 
         <item name="android:textColorPrimary">@color/primary_text_default_material_light</item>
+        <item name="android:textColor">@color/primary_text_default_material_light</item>
         <item name="colorControlHighlight">@color/default_background_gray</item> <!-- Highlight color for pressed states -->
     </style>
 
-    <style name="ToolbarAppTheme" parent="AppTheme">
+    <!--Toolbar override of theme, which has dark theme instead of light.-->
+    <style name="ToolbarAppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:textColorPrimary">@color/default_white</item>
+        <item name="android:textColor">@color/default_white</item>
+
+        <item name="android:windowBackground">@color/default_background_gray</item>
+        <item name="colorPrimary">@color/brand_primary</item>
+        <item name="colorPrimaryDark">@color/brand_secondary</item>
+        <item name="colorAccent">@color/secondary_500</item>
+
+        <item name="colorControlHighlight">@color/default_background_gray</item> <!-- Highlight color for pressed states -->
     </style>
 
 </resources>

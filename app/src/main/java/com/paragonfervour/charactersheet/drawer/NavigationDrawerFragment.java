@@ -30,7 +30,9 @@ import rx.subscriptions.CompositeSubscription;
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
+ * @Deprecated in favor of build-in NavigationView class in android support design lib
  */
+@Deprecated
 public class NavigationDrawerFragment extends RoboFragment {
 
     @Inject
@@ -120,11 +122,9 @@ public class NavigationDrawerFragment extends RoboFragment {
     /**
      * Users of this fragment must call this method to set up the navigation drawer interactions.
      *
-     * @param fragmentId   The android:id of this fragment in its activity's layout.
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
      */
-    public void setUp(int fragmentId, DrawerLayout drawerLayout, ActionBarDrawerToggle drawerToggle) {
-        mFragmentContainerView = getActivity().findViewById(fragmentId);
+    public void setUp(DrawerLayout drawerLayout, ActionBarDrawerToggle drawerToggle) {
         mDrawerLayout = drawerLayout;
         mDrawerToggle = drawerToggle;
 
@@ -148,6 +148,7 @@ public class NavigationDrawerFragment extends RoboFragment {
         } catch (ClassCastException e) {
             throw new ClassCastException("Activity must implement NavigationDrawerCallbacks.");
         }
+//        mFragmentContainerView = activity.findViewById(R.id.navigation_drawer);
     }
 
     @Override

@@ -2,8 +2,9 @@
 <resources>
 
     <!-- Primary color pallette -->
-    <color name="brand_primary">#ff00d4c6</color> 00BCD4
+    <color name="brand_primary">#ff00d4c6</color> <!--00BCD4-->
     <color name="brand_secondary">#ff149480</color>
+    <color name="brand_secondary_translucent">#88108D85</color>
     <color name="brand_bright">#ff7eeae2</color>
 
     <!-- Secondary color palette -->
