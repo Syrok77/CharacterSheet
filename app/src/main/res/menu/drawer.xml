@@ -3,20 +3,11 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/navigation_offense"
+            android:id="@+id/navigation_character_info"
             android:checked="true"
             android:icon="@drawable/abc_ic_clear_mtrl_alpha"
-            android:title="@string/nav_offense_title"/>
+            android:title="@string/nav_character_title"/>
 
-        <item
-            android:id="@+id/navigation_defense"
-            android:icon="@drawable/abc_edit_text_material"
-            android:title="@string/nav_defense_title"/>
-
-        <item
-            android:id="@+id/navigation_biography"
-            android:icon="@drawable/ic_drawer"
-            android:title="@string/nav_bio_title"/>
     </group>
 
 </menu>

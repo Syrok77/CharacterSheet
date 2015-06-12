@@ -16,6 +16,7 @@
     <string name="nav_offense_title">Offensive stats</string>
     <string name="nav_defense_title">Defensive stats</string>
     <string name="nav_bio_title">Biography</string>
+    <string name="nav_character_title">Stats and Info</string>
 
     <!-- Offense page -->
     <string name="offense_main_hand">Main Hand</string>

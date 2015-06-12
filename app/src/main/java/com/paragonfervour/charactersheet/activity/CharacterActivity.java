@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -18,9 +19,7 @@ import android.widget.TextView;
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.dao.CharacterDAO;
-import com.paragonfervour.charactersheet.fragment.BioFragment;
-import com.paragonfervour.charactersheet.fragment.DefenseFragment;
-import com.paragonfervour.charactersheet.fragment.OffenseFragment;
+import com.paragonfervour.charactersheet.fragment.CharacterPagerFragment;
 import com.paragonfervour.charactersheet.model.CharacterInfo;
 import com.paragonfervour.charactersheet.model.GameCharacter;
 
@@ -37,6 +36,9 @@ public class CharacterActivity extends BaseToolbarActivity {
     @InjectView(R.id.activity_toolbar)
     private Toolbar mToolbar;
 
+    @InjectView(R.id.activity_character_tab)
+    private TabLayout mTabLayout;
+
     @InjectView(R.id.drawer_layout)
     private DrawerLayout mDrawerLayout;
 
@@ -47,7 +49,7 @@ public class CharacterActivity extends BaseToolbarActivity {
 
     private CharSequence mTitle;
     private boolean mUserLearnedDrawer;
-    private int mCurrentNavTarget = R.id.navigation_offense;
+    private int mCurrentNavTarget = R.id.navigation_character_info;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
@@ -86,6 +88,11 @@ public class CharacterActivity extends BaseToolbarActivity {
     @Override
     public Toolbar getToolbar() {
         return mToolbar;
+    }
+
+    @Override
+    public TabLayout getTabLayout() {
+        return mTabLayout;
     }
 
     @Override
@@ -182,14 +189,8 @@ public class CharacterActivity extends BaseToolbarActivity {
             // update the main content by replacing fragments
             Fragment fragment;
             switch(mCurrentNavTarget) {
-                case R.id.navigation_offense:
-                    fragment = OffenseFragment.newInstance();
-                    break;
-                case R.id.navigation_defense:
-                    fragment = DefenseFragment.newInstance();
-                    break;
-                case R.id.navigation_biography:
-                    fragment = BioFragment.newInstance();
+                case R.id.navigation_character_info:
+                    fragment = CharacterPagerFragment.newInstance();
                     break;
                 default:
                     // All cases should have already been covered.

@@ -4,7 +4,6 @@
     <!-- Primary color pallette -->
     <color name="brand_primary">#ff00d4c6</color> <!--00BCD4-->
     <color name="brand_secondary">#ff149480</color>
-    <color name="brand_secondary_translucent">#88108D85</color>
     <color name="brand_bright">#ff7eeae2</color>
 
     <!-- Secondary color palette -->
@@ -13,6 +12,7 @@
     <color name="secondary_200">#BCAAA4</color>
 
     <!-- Other colors -->
+    <color name="status_bar">#25000000</color>
     <color name="default_white">#FDFDFD</color>
     <color name="default_background_gray">#CECECE</color>
 
