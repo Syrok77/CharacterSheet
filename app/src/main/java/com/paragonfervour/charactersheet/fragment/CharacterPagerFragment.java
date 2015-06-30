@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.activity.BaseToolbarActivity;
 import com.paragonfervour.charactersheet.adapter.CharacterPagerAdapter;
@@ -18,9 +17,6 @@ import roboguice.inject.InjectView;
 
 
 public class CharacterPagerFragment extends RoboFragment {
-
-    @Inject
-    private CharacterPagerAdapter mPagerAdapter;
 
     @InjectView(R.id.character_view_pager)
     private ViewPager mViewPager;
@@ -42,9 +38,10 @@ public class CharacterPagerFragment extends RoboFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mViewPager.setAdapter(mPagerAdapter);
+        CharacterPagerAdapter pagerAdapter = new CharacterPagerAdapter(getChildFragmentManager(), getActivity());
+        mViewPager.setAdapter(pagerAdapter);
 
-        BaseToolbarActivity activity = (BaseToolbarActivity)getActivity();
+        BaseToolbarActivity activity = (BaseToolbarActivity) getActivity();
         TabLayout tabLayout = activity.getTabLayout();
         tabLayout.setVisibility(View.VISIBLE);
         tabLayout.setupWithViewPager(mViewPager);
@@ -52,7 +49,7 @@ public class CharacterPagerFragment extends RoboFragment {
 
     @Override
     public void onDestroyView() {
-        BaseToolbarActivity activity = (BaseToolbarActivity)getActivity();
+        BaseToolbarActivity activity = (BaseToolbarActivity) getActivity();
         TabLayout tabLayout = activity.getTabLayout();
         tabLayout.setVisibility(View.GONE);
         super.onDestroyView();

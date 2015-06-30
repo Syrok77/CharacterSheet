@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
 
-import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.fragment.BioFragment;
 import com.paragonfervour.charactersheet.fragment.DefenseFragment;
@@ -17,7 +16,6 @@ import com.paragonfervour.charactersheet.fragment.StatsFragment;
 public class CharacterPagerAdapter extends FragmentPagerAdapter {
     private Context mContext;
 
-    @Inject
     public CharacterPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         mContext = context;
