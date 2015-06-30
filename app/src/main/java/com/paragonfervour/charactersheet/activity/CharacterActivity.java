@@ -20,6 +20,8 @@ import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.fragment.CharacterPagerFragment;
+import com.paragonfervour.charactersheet.fragment.EquipmentFragment;
+import com.paragonfervour.charactersheet.fragment.SpellsFragment;
 import com.paragonfervour.charactersheet.model.CharacterInfo;
 import com.paragonfervour.charactersheet.model.GameCharacter;
 
@@ -191,6 +193,12 @@ public class CharacterActivity extends BaseToolbarActivity {
             switch(mCurrentNavTarget) {
                 case R.id.navigation_character_info:
                     fragment = CharacterPagerFragment.newInstance();
+                    break;
+                case R.id.navigation_spells:
+                    fragment = SpellsFragment.newInstance();
+                    break;
+                case R.id.navigation_equipment:
+                    fragment = EquipmentFragment.newInstance();
                     break;
                 default:
                     // All cases should have already been covered.

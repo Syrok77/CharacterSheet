@@ -1,6 +1,5 @@
 package com.paragonfervour.charactersheet.fragment;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,17 +11,18 @@ import com.paragonfervour.charactersheet.R;
 import roboguice.fragment.RoboFragment;
 
 // TODO: This is a stub.
-public class DefenseFragment extends RoboFragment {
+public class SpellsFragment extends RoboFragment {
 
-    public static DefenseFragment newInstance() {
-        return new DefenseFragment();
+    public static SpellsFragment newInstance() {
+        return new SpellsFragment();
     }
 
-    public DefenseFragment() {}
+    public SpellsFragment() {}
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_defense, container, false);
+        return inflater.inflate(R.layout.fragment_spells, container, false);
     }
 }
+

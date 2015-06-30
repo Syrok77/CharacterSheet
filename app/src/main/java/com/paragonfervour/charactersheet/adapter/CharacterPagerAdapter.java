@@ -11,6 +11,7 @@ import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.fragment.BioFragment;
 import com.paragonfervour.charactersheet.fragment.DefenseFragment;
 import com.paragonfervour.charactersheet.fragment.OffenseFragment;
+import com.paragonfervour.charactersheet.fragment.StatsFragment;
 
 
 public class CharacterPagerAdapter extends FragmentPagerAdapter {
@@ -24,16 +25,16 @@ public class CharacterPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch(position) {
-            case 0: return OffenseFragment.newInstance();
-            // todo: spells fragment
-            case 1: return DefenseFragment.newInstance();
-            case 2: return BioFragment.newInstance();
+            case 0: return StatsFragment.newInstance();
+            case 1: return OffenseFragment.newInstance();
+            case 2: return DefenseFragment.newInstance();
+            case 3: return BioFragment.newInstance();
             default: return null;
         }
     }
@@ -50,10 +51,10 @@ public class CharacterPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch(position) {
-            case 0: return mContext.getString(R.string.nav_offense_title);
-            // todo: spells fragment
-            case 1: return mContext.getString(R.string.nav_defense_title);
-            case 2: return mContext.getString(R.string.nav_bio_title);
+            case 0: return mContext.getString(R.string.nav_stats_title);
+            case 1: return mContext.getString(R.string.nav_offense_title);
+            case 2: return mContext.getString(R.string.nav_defense_title);
+            case 3: return mContext.getString(R.string.nav_bio_title);
             default: return null;
         }
     }
