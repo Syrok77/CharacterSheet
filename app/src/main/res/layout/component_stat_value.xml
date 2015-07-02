@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/component_stat_delta_counter"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        tools:text="+2"/>
+
+    <TextView
+        android:id="@+id/component_stat_value"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/component_stat_delta_counter"
+        android:background="@drawable/stat_value_bg"
+        android:gravity="center"
+        android:padding="8dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/stat_default_value"/>
+
+    <LinearLayout
+        android:id="@+id/component_stat_control_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/component_stat_value"
+        android:layout_toEndOf="@+id/component_stat_value"
+        android:layout_toRightOf="@+id/component_stat_value"
+        android:orientation="vertical">
+
+        <!-- +/- controls layout -->
+        <ImageButton
+            android:id="@+id/component_stat_increase_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:src="@drawable/ic_add_black_24dp" />
+
+        <ImageButton
+            android:id="@+id/component_stat_decrease_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:src="@drawable/ic_remove_black_24dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

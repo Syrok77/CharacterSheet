@@ -30,6 +30,9 @@
     <string name="cd_weapon_icon">Weapon Icon</string>
     <string name="cd_navigatoin">Navigation</string>
 
+    <!-- Stat component -->
+    <string name="stat_default_value">10</string>
+
     <string name="character_info_class_format">Level %1$d %2$s</string>
 
     <string-array name="classes" >
