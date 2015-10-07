@@ -20,6 +20,7 @@
     <string name="nav_character_title">Stats and Info</string>
     <string name="nav_spells">Spell List</string>
     <string name="nav_equipment">Equipment</string>
+    <string name="nav_Settings">Settings</string>
 
     <!-- Offense page -->
     <string name="offense_main_hand">Main Hand</string>
