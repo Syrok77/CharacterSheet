@@ -63,7 +63,7 @@ public class CharacterActivity extends BaseToolbarActivity {
 
         mTitle = getTitle();
 
-        mToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         mToolbar.setTitle(mTitle);
         setSupportActionBar(mToolbar);
 

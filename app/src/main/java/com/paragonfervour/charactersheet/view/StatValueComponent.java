@@ -1,6 +1,7 @@
 package com.paragonfervour.charactersheet.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -30,28 +31,39 @@ public class StatValueComponent extends LinearLayout {
 
     // members
     private PublishSubject<Integer> mValuePublisher = PublishSubject.create();
-
-    private int mCurrentDelta = 0;
     private Handler mCurrentDeltaHandler = new Handler();
     private Runnable mCurrentDeltaRunner = null;
 
+    private int mHapticInterval = -1;
+    private int mCurrentDelta = 0;
+
     public StatValueComponent(Context context) {
         super(context);
-        init();
+        init(null);
     }
 
     public StatValueComponent(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(attrs);
     }
 
     public StatValueComponent(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(attrs);
     }
 
-    public void init() {
+    public void init(AttributeSet attrs) {
         LayoutInflater.from(getContext()).inflate(R.layout.component_stat_value, this, true);
+
+        if (!isInEditMode() && attrs != null) {
+            TypedArray attributes = getContext().obtainStyledAttributes(
+                    attrs,
+                    R.styleable.StatValueComponent);
+
+            mHapticInterval = attributes.getInt(R.styleable.StatValueComponent_hapticInterval, -1);
+
+            attributes.recycle();
+        }
 
         mValueTextView = (TextView) findViewById(R.id.component_stat_value);
         mDeltaTextView = (TextView) findViewById(R.id.component_stat_delta_counter);
@@ -102,6 +114,18 @@ public class StatValueComponent extends LinearLayout {
     }
 
     /**
+     * Set increment interval to fire haptic feedback to the user. This will fire a slight buzz every
+     * time this interval is hit. For example, a character attribute counter might set this to 2, so that
+     * every time a character's ability score increases they get some user feedback from it.
+     *
+     * @param interval haptic interval.
+     */
+    @SuppressWarnings("unused")
+    public void setHapticInterval(int interval) {
+        mHapticInterval = interval;
+    }
+
+    /**
      * Change the value by the given delta. Changes main displayed value and also shows a temporary
      * counter that shows how much you've changed it by recently.
      *
@@ -135,7 +159,15 @@ public class StatValueComponent extends LinearLayout {
             // hide the counter
             mDeltaTextView.setText("");
         }
+
         setValue(value + by);
+
+        // Send haptic feedback
+        //noinspection StatementWithEmptyBody
+        if (mHapticInterval > 0 && getValue() % mHapticInterval == 0) {
+            // todo: haptic feedback.
+        }
+
 
         if (by != 0) {
             mValuePublisher.onNext(getValue());
