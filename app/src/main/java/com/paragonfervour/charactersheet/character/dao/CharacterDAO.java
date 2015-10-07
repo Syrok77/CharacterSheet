@@ -1,7 +1,7 @@
-package com.paragonfervour.charactersheet.dao;
+package com.paragonfervour.charactersheet.character.dao;
 
 import com.google.inject.Singleton;
-import com.paragonfervour.charactersheet.model.GameCharacter;
+import com.paragonfervour.charactersheet.character.model.GameCharacter;
 
 import rx.Observable;
 

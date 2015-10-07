@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.model.Weapon;
+import com.paragonfervour.charactersheet.character.model.Weapon;
 
 /**
  * View component that displays a Weapon model

@@ -1,4 +1,4 @@
-package com.paragonfervour.charactersheet.fragment;
+package com.paragonfervour.charactersheet.stats.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.dao.CharacterDAO;
-import com.paragonfervour.charactersheet.model.GameCharacter;
+import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.model.GameCharacter;
+import com.paragonfervour.charactersheet.stats.observer.UpdateHPObserver;
 import com.paragonfervour.charactersheet.view.StatValueComponent;
 
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 import rx.Observer;
 import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * Fragment containing a view that shows the user's stats. Stats include HP, character scores, skills,
@@ -48,21 +48,8 @@ public class StatsFragment extends RoboFragment {
 
         mHealthComponent.getValueObservable().subscribe(new Action1<Integer>() {
             @Override
-            public void call(final Integer hitPoints) {
-                mCharacterDAO.getActiveCharacter().subscribe(new Observer<GameCharacter>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onNext(GameCharacter gameCharacter) {
-                        gameCharacter.getDefenseStats().setHitPoints(hitPoints);
-                    }
-                });
+            public void call(Integer hitPoints) {
+                mCharacterDAO.getActiveCharacter().subscribe(new UpdateHPObserver(hitPoints));
             }
         });
 

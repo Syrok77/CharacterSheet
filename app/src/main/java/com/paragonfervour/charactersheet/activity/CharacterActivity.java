@@ -18,12 +18,12 @@ import android.widget.TextView;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.model.CharacterInfo;
+import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.fragment.CharacterPagerFragment;
 import com.paragonfervour.charactersheet.fragment.EquipmentFragment;
 import com.paragonfervour.charactersheet.fragment.SpellsFragment;
-import com.paragonfervour.charactersheet.model.CharacterInfo;
-import com.paragonfervour.charactersheet.model.GameCharacter;
 
 import roboguice.inject.InjectView;
 import rx.android.schedulers.AndroidSchedulers;

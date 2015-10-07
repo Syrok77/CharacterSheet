@@ -1,4 +1,4 @@
-package com.paragonfervour.charactersheet.model;
+package com.paragonfervour.charactersheet.character.model;
 
 /**
  * Model representing a Weapon, with a name (i.e. Rapier), damage, value, weight, and properties

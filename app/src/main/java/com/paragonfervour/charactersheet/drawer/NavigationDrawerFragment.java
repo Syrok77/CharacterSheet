@@ -17,8 +17,8 @@ import android.view.ViewGroup;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.dao.CharacterDAO;
-import com.paragonfervour.charactersheet.model.GameCharacter;
+import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.model.GameCharacter;
 
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;

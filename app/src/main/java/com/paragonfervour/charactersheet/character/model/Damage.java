@@ -1,4 +1,4 @@
-package com.paragonfervour.charactersheet.model;
+package com.paragonfervour.charactersheet.character.model;
 
 /**
  * Damage representation. Dice type, # of that dice, and modifier

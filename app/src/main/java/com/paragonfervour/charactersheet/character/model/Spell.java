@@ -1,4 +1,4 @@
-package com.paragonfervour.charactersheet.model;
+package com.paragonfervour.charactersheet.character.model;
 
 /**
  * Model represents a Spell.

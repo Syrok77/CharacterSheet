@@ -10,7 +10,7 @@ import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.fragment.BioFragment;
 import com.paragonfervour.charactersheet.fragment.DefenseFragment;
 import com.paragonfervour.charactersheet.fragment.OffenseFragment;
-import com.paragonfervour.charactersheet.fragment.StatsFragment;
+import com.paragonfervour.charactersheet.stats.fragment.StatsFragment;
 
 
 public class CharacterPagerAdapter extends FragmentPagerAdapter {

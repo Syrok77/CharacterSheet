@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.dao.CharacterDAO;
-import com.paragonfervour.charactersheet.model.GameCharacter;
+import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.view.WeaponComponent;
 
 import roboguice.fragment.RoboFragment;

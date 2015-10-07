@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.model.CharacterInfo;
-import com.paragonfervour.charactersheet.model.GameCharacter;
+import com.paragonfervour.charactersheet.character.model.CharacterInfo;
+import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.widget.RecycleViewHolder;
 
 import java.util.ArrayList;
