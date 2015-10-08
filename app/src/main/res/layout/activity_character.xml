@@ -18,20 +18,13 @@
         android:orientation="vertical"
         android:fitsSystemWindows="true">
 
-        <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/main_toolbar_layout"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false">
-
-
-            <android.support.design.widget.AppBarLayout
-                android:id="@+id/main_appbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:background="@color/brand_primary"
+        android:elevation="@dimen/appbar_elevation">
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/activity_toolbar"
@@ -50,13 +43,12 @@
                     android:visibility="gone"
                     android:clipToPadding="false"
                     android:theme="@style/ToolbarAppTheme"
+                    tools:visibility="visible"
                     app:tabMode="scrollable"
                     app:layout_scrollFlags="scroll|enterAlways"
                     />
 
-            </android.support.design.widget.AppBarLayout>
-
-        </android.support.design.widget.CoordinatorLayout>
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/container"
