@@ -2,12 +2,12 @@
 <android.support.v4.widget.DrawerLayout
     android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OffenseActivity"
     android:fitsSystemWindows="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:context=".OffenseActivity">
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
@@ -15,38 +15,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:orientation="vertical"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:orientation="vertical"
-        android:background="@color/brand_primary"
-        android:elevation="@dimen/appbar_elevation">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/brand_primary"
+            android:clipToPadding="false"
+            android:elevation="@dimen/appbar_elevation"
+            android:orientation="vertical">
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/activity_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?actionBarSize"
-                    android:clipToPadding="false"
-                    android:theme="@style/ToolbarAppTheme"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/activity_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:clipToPadding="false"
+                android:theme="@style/ToolbarAppTheme"
+                app:layout_scrollFlags="scroll|enterAlways"
+                />
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/activity_character_tab"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone"
-                    android:clipToPadding="false"
-                    android:theme="@style/ToolbarAppTheme"
-                    tools:visibility="visible"
-                    app:tabMode="scrollable"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    />
+            <android.support.design.widget.TabLayout
+                android:id="@+id/activity_character_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clipToPadding="false"
+                android:theme="@style/ToolbarAppTheme"
+                android:visibility="gone"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:tabMode="scrollable"
+                tools:visibility="visible"
+                />
 
         </LinearLayout>
 
