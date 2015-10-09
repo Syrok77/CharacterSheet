@@ -3,13 +3,35 @@
 
     <!-- Primary color pallette -->
     <color name="brand_primary">#ff00d4c6</color> <!--00BCD4-->
-    <color name="brand_secondary">#ff149480</color>
-    <color name="brand_bright">#ff7eeae2</color>
+    <color name="brand_secondary">#ff00B1A4</color>
+    <color name="brand_bright">#ff55DED4</color>
 
     <!-- Secondary color palette -->
-    <color name="secondary_500">#795548</color>
-    <color name="secondary_700">#5D4037</color>
-    <color name="secondary_200">#BCAAA4</color>
+    <color name="secondary_500">#B44E00</color>
+    <color name="secondary_700">#8A3C00</color>
+    <color name="secondary_200">#FFA763</color>
+
+    <!-- Tertiary color palette -->
+    <color name="tertiary_500">#022A78</color>
+    <color name="tertiary_700">#001F5C</color>
+    <color name="tertiary_200">#6D9AF3</color>
+
+    <color name="blue_500">#1658DA</color>
+    <color name="blue_700">#0945BC</color>
+    <color name="blue_200">#3D73DD</color>
+
+    <color name="orange_500">#FF6F00</color>
+    <color name="orange_700">#D05A00</color>
+    <color name="orange_200">#FFA662</color>
+
+    <color name="yellow_500">#FFA700</color>
+    <color name="yellow_700">#D08800</color>
+    <color name="yellow_200">#FFC962</color>
+
+    <!-- Brown alternate -->
+    <color name="brown_500">#795548</color>
+    <color name="brown_700">#5D4037</color>
+    <color name="brown_200">#BCAAA4</color>
 
     <!-- Other colors -->
     <color name="status_bar">#25000000</color>

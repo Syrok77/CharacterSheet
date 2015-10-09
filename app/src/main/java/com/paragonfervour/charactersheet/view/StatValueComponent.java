@@ -28,6 +28,7 @@ public class StatValueComponent extends LinearLayout {
     // child views
     private TextView mValueTextView;
     private TextView mDeltaTextView;
+    private TextView mTitleTextView;
 
     // members
     private PublishSubject<Integer> mValuePublisher = PublishSubject.create();
@@ -54,21 +55,30 @@ public class StatValueComponent extends LinearLayout {
 
     public void init(AttributeSet attrs) {
         LayoutInflater.from(getContext()).inflate(R.layout.component_stat_value, this, true);
+        String title = null;
 
-        if (!isInEditMode() && attrs != null) {
-            TypedArray attributes = getContext().obtainStyledAttributes(
-                    attrs,
-                    R.styleable.StatValueComponent);
+        mValueTextView = (TextView) findViewById(R.id.component_stat_value);
+        mDeltaTextView = (TextView) findViewById(R.id.component_stat_delta_counter);
+        mTitleTextView = (TextView) findViewById(R.id.component_stat_title);
+        ImageButton valueIncreaseButton = (ImageButton) findViewById(R.id.component_stat_increase_button);
+        ImageButton valueDecreaseButton = (ImageButton) findViewById(R.id.component_stat_decrease_button);
+        View controlSection = findViewById(R.id.component_stat_control_section);
 
+        TypedArray attributes = getContext().obtainStyledAttributes(
+                attrs,
+                R.styleable.StatValueComponent);
+        if (attrs != null) {
             mHapticInterval = attributes.getInt(R.styleable.StatValueComponent_hapticInterval, -1);
+            title = attributes.getString(R.styleable.StatValueComponent_statTitle);
+            int color = attributes.getColor(R.styleable.StatValueComponent_statBackground, 0);
+            if (color != 0) {
+                controlSection.setBackgroundColor(color);
+            }
 
             attributes.recycle();
         }
 
-        mValueTextView = (TextView) findViewById(R.id.component_stat_value);
-        mDeltaTextView = (TextView) findViewById(R.id.component_stat_delta_counter);
-        ImageButton valueIncreaseButton = (ImageButton) findViewById(R.id.component_stat_increase_button);
-        ImageButton valueDecreaseButton = (ImageButton) findViewById(R.id.component_stat_decrease_button);
+        mTitleTextView.setText(title);
 
         valueIncreaseButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -172,5 +182,9 @@ public class StatValueComponent extends LinearLayout {
         if (by != 0) {
             mValuePublisher.onNext(getValue());
         }
+    }
+
+    public void setTitle(String title) {
+        mTitleTextView.setText(title);
     }
 }

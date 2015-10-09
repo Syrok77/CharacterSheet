@@ -3,6 +3,8 @@
 
     <declare-styleable name="StatValueComponent">
         <attr name="hapticInterval" format="integer"/>
+        <attr name="statTitle" format="string"/>
+        <attr name="statBackground" format="color"/>
     </declare-styleable>
 
 </resources>
