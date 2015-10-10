@@ -3,6 +3,7 @@ package com.paragonfervour.charactersheet.view;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -59,7 +60,8 @@ public class SkillValueComponent extends LinearLayout {
                 mSkillName = attributes.getString(R.styleable.SkillValueComponent_skillName);
                 int color = attributes.getColor(R.styleable.SkillValueComponent_skillBackground, 0);
                 if (color != 0) {
-                    mSkillButton.setBackgroundTintList(ColorStateList.valueOf(color));
+//                    mSkillButton.setBackgroundTintList(ColorStateList.valueOf(color));
+                    ViewCompat.setBackgroundTintList(mSkillButton, ColorStateList.valueOf(color));
                 }
 
                 mSkillButton.setText(getButtonText());
