@@ -64,18 +64,20 @@ public class StatValueComponent extends LinearLayout {
         ImageButton valueDecreaseButton = (ImageButton) findViewById(R.id.component_stat_decrease_button);
         View controlSection = findViewById(R.id.component_stat_control_section);
 
-        TypedArray attributes = getContext().obtainStyledAttributes(
-                attrs,
-                R.styleable.StatValueComponent);
         if (attrs != null) {
-            mHapticInterval = attributes.getInt(R.styleable.StatValueComponent_hapticInterval, -1);
-            title = attributes.getString(R.styleable.StatValueComponent_statTitle);
-            int color = attributes.getColor(R.styleable.StatValueComponent_statBackground, 0);
-            if (color != 0) {
-                controlSection.setBackgroundColor(color);
-            }
+            TypedArray attributes = getContext().obtainStyledAttributes(
+                    attrs,
+                    R.styleable.StatValueComponent);
+            if (attributes != null) {
+                mHapticInterval = attributes.getInt(R.styleable.StatValueComponent_hapticInterval, -1);
+                title = attributes.getString(R.styleable.StatValueComponent_statTitle);
+                int color = attributes.getColor(R.styleable.StatValueComponent_statBackground, 0);
+                if (color != 0) {
+                    controlSection.setBackgroundColor(color);
+                }
 
-            attributes.recycle();
+                attributes.recycle();
+            }
         }
 
         mTitleTextView.setText(title);

@@ -27,9 +27,11 @@
 
 
         <LinearLayout
+            android:id="@+id/stats_ability_score_section"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
             android:paddingBottom="11dp"
@@ -82,6 +84,15 @@
                 app:statTitle="@string/stat_name_cha"/>
 
         </LinearLayout>
+
+        <com.paragonfervour.charactersheet.view.SkillValueComponent
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stats_ability_score_section"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            app:skillBackground="@color/tertiary_200"
+            app:skillName="Stealth"/>
 
     </RelativeLayout>
 

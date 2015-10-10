@@ -7,4 +7,9 @@
         <attr name="statBackground" format="color"/>
     </declare-styleable>
 
+    <declare-styleable name="SkillValueComponent">
+        <attr name="skillName" format="string"/>
+        <attr name="skillBackground" format="color"/>
+    </declare-styleable>
+
 </resources>
