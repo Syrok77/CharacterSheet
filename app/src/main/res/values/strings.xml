@@ -35,13 +35,17 @@
     <string name="stat_default_value">10</string>
 
     <!-- Stat fragment -->
-    <string name="stat_name_hp">HP</string>
     <string name="stat_name_str">STR</string>
     <string name="stat_name_con">CON</string>
     <string name="stat_name_dex">DEX</string>
     <string name="stat_name_int">INT</string>
     <string name="stat_name_wis">WIS</string>
     <string name="stat_name_cha">CHA</string>
+    <string name="stat_name_hp">HP</string>
+    <string name="stat_name_max_hp">Max HP</string>
+    <string name="stat_name_tmp_hp">Temp HP</string>
+    <string name="stat_health_summary_format">%1$d / %2$d</string>
+    <string name="stat_health_summary_title">Effective HP</string>
     <string name="skill_button_text_format">%1$s: %2$s%3$d</string>
 
     <string name="character_info_class_format">Level %1$d %2$s</string>

@@ -3,6 +3,9 @@ package com.paragonfervour.charactersheet.character.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Character info model, containing name, class, level, XP, and race info.
+ */
 public class CharacterInfo {
 
     @SerializedName("CharacterClass")

@@ -10,13 +10,13 @@
 
     <TextView
         android:id="@+id/component_stat_title"
-        android:layout_width="48dp"
+        android:layout_width="wrap_content"
         android:layout_height="16dp"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="2dp"
         android:gravity="center_horizontal"
         android:textSize="13dp"
-        tools:text="STR"/>
+        tools:text="@string/stat_name_tmp_hp"/>
 
     <LinearLayout
         android:id="@+id/component_stat_control_section"

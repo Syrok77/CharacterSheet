@@ -18,6 +18,10 @@ import roboguice.inject.InjectView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
+/**
+ * Fragment that displays a character's offensive abilities. This includes equipped weapons, as well as
+ * proficiency bonus. Probably.
+ */
 public class OffenseFragment extends RoboFragment {
 
     @Inject

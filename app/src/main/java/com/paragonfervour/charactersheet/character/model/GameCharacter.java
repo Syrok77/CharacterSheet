@@ -1,8 +1,10 @@
 package com.paragonfervour.charactersheet.character.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Hierarchy of models that contains all the data of a D&D Character.
- * TODO: Make this gson compliant
  */
 public class GameCharacter {
     // Name, class, race, level, xp
@@ -17,6 +19,9 @@ public class GameCharacter {
     // Bio - background, bond/ideal/etc.
     private BioInfo mBioInfo;
 
+    // Skill list
+    private List<Skill> mSkills;
+
     // Temp - create a default character
     public static GameCharacter createDefaultCharacter() {
         GameCharacter maldalair = new GameCharacter();
@@ -24,6 +29,8 @@ public class GameCharacter {
         maldalair.mDefenseStats = DefenseStats.createDefault();
         maldalair.mOffenseStats = OffenseStats.createDefault();
         maldalair.mBioInfo = BioInfo.createDefault();
+        maldalair.mSkills = new ArrayList<>();
+        maldalair.mSkills.add(Skill.createDefault());
         return maldalair;
     }
 
@@ -57,5 +64,13 @@ public class GameCharacter {
 
     public void setBioInfo(BioInfo bioInfo) {
         mBioInfo = bioInfo;
+    }
+
+    public List<Skill> getSkills() {
+        return mSkills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        mSkills = skills;
     }
 }
