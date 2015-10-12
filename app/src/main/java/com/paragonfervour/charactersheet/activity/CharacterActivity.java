@@ -119,8 +119,8 @@ public class CharacterActivity extends BaseToolbarActivity {
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the navigation drawer and the action bar app icon.
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
-                R.string.navigation_drawer_close)  /* "close drawer" description for accessibility */
+                R.string.navigation_drawer_open,  // "open drawer" description for accessibility
+                R.string.navigation_drawer_close)  // "close drawer" description for accessibility
         {
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -181,7 +181,6 @@ public class CharacterActivity extends BaseToolbarActivity {
                         mNavigationView.addHeaderView(headerView);
                     }
         }));
-
 
         mNavigationView.setNavigationItemSelectedListener(new DrawerListener());
     }
