@@ -51,7 +51,6 @@ public class CharacterActivity extends BaseToolbarActivity {
 
     private CharSequence mTitle;
     private boolean mUserLearnedDrawer;
-    private int mCurrentNavTarget = R.id.navigation_character_info;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
@@ -68,7 +67,7 @@ public class CharacterActivity extends BaseToolbarActivity {
         setSupportActionBar(mToolbar);
 
         setUpDrawer(savedInstanceState);
-        navigateToTarget();
+        navigateToTarget(R.id.navigation_character_info);
     }
 
     @Override
@@ -80,7 +79,7 @@ public class CharacterActivity extends BaseToolbarActivity {
     private class DrawerListener implements NavigationView.OnNavigationItemSelectedListener {
         @Override
         public boolean onNavigationItemSelected(MenuItem menuItem) {
-            mCurrentNavTarget = menuItem.getItemId();
+            navigateToTarget(menuItem.getItemId());
             mDrawerLayout.closeDrawers();
             menuItem.setChecked(true);
             return false;
@@ -126,8 +125,6 @@ public class CharacterActivity extends BaseToolbarActivity {
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
-
-                navigateToTarget();
             }
 
             @Override
@@ -180,38 +177,34 @@ public class CharacterActivity extends BaseToolbarActivity {
 
                         mNavigationView.addHeaderView(headerView);
                     }
-        }));
+                }));
 
         mNavigationView.setNavigationItemSelectedListener(new DrawerListener());
     }
 
-    private void navigateToTarget() {
-        if (mCurrentNavTarget > 0) {
-            // update the main content by replacing fragments
-            Fragment fragment;
-            switch(mCurrentNavTarget) {
-                case R.id.navigation_character_info:
-                    fragment = CharacterPagerFragment.newInstance();
-                    break;
-                case R.id.navigation_spells:
-                    fragment = SpellsFragment.newInstance();
-                    break;
-                case R.id.navigation_equipment:
-                    fragment = EquipmentFragment.newInstance();
-                    break;
-                default:
-                    // All cases should have already been covered.
-                    return;
-            }
-
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, fragment)
-                    .commit();
-
-            mCurrentNavTarget = -1;
+    private void navigateToTarget(int navTarget) {
+        // update the main content by replacing fragments
+        Fragment fragment;
+        switch (navTarget) {
+            case R.id.navigation_character_info:
+                fragment = CharacterPagerFragment.newInstance();
+                break;
+            case R.id.navigation_spells:
+                fragment = SpellsFragment.newInstance();
+                break;
+            case R.id.navigation_equipment:
+                fragment = EquipmentFragment.newInstance();
+                break;
+            default:
+                // All cases should have already been covered.
+                return;
         }
+
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
     }
 
 }
