@@ -37,6 +37,7 @@
     <color name="status_bar">#25000000</color>
     <color name="default_white">#FDFDFD</color>
     <color name="default_background_gray">#CECECE</color>
+    <color name="dangerous_red">#da0000</color>
 
 
 

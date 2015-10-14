@@ -5,13 +5,13 @@ public class DefenseStats {
 
     private int mAC;
 
-    // saves
-    private int mStrSave;
-    private int mDexSave;
-    private int mConSave;
-    private int mIntSave;
-    private int mWisSave;
-    private int mChaSave;
+    // ability scores
+    private int mStrScore;
+    private int mDexScore;
+    private int mConScore;
+    private int mIntScore;
+    private int mWisScore;
+    private int mChaScore;
 
     // HP
     private int mHitPoints;
@@ -23,18 +23,48 @@ public class DefenseStats {
     private int mSuccessAttempts;
     private int mFailAttempts;
 
-    // Create default Defense Stats
+    /**
+     * Create a new, default set of DefenseStats.
+     *
+     * @return new default defense stat model.
+     */
     public static DefenseStats createDefault() {
         DefenseStats d = new DefenseStats();
-        d.mAC = 16;
-        d.mStrSave = 10;
-        d.mDexSave = 10;
-        d.mConSave = 10;
-        d.mIntSave = 10;
-        d.mWisSave = 10;
-        d.mChaSave = 10;
+        d.mAC = 14;
+        d.mStrScore = 10;
+        d.mDexScore = 10;
+        d.mConScore = 10;
+        d.mIntScore = 10;
+        d.mWisScore = 10;
+        d.mChaScore = 10;
 
-        d.mHitPoints = 20;
+        d.mHitPoints = 14;
+        d.mTempHp = 0;
+        d.mMaxHp = 14;
+        d.mHitDice = Dice.D6;
+
+        d.mSuccessAttempts = 0;
+        d.mFailAttempts = 0;
+
+        return d;
+    }
+
+    /**
+     * Create default model for Maldalair test rogue
+     *
+     * @return default rogue stats
+     */
+    public static DefenseStats createMaldalair() {
+        DefenseStats d = new DefenseStats();
+        d.mAC = 16;
+        d.mStrScore = 11;
+        d.mDexScore = 16;
+        d.mConScore = 13;
+        d.mIntScore = 11;
+        d.mWisScore = 12;
+        d.mChaScore = 8;
+
+        d.mHitPoints = 22;
         d.mTempHp = 0;
         d.mMaxHp = 24;
         d.mHitDice = Dice.D8;
@@ -53,52 +83,52 @@ public class DefenseStats {
         mAC = AC;
     }
 
-    public int getStrSave() {
-        return mStrSave;
+    public int getStrScore() {
+        return mStrScore;
     }
 
-    public void setStrSave(int strSave) {
-        mStrSave = strSave;
+    public void setStrScore(int strScore) {
+        mStrScore = strScore;
     }
 
-    public int getDexSave() {
-        return mDexSave;
+    public int getDexScore() {
+        return mDexScore;
     }
 
-    public void setDexSave(int dexSave) {
-        mDexSave = dexSave;
+    public void setDexScore(int dexScore) {
+        mDexScore = dexScore;
     }
 
-    public int getConSave() {
-        return mConSave;
+    public int getConScore() {
+        return mConScore;
     }
 
-    public void setConSave(int conSave) {
-        mConSave = conSave;
+    public void setConScore(int conScore) {
+        mConScore = conScore;
     }
 
-    public int getIntSave() {
-        return mIntSave;
+    public int getIntScore() {
+        return mIntScore;
     }
 
-    public void setIntSave(int intSave) {
-        mIntSave = intSave;
+    public void setIntScore(int intScore) {
+        mIntScore = intScore;
     }
 
-    public int getWisSave() {
-        return mWisSave;
+    public int getWisScore() {
+        return mWisScore;
     }
 
-    public void setWisSave(int wisSave) {
-        mWisSave = wisSave;
+    public void setWisScore(int wisScore) {
+        mWisScore = wisScore;
     }
 
-    public int getChaSave() {
-        return mChaSave;
+    public int getChaScore() {
+        return mChaScore;
     }
 
-    public void setChaSave(int chaSave) {
-        mChaSave = chaSave;
+    public void setChaScore(int chaScore) {
+        mChaScore = chaScore;
     }
 
     public int getHitPoints() {

@@ -47,6 +47,7 @@
     <string name="stat_health_summary_format">%1$d / %2$d</string>
     <string name="stat_health_summary_title">Effective HP</string>
     <string name="skill_button_text_format">%1$s: %2$s%3$d</string>
+    <string name="stat_ability_score_modifier_format">%1$s</string>
 
     <string name="character_info_class_format">Level %1$d %2$s</string>
 

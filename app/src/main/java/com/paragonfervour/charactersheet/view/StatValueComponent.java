@@ -2,6 +2,8 @@ package com.paragonfervour.charactersheet.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -72,8 +74,18 @@ public class StatValueComponent extends LinearLayout {
                 mHapticInterval = attributes.getInt(R.styleable.StatValueComponent_hapticInterval, -1);
                 title = attributes.getString(R.styleable.StatValueComponent_statTitle);
                 int color = attributes.getColor(R.styleable.StatValueComponent_statBackground, 0);
-                if (color != 0) {
-                    controlSection.setBackgroundColor(color);
+                if (color == 0) {
+                    color = getResources().getColor(R.color.blue_500);
+                }
+
+                GradientDrawable bg = (GradientDrawable) controlSection.getBackground();
+                bg.setColor(color);
+
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    //noinspection deprecation
+                    controlSection.setBackgroundDrawable(bg);
+                } else {
+                    controlSection.setBackground(bg);
                 }
 
                 attributes.recycle();
@@ -123,6 +135,7 @@ public class StatValueComponent extends LinearLayout {
         if (mValueTextView != null) {
             mValueTextView.setText(String.valueOf(value));
         }
+        mValuePublisher.onNext(value);
     }
 
     /**

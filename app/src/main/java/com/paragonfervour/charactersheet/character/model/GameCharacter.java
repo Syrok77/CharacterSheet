@@ -26,7 +26,7 @@ public class GameCharacter {
     public static GameCharacter createDefaultCharacter() {
         GameCharacter maldalair = new GameCharacter();
         maldalair.mInfo = CharacterInfo.createDefault();
-        maldalair.mDefenseStats = DefenseStats.createDefault();
+        maldalair.mDefenseStats = DefenseStats.createMaldalair();
         maldalair.mOffenseStats = OffenseStats.createDefault();
         maldalair.mBioInfo = BioInfo.createDefault();
         maldalair.mSkills = new ArrayList<>();
@@ -38,32 +38,16 @@ public class GameCharacter {
         return mInfo;
     }
 
-    public void setInfo(CharacterInfo info) {
-        mInfo = info;
-    }
-
     public DefenseStats getDefenseStats() {
         return mDefenseStats;
-    }
-
-    public void setDefenseStats(DefenseStats defenseStats) {
-        mDefenseStats = defenseStats;
     }
 
     public OffenseStats getOffenseStats() {
         return mOffenseStats;
     }
 
-    public void setOffenseStats(OffenseStats offenseStats) {
-        mOffenseStats = offenseStats;
-    }
-
     public BioInfo getBioInfo() {
         return mBioInfo;
-    }
-
-    public void setBioInfo(BioInfo bioInfo) {
-        mBioInfo = bioInfo;
     }
 
     public List<Skill> getSkills() {
