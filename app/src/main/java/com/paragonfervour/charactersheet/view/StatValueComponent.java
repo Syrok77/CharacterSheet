@@ -6,6 +6,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -75,6 +76,7 @@ public class StatValueComponent extends LinearLayout {
                 title = attributes.getString(R.styleable.StatValueComponent_statTitle);
                 int color = attributes.getColor(R.styleable.StatValueComponent_statBackground, 0);
                 if (color == 0) {
+                    //noinspection deprecation
                     color = getResources().getColor(R.color.blue_500);
                 }
 
@@ -188,9 +190,8 @@ public class StatValueComponent extends LinearLayout {
         setValue(value + by);
 
         // Send haptic feedback
-        //noinspection StatementWithEmptyBody
         if (mHapticInterval > 0 && getValue() % mHapticInterval == 0) {
-            // todo: haptic feedback.
+            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
         }
 
 
