@@ -5,15 +5,18 @@ import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
+import com.paragonfervour.charactersheet.character.model.Skill;
 import com.paragonfervour.charactersheet.stats.helper.StatHelper;
 import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateChaSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateConSubscriber;
@@ -24,7 +27,10 @@ import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateWisSu
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateHPSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateMaxHpSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateTempHPSubscriber;
+import com.paragonfervour.charactersheet.view.SkillValueComponent;
 import com.paragonfervour.charactersheet.view.StatValueComponent;
+
+import java.util.List;
 
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
@@ -90,6 +96,9 @@ public class StatsFragment extends RoboFragment {
 
     @InjectView(R.id.stats_score_cha_mod)
     private TextView mCharismaModifier;
+
+    @InjectView(R.id.stats_skill_section)
+    private ViewGroup mSkillsSection;
 
     // endregion
 
@@ -163,7 +172,29 @@ public class StatsFragment extends RoboFragment {
         mWisdom.setValue(character.getDefenseStats().getWisScore());
         mCharisma.setValue(character.getDefenseStats().getChaScore());
 
+        buildSkillsView(character.getSkills());
+
         updateHealthSummary();
+    }
+
+    private void buildSkillsView(List<Skill> skills) {
+        mSkillsSection.removeAllViews();
+
+        for (Skill skill : skills) {
+            SkillValueComponent skillView = new SkillValueComponent(getContext());
+            skillView.setSkillName(skill.getName());
+            skillView.setSkillModifier(skill.getValue());
+
+            skillView.setComponentColor(getResources().getColor(R.color.blue_200));
+
+            //android:layout_gravity="end"
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.gravity = Gravity.END;
+            skillView.setLayoutParams(params);
+
+            mSkillsSection.addView(skillView);
+        }
     }
 
     /**
@@ -273,7 +304,7 @@ public class StatsFragment extends RoboFragment {
 
         SpannableString spannableString = new SpannableString(healthSummary);
         if (effectiveHp < mMaxHealthComponent.getValue() / 2) {
-            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getActivity().getResources().getColor(R.color.dangerous_red));
+            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.dangerous_red));
             spannableString.setSpan(foregroundColorSpan, 0, healthSummary.indexOf('/'), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 

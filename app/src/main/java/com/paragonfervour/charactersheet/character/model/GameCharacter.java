@@ -1,6 +1,5 @@
 package com.paragonfervour.charactersheet.character.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,8 +28,7 @@ public class GameCharacter {
         maldalair.mDefenseStats = DefenseStats.createMaldalair();
         maldalair.mOffenseStats = OffenseStats.createDefault();
         maldalair.mBioInfo = BioInfo.createDefault();
-        maldalair.mSkills = new ArrayList<>();
-        maldalair.mSkills.add(Skill.createDefault());
+        maldalair.mSkills = Skill.createMaldalairList();
         return maldalair;
     }
 

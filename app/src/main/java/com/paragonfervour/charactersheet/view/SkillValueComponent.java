@@ -3,6 +3,7 @@ package com.paragonfervour.charactersheet.view;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.support.annotation.ColorInt;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -22,7 +23,7 @@ public class SkillValueComponent extends LinearLayout {
     private Button mSkillButton;
 
     private String mSkillName = "";
-    private int mModifier = 2;
+    private int mModifier = 0;
 
     public SkillValueComponent(Context context) {
         super(context);
@@ -57,17 +58,44 @@ public class SkillValueComponent extends LinearLayout {
                     R.styleable.SkillValueComponent);
 
             if (attributes != null) {
-                mSkillName = attributes.getString(R.styleable.SkillValueComponent_skillName);
+                setSkillName(attributes.getString(R.styleable.SkillValueComponent_skillName));
                 int color = attributes.getColor(R.styleable.SkillValueComponent_skillBackground, 0);
-                if (color != 0) {
-                    ViewCompat.setBackgroundTintList(mSkillButton, ColorStateList.valueOf(color));
-                }
-
-                mSkillButton.setText(getButtonText());
+                setComponentColor(color);
 
                 attributes.recycle();
             }
         }
+    }
+
+    /**
+     * Set background color of this component.
+     *
+     * @param color Color for the background.
+     */
+    public void setComponentColor(@ColorInt int color) {
+        if (color != 0) {
+            ViewCompat.setBackgroundTintList(mSkillButton, ColorStateList.valueOf(color));
+        }
+    }
+
+    /**
+     * Set the name of this skill.
+     *
+     * @param name skill name.
+     */
+    public void setSkillName(String name) {
+        mSkillName = name;
+        mSkillButton.setText(getButtonText());
+    }
+
+    /**
+     * Set the skill's modifier value.
+     *
+     * @param modifier new mod value.
+     */
+    public void setSkillModifier(int modifier) {
+        mModifier = modifier;
+        mSkillButton.setText(getButtonText());
     }
 
     /**

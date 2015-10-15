@@ -9,7 +9,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="32dp"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:id="@+id/stats_health_section"
@@ -20,8 +22,8 @@
             android:layout_toEndOf="@+id/stats_ability_score_section"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:padding="8dp"
             android:elevation="4dp"
@@ -257,6 +259,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/stats_skill_section"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -264,34 +267,6 @@
             android:layout_below="@+id/stats_health_section"
             android:layout_marginTop="16dp"
             android:orientation="vertical">
-
-            <com.paragonfervour.charactersheet.view.SkillValueComponent
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                app:skillBackground="@color/tertiary_200"
-                app:skillName="Stealth"/>
-
-            <com.paragonfervour.charactersheet.view.SkillValueComponent
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                app:skillBackground="@color/tertiary_200"
-                app:skillName="Something"/>
-
-            <com.paragonfervour.charactersheet.view.SkillValueComponent
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                app:skillBackground="@color/tertiary_200"
-                app:skillName="Awesome"/>
-
-            <com.paragonfervour.charactersheet.view.SkillValueComponent
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                app:skillBackground="@color/tertiary_200"
-                app:skillName="Spot"/>
 
         </LinearLayout>
 
