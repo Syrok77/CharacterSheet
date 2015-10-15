@@ -39,6 +39,7 @@
     <color name="default_background_gray">#CECECE</color>
     <color name="dangerous_red">#da0000</color>
 
-
+    <color name="page_color">#e2e2e2</color>
+    <color name="page_section_color">#efefef</color>
 
 </resources>

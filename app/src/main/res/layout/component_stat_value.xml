@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/component_stat_title"
         android:background="@drawable/stat_control_bg"
-        android:elevation="2dp"
         android:orientation="horizontal">
 
         <ImageButton

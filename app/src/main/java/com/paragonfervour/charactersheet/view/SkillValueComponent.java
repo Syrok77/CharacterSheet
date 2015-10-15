@@ -60,7 +60,6 @@ public class SkillValueComponent extends LinearLayout {
                 mSkillName = attributes.getString(R.styleable.SkillValueComponent_skillName);
                 int color = attributes.getColor(R.styleable.SkillValueComponent_skillBackground, 0);
                 if (color != 0) {
-//                    mSkillButton.setBackgroundTintList(ColorStateList.valueOf(color));
                     ViewCompat.setBackgroundTintList(mSkillButton, ColorStateList.valueOf(color));
                 }
 

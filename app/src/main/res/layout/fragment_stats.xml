@@ -4,7 +4,7 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/default_white"
+            android:background="@color/page_color"
             android:orientation="vertical">
 
     <RelativeLayout
@@ -12,14 +12,20 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/stats_health_section"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_gravity="end"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@+id/stats_ability_score_section"
+            android:layout_toEndOf="@+id/stats_ability_score_section"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:elevation="4dp"
+            android:background="@drawable/section_bg"
             android:orientation="vertical">
 
 
@@ -90,7 +96,9 @@
             android:paddingEnd="8dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:paddingStart="8dp">
+            android:paddingStart="8dp"
+            android:elevation="4dp"
+            android:background="@drawable/section_bg">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -253,7 +261,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/stats_ability_score_section"
+            android:layout_below="@+id/stats_health_section"
+            android:layout_marginTop="16dp"
             android:orientation="vertical">
 
             <com.paragonfervour.charactersheet.view.SkillValueComponent
