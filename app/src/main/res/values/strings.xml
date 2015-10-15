@@ -50,6 +50,7 @@
     <string name="stat_ability_score_modifier_format">%1$s</string>
 
     <string name="character_info_class_format">Level %1$d %2$s</string>
+    <string name="toolbar_character_format">"%1$s   (%2$s level %3$s)"</string>
 
     <string-array name="classes" >
         <item>Rogue</item>

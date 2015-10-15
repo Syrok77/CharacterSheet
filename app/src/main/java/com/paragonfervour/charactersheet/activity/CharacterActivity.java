@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.helper.CharacterHelper;
 import com.paragonfervour.charactersheet.character.model.CharacterInfo;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.fragment.CharacterPagerFragment;
@@ -176,6 +177,8 @@ public class CharacterActivity extends BaseToolbarActivity {
                         characterName.setText(info.getName());
 
                         mNavigationView.addHeaderView(headerView);
+
+                        mToolbar.setTitle(CharacterHelper.getToolbarTitle(CharacterActivity.this, gameCharacter));
                     }
                 }));
 
