@@ -137,9 +137,10 @@ public class StatsFragment extends RoboFragment {
 
     // endregion
 
+    @SuppressWarnings("unused") // doesn't matter if TAG is unused, it's nice to keep it around.
+    private static final String TAG = StatsFragment.class.getSimpleName();
 
     private CompositeSubscription mCompositeSubscription;
-
 
     @Nullable
     @Override
@@ -205,8 +206,6 @@ public class StatsFragment extends RoboFragment {
         mCharisma.setValue(character.getDefenseStats().getChaScore());
 
         buildSkillsView(character.getSkills());
-
-        updateHealthSummary();
     }
 
     private void buildSkillsView(List<Skill> skills) {
@@ -399,7 +398,6 @@ public class StatsFragment extends RoboFragment {
             final int maxHp = gameCharacter.getDefenseStats().getMaxHp();
 
             updateMaxHp(maxHp + roll);
-            updateHealthSummary();
 
             // Display the change to the user.
             String updateToast = String.format(getString(R.string.stat_max_hp_updated_format), roll);

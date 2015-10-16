@@ -26,7 +26,7 @@ import rx.subjects.PublishSubject;
  */
 public class StatValueComponent extends LinearLayout {
 
-    private static final int DELTA_COUNTER_DELAY = 4000;
+    private static final int DELTA_COUNTER_DELAY = 3000;
 
     // child views
     private TextView mValueTextView;

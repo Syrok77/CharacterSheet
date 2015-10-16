@@ -90,6 +90,15 @@
                 android:textColor="@color/tertiary_500"
                 android:textSize="9dp"/>
 
+            <com.paragonfervour.charactersheet.view.StatValueComponent
+                android:id="@+id/stats_temp_health_stat_component"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="8dp"
+                app:hapticInterval="10"
+                app:statBackground="@color/tertiary_200"
+                app:statTitle="@string/stat_name_tmp_hp"/>
 
             <com.paragonfervour.charactersheet.view.StatValueComponent
                 android:id="@+id/stats_health_stat_component"
@@ -109,16 +118,6 @@
                 app:hapticInterval="10"
                 app:statBackground="@color/tertiary_200"
                 app:statTitle="@string/stat_name_max_hp"/>
-
-            <com.paragonfervour.charactersheet.view.StatValueComponent
-                android:id="@+id/stats_temp_health_stat_component"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="8dp"
-                app:hapticInterval="10"
-                app:statBackground="@color/tertiary_200"
-                app:statTitle="@string/stat_name_tmp_hp"/>
 
             <TextView
                 android:layout_width="wrap_content"
