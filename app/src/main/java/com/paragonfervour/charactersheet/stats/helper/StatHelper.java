@@ -33,7 +33,9 @@ public class StatHelper {
      * @return modifier value.
      */
     public static int getScoreModifier(int score) {
-        return (score - 10) / 2;
+        double mod = ((double) score - 10d) / 2d;
+        // Always round this value down. Integer division rounds towards zero, not down.
+        return (int)Math.floor(mod);
     }
 
     /**

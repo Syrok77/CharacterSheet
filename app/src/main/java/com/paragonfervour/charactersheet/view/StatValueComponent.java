@@ -77,7 +77,7 @@ public class StatValueComponent extends LinearLayout {
                 int color = attributes.getColor(R.styleable.StatValueComponent_statBackground, 0);
                 if (color == 0) {
                     //noinspection deprecation
-                    color = getResources().getColor(R.color.blue_700);
+                    color = getResources().getColor(R.color.brand_secondary);
                 }
 
                 GradientDrawable bg = (GradientDrawable) controlSection.getBackground();

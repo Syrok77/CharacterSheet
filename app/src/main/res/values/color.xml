@@ -12,7 +12,7 @@
     <color name="secondary_200">#FFA763</color>
 
     <!-- Tertiary color palette -->
-    <color name="tertiary_500">#022A78</color>
+    <color name="tertiary_500">#0945BC</color>
     <color name="tertiary_700">#001F5C</color>
     <color name="tertiary_200">#6D9AF3</color>
 
@@ -37,6 +37,7 @@
     <color name="status_bar">#25000000</color>
     <color name="default_white">#FDFDFD</color>
     <color name="default_background_gray">#CECECE</color>
+    <color name="button_gray">#878787</color>
     <color name="dangerous_red">#da0000</color>
 
     <color name="page_color">#e2e2e2</color>

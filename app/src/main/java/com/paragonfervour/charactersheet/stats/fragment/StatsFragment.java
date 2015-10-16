@@ -185,7 +185,7 @@ public class StatsFragment extends RoboFragment {
             skillView.setSkillName(skill.getName());
             skillView.setSkillModifier(skill.getValue());
 
-            skillView.setComponentColor(getResources().getColor(R.color.blue_200));
+            skillView.setComponentColor(getResources().getColor(R.color.tertiary_500));
 
             //android:layout_gravity="end"
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
