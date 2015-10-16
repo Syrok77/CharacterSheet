@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,6 @@ import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateConSu
 import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateDexSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateIntSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateStrSubscriber;
-import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateWisSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateHPSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateMaxHpSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateTempHPSubscriber;
@@ -48,7 +48,7 @@ import rx.subscriptions.CompositeSubscription;
  * Fragment containing a view that shows the user's stats. Stats include HP, character scores, skills,
  * etc.
  * <p/>
- * TODO: Add skills, passive perception
+ * TODO: Add skills, proficiency bonus
  * TODO: death rolls, change dice
  */
 public class StatsFragment extends RoboFragment {
@@ -123,6 +123,9 @@ public class StatsFragment extends RoboFragment {
 
     @InjectView(R.id.stats_skill_section)
     private ViewGroup mSkillsSection;
+
+    @InjectView(R.id.stats_skill_passive_wis)
+    private TextView mPassiveWisdom;
 
     // endregion
 
@@ -288,6 +291,7 @@ public class StatsFragment extends RoboFragment {
         mWisdom.getValueObservable().subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer wisdom) {
+                Log.d(TAG, "Updating wisdom: " + wisdom);
                 mCharacterDAO.getActiveCharacter().subscribe(new UpdateWisSubscriber(wisdom));
 
                 String wisMod = String.format(modFormat, StatHelper.getScoreModifierString(wisdom));
@@ -362,6 +366,19 @@ public class StatsFragment extends RoboFragment {
     }
 
     /**
+     * Update the passive wisdom value for the character. TODO: Do this when perception skill is changed.
+     *
+     * @param gameCharacter active game character.
+     */
+    private void updatePassiveWisdom(GameCharacter gameCharacter) {
+        String passiveWisdom = StatHelper.makePassiveWisdomText(getActivity(),
+                gameCharacter.getSkills(),
+                gameCharacter.getDefenseStats().getWisScore());
+        Log.d(TAG, "Update passive wisdom: " + passiveWisdom);
+        mPassiveWisdom.setText(passiveWisdom);
+    }
+
+    /**
      * Update the max health component to the given value.
      *
      * @param maxHealth new max health to put into component.
@@ -414,6 +431,34 @@ public class StatsFragment extends RoboFragment {
                     }
                 }).show();
             }
+
+            unsubscribe();
+        }
+    }
+
+    public class UpdateWisSubscriber extends Subscriber<GameCharacter> {
+
+        private int mWis;
+
+        public UpdateWisSubscriber(int wis) {
+            mWis = wis;
+        }
+
+        @Override
+        public void onCompleted() {
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onNext(GameCharacter gameCharacter) {
+            Log.d(TAG, "Update wisdom");
+            gameCharacter.getDefenseStats().setWisScore(mWis);
+            updatePassiveWisdom(gameCharacter);
 
             unsubscribe();
         }

@@ -193,11 +193,6 @@ public class StatValueComponent extends LinearLayout {
         if (mHapticInterval > 0 && getValue() % mHapticInterval == 0) {
             performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
         }
-
-
-        if (by != 0) {
-            mValuePublisher.onNext(getValue());
-        }
     }
 
     public void setTitle(String title) {

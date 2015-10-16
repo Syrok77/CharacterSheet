@@ -33,7 +33,7 @@ public class Skill {
         skills.add(createDefault());
 
         Skill perception = new Skill();
-        perception.setName("Perception");
+        perception.setName("Acrobatics");
         perception.setValue(2);
         skills.add(perception);
 

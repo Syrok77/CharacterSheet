@@ -63,6 +63,10 @@
 
     <string name="undo">Undo</string>
 
+    <string name="skill_name_perception">Perception</string>
+    <string name="skill_name_wisdom">Wisdom</string>
+    <string name="stat_skill_passive_wisdom_format">Passive %1$s: %2$s%3$d</string>
+
     <string-array name="classes" >
         <item>Rogue</item>
     </string-array>

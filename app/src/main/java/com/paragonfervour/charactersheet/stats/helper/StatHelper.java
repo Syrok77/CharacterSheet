@@ -4,6 +4,9 @@ package com.paragonfervour.charactersheet.stats.helper;
 import android.content.Context;
 
 import com.paragonfervour.charactersheet.R;
+import com.paragonfervour.charactersheet.character.model.Skill;
+
+import java.util.List;
 
 public final class StatHelper {
 
@@ -73,5 +76,37 @@ public final class StatHelper {
      */
     public static String makeInitiativeText(Context context, int dexterity) {
         return String.format(context.getString(R.string.stats_initiative_format), getScoreModifierString(dexterity));
+    }
+
+    /**
+     * Create formatted text that displays the character's passive wisdom attribute, which is
+     * WIS + perception skill. TODO: Does this also include the character's proficiency bonus?
+     *
+     * @param context Android context.
+     * @param skills  Character's skill list.
+     * @param wisdom  Character's WIS score.
+     * @return Formatted display string for user's passive Wisdom.
+     */
+    public static String makePassiveWisdomText(Context context, List<Skill> skills, int wisdom) {
+        Skill perception = null;
+        String skillName;
+
+        String perceptionName = context.getString(R.string.skill_name_perception);
+        for (Skill skill : skills) {
+            if (skill.getName().equalsIgnoreCase(perceptionName)) {
+                perception = skill;
+            }
+        }
+
+        int passiveWisdom = getScoreModifier(wisdom);
+        if (perception != null) {
+            passiveWisdom += perception.getValue();
+            skillName = perceptionName;
+        } else {
+            skillName = context.getString(R.string.skill_name_wisdom);
+        }
+
+        String format = context.getString(R.string.stat_skill_passive_wisdom_format);
+        return String.format(format, skillName, getStatIndicator(passiveWisdom), Math.abs(passiveWisdom));
     }
 }
