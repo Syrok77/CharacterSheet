@@ -1,6 +1,8 @@
 package com.paragonfervour.charactersheet.character.model;
 
 
+import java.util.Random;
+
 public enum Dice {
     D4(4),
     D6(6),
@@ -24,5 +26,15 @@ public enum Dice {
      */
     public String toString() {
         return "D" + getValue();
+    }
+
+    /**
+     * Roll the dice!
+     *
+     * @return random value [1, value].
+     */
+    public int roll() {
+        Random roller = new Random(System.currentTimeMillis());
+        return roller.nextInt(mValue) + 1;
     }
 }

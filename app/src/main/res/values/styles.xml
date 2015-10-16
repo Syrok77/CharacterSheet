@@ -11,8 +11,8 @@
         <item name="colorPrimaryDark">@color/status_bar</item>
         <item name="colorAccent">@color/secondary_500</item>
 
-        <item name="android:textColorPrimary">@color/primary_text_default_material_light</item>
-        <item name="android:textColor">@color/primary_text_default_material_light</item>
+        <item name="android:textColorPrimary">@color/primary_text_default_light</item>
+        <item name="android:textColor">@color/primary_text_default_light</item>
         <item name="colorControlHighlight">@color/default_background_gray</item> <!-- Highlight color for pressed states -->
     </style>
 

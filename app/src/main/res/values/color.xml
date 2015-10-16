@@ -34,6 +34,7 @@
     <color name="brown_200">#BCAAA4</color>
 
     <!-- Other colors -->
+    <color name="primary_text_default_light">#de000000</color>
     <color name="status_bar">#25000000</color>
     <color name="default_white">#FDFDFD</color>
     <color name="default_background_gray">#CECECE</color>

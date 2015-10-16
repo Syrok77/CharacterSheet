@@ -2,6 +2,7 @@ package com.paragonfervour.charactersheet.stats.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.model.Dice;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Skill;
 import com.paragonfervour.charactersheet.stats.helper.StatHelper;
@@ -38,15 +40,16 @@ import java.util.List;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 import rx.Observer;
+import rx.Subscriber;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
 /**
  * Fragment containing a view that shows the user's stats. Stats include HP, character scores, skills,
  * etc.
- *
+ * <p/>
  * TODO: Add skills, passive perception
- * TODO: death rolls, hit dice
+ * TODO: death rolls, change dice
  */
 public class StatsFragment extends RoboFragment {
 
@@ -75,6 +78,12 @@ public class StatsFragment extends RoboFragment {
 
     @InjectView(R.id.stats_health_summary_value)
     private TextView mHealthSummary;
+
+    @InjectView(R.id.stats_health_dice_indicator)
+    private TextView mDiceIndicator;
+
+    @InjectView(R.id.stats_health_dice_roll)
+    private TextView mHitDiceRollButton;
 
     @InjectView(R.id.stats_score_str_control)
     private StatValueComponent mStrength;
@@ -122,7 +131,9 @@ public class StatsFragment extends RoboFragment {
     public static StatsFragment newInstance() {
         return new StatsFragment();
     }
-    public StatsFragment() {}
+
+    public StatsFragment() {
+    }
 
     // endregion
 
@@ -182,8 +193,9 @@ public class StatsFragment extends RoboFragment {
         updateInitiative(character.getDefenseStats().getDexScore());
 
         mHealthComponent.setValue(character.getDefenseStats().getHitPoints());
-        mMaxHealthComponent.setValue(character.getDefenseStats().getMaxHp());
         mTempHpComponent.setValue(character.getDefenseStats().getTempHp());
+        mDiceIndicator.setText(String.format(getString(R.string.dice_text_indicator), character.getDefenseStats().getHitDice().getValue()));
+        updateMaxHp(character.getDefenseStats().getMaxHp());
 
         mStrength.setValue(character.getDefenseStats().getStrScore());
         mConstitution.setValue(character.getDefenseStats().getConScore());
@@ -323,6 +335,13 @@ public class StatsFragment extends RoboFragment {
                 updateHealthSummary();
             }
         });
+
+        mHitDiceRollButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCharacterDAO.getActiveCharacter().subscribe(new RollHitDiceSubscriber());
+            }
+        });
     }
 
     /**
@@ -343,7 +362,65 @@ public class StatsFragment extends RoboFragment {
         mHealthSummary.setText(spannableString);
     }
 
+    /**
+     * Update the max health component to the given value.
+     *
+     * @param maxHealth new max health to put into component.
+     */
+    private void updateMaxHp(int maxHealth) {
+        mMaxHealthComponent.setValue(maxHealth);
+    }
+
+    /**
+     * Update initiative view with the given dexterity value.
+     *
+     * @param dexterity character dexterity.
+     */
     private void updateInitiative(int dexterity) {
         mInitiative.setText(StatHelper.makeInitiativeText(getActivity(), dexterity));
     }
+
+    // region observers ----------------------------------------------------------------------------
+
+    private class RollHitDiceSubscriber extends Subscriber<GameCharacter> {
+
+        @Override
+        public void onCompleted() {
+        }
+
+        @Override
+        public void onError(Throwable e) {
+        }
+
+        @Override
+        public void onNext(GameCharacter gameCharacter) {
+            Dice hitDice = gameCharacter.getDefenseStats().getHitDice();
+            final int roll = hitDice.roll();
+            final int maxHp = gameCharacter.getDefenseStats().getMaxHp();
+
+            updateMaxHp(maxHp + roll);
+            updateHealthSummary();
+
+            // Display the change to the user.
+            String updateToast = String.format(getString(R.string.stat_max_hp_updated_format), roll);
+            if (getView() != null) {
+                Snackbar snackbar = Snackbar.make(getView(), updateToast, Snackbar.LENGTH_LONG);
+                TextView tv = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+                // noinspection deprecation
+                tv.setTextColor(getResources().getColor(R.color.default_white));
+                snackbar.setAction(R.string.undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        updateMaxHp(maxHp);
+                        updateHealthSummary();
+                    }
+                }).show();
+            }
+
+            unsubscribe();
+        }
+    }
+
+    // endregion
+
 }
