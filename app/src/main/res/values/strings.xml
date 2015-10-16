@@ -46,6 +46,10 @@
     <string name="stat_name_tmp_hp">Temp HP</string>
     <string name="stat_health_summary_format">%1$d / %2$d</string>
     <string name="stat_health_summary_title">Effective HP</string>
+    <string name="stat_health_hit_dice_title">Hit Dice</string>
+    <string name="stat_health_hit_dice_roll">Roll</string>
+    <string name="stat_max_hp_updated_format">Your health has increased by %1$d!</string>
+    <string name="dice_text_indicator">[%1$d]</string>
     <string name="skill_button_text_format">%1$s: %2$s%3$d</string>
     <string name="stat_ability_score_modifier_format">%1$s</string>
     <string name="stats_speed_format">Speed: %1$d ft.</string>
@@ -54,6 +58,10 @@
 
     <string name="character_info_class_format">Level %1$d %2$s</string>
     <string name="toolbar_character_format">"%1$s   (%2$s level %3$s)"</string>
+    <string name="stat_title_health">Health</string>
+    <string name="stat_title_ability_scores">Ability Scores</string>
+
+    <string name="undo">Undo</string>
 
     <string-array name="classes" >
         <item>Rogue</item>
