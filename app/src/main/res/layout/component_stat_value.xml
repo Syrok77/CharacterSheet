@@ -27,7 +27,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/component_stat_increase_button"
+            android:id="@+id/component_stat_decrease_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -36,7 +36,7 @@
             android:paddingRight="6dp"
             android:paddingEnd="6dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_add_white_24dp"/>
+            android:src="@drawable/ic_remove_white_24dp"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
         </RelativeLayout>
 
         <ImageButton
-            android:id="@+id/component_stat_decrease_button"
+            android:id="@+id/component_stat_increase_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -73,7 +73,7 @@
             android:paddingRight="6dp"
             android:paddingEnd="6dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_remove_white_24dp"/>
+            android:src="@drawable/ic_add_white_24dp"/>
 
     </LinearLayout>
 

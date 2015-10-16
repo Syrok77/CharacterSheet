@@ -48,6 +48,9 @@
     <string name="stat_health_summary_title">Effective HP</string>
     <string name="skill_button_text_format">%1$s: %2$s%3$d</string>
     <string name="stat_ability_score_modifier_format">%1$s</string>
+    <string name="stats_speed_format">Speed: %1$d ft.</string>
+    <string name="stats_initiative_format">Initiative: %1$s</string>
+    <string name="stats_inspired">Inspiration</string>
 
     <string name="character_info_class_format">Level %1$d %2$s</string>
     <string name="toolbar_character_format">"%1$s   (%2$s level %3$s)"</string>

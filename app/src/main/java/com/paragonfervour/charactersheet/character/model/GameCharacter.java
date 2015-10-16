@@ -21,6 +21,9 @@ public class GameCharacter {
     // Skill list
     private List<Skill> mSkills;
 
+    private boolean isInspired;
+    private int mSpeed;
+
     // Temp - create a default character
     public static GameCharacter createDefaultCharacter() {
         GameCharacter maldalair = new GameCharacter();
@@ -29,6 +32,8 @@ public class GameCharacter {
         maldalair.mOffenseStats = OffenseStats.createDefault();
         maldalair.mBioInfo = BioInfo.createDefault();
         maldalair.mSkills = Skill.createMaldalairList();
+        maldalair.isInspired = false;
+        maldalair.mSpeed = 30;
         return maldalair;
     }
 
@@ -54,5 +59,21 @@ public class GameCharacter {
 
     public void setSkills(List<Skill> skills) {
         mSkills = skills;
+    }
+
+    public boolean isInspired() {
+        return isInspired;
+    }
+
+    public void setIsInspired(boolean isInspired) {
+        this.isInspired = isInspired;
+    }
+
+    public int getSpeed() {
+        return mSpeed;
+    }
+
+    public void setSpeed(int speed) {
+        mSpeed = speed;
     }
 }

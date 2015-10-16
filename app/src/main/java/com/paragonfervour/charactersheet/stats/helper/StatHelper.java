@@ -1,7 +1,11 @@
 package com.paragonfervour.charactersheet.stats.helper;
 
 
-public class StatHelper {
+import android.content.Context;
+
+import com.paragonfervour.charactersheet.R;
+
+public final class StatHelper {
 
     private StatHelper() {
     }
@@ -35,7 +39,7 @@ public class StatHelper {
     public static int getScoreModifier(int score) {
         double mod = ((double) score - 10d) / 2d;
         // Always round this value down. Integer division rounds towards zero, not down.
-        return (int)Math.floor(mod);
+        return (int) Math.floor(mod);
     }
 
     /**
@@ -49,4 +53,25 @@ public class StatHelper {
         return getStatIndicator(scoreMod) + Math.abs(scoreMod);
     }
 
+    /**
+     * Create formatted text that displays the character's speed value.
+     *
+     * @param context Android context.
+     * @param speed   Character speed.
+     * @return Formatted display string for speed.
+     */
+    public static String makeSpeedText(Context context, int speed) {
+        return String.format(context.getString(R.string.stats_speed_format), speed);
+    }
+
+    /**
+     * Create formatted text that displays the character's initiative value.
+     *
+     * @param context   Android context.
+     * @param dexterity Character's dexterity, which determines a character's initiative.
+     * @return Formatted display string for initiative.
+     */
+    public static String makeInitiativeText(Context context, int dexterity) {
+        return String.format(context.getString(R.string.stats_initiative_format), getScoreModifierString(dexterity));
+    }
 }

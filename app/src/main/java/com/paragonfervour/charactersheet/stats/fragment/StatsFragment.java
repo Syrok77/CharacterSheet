@@ -9,6 +9,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,6 +20,7 @@ import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Skill;
 import com.paragonfervour.charactersheet.stats.helper.StatHelper;
+import com.paragonfervour.charactersheet.stats.observer.UpdateInspirationSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateChaSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateConSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateDexSubscriber;
@@ -41,6 +44,9 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Fragment containing a view that shows the user's stats. Stats include HP, character scores, skills,
  * etc.
+ *
+ * TODO: Add skills, passive perception
+ * TODO: death rolls, hit dice
  */
 public class StatsFragment extends RoboFragment {
 
@@ -48,6 +54,15 @@ public class StatsFragment extends RoboFragment {
     private CharacterDAO mCharacterDAO;
 
     // region injected views -----------------------------------------------------------------------
+
+    @InjectView(R.id.stats_speed)
+    private TextView mSpeed;
+
+    @InjectView(R.id.stats_inspriation)
+    private CheckBox mInspiration;
+
+    @InjectView(R.id.stats_initiative)
+    private TextView mInitiative;
 
     @InjectView(R.id.stats_health_stat_component)
     private StatValueComponent mHealthComponent;
@@ -128,6 +143,7 @@ public class StatsFragment extends RoboFragment {
 
         bindHealthValues();
         bindAbilityScores();
+        bindAttributes();
 
         mCharacterDAO.getActiveCharacter()
                 .subscribe(new Observer<GameCharacter>() {
@@ -161,6 +177,10 @@ public class StatsFragment extends RoboFragment {
      * @param character game character whose stats we are going to show on screen.
      */
     private void initializeView(GameCharacter character) {
+        mSpeed.setText(StatHelper.makeSpeedText(getActivity(), character.getSpeed()));
+        mInspiration.setChecked(character.isInspired());
+        updateInitiative(character.getDefenseStats().getDexScore());
+
         mHealthComponent.setValue(character.getDefenseStats().getHitPoints());
         mMaxHealthComponent.setValue(character.getDefenseStats().getMaxHp());
         mTempHpComponent.setValue(character.getDefenseStats().getTempHp());
@@ -185,6 +205,7 @@ public class StatsFragment extends RoboFragment {
             skillView.setSkillName(skill.getName());
             skillView.setSkillModifier(skill.getValue());
 
+            //noinspection deprecation
             skillView.setComponentColor(getResources().getColor(R.color.tertiary_500));
 
             //android:layout_gravity="end"
@@ -195,6 +216,15 @@ public class StatsFragment extends RoboFragment {
 
             mSkillsSection.addView(skillView);
         }
+    }
+
+    private void bindAttributes() {
+        mInspiration.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mCharacterDAO.getActiveCharacter().subscribe(new UpdateInspirationSubscriber(isChecked));
+            }
+        });
     }
 
     /**
@@ -230,6 +260,7 @@ public class StatsFragment extends RoboFragment {
 
                 String dexMod = String.format(modFormat, StatHelper.getScoreModifierString(dexterity));
                 mDexterityModifier.setText(dexMod);
+                updateInitiative(dexterity);
             }
         });
 
@@ -304,6 +335,7 @@ public class StatsFragment extends RoboFragment {
 
         SpannableString spannableString = new SpannableString(healthSummary);
         if (effectiveHp < mMaxHealthComponent.getValue() / 2) {
+            //noinspection deprecation
             ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.dangerous_red));
             spannableString.setSpan(foregroundColorSpan, 0, healthSummary.indexOf('/'), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
@@ -311,4 +343,7 @@ public class StatsFragment extends RoboFragment {
         mHealthSummary.setText(spannableString);
     }
 
+    private void updateInitiative(int dexterity) {
+        mInitiative.setText(StatHelper.makeInitiativeText(getActivity(), dexterity));
+    }
 }
