@@ -6,7 +6,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="6dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
     android:elevation="@dimen/button_elevation"
     android:textColor="@color/default_white"
     tools:ignore="UnusedAttribute"/>

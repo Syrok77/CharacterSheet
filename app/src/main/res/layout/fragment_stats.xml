@@ -382,8 +382,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/stats_health_section"
-            android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="16dp"
             android:textSize="16sp"
             tools:text="Passive Wisdom: +3"/>
@@ -399,6 +399,21 @@
             android:orientation="vertical">
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/stats_add_skill_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/stats_skill_section"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/default_white"
+            android:elevation="@dimen/button_elevation"
+            android:backgroundTint="@color/tertiary_700"
+            android:text="@string/skill_add_new"/>
 
     </RelativeLayout>
 

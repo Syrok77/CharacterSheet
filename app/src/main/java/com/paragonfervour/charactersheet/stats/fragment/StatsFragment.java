@@ -11,10 +11,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
@@ -127,6 +129,9 @@ public class StatsFragment extends RoboFragment {
     @InjectView(R.id.stats_skill_passive_wis)
     private TextView mPassiveWisdom;
 
+    @InjectView(R.id.stats_add_skill_button)
+    private Button mAddSkillButton;
+
     // endregion
 
     // region constructors -------------------------------------------------------------------------
@@ -209,6 +214,12 @@ public class StatsFragment extends RoboFragment {
         mCharisma.setValue(character.getDefenseStats().getChaScore());
 
         buildSkillsView(character.getSkills());
+        mAddSkillButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Add a new SKILL", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void buildSkillsView(List<Skill> skills) {
