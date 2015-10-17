@@ -95,7 +95,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginTop="8dp"
                 app:hapticInterval="10"
                 app:statBackground="@color/tertiary_200"
                 app:statTitle="@string/stat_name_tmp_hp"/>
@@ -105,6 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:layout_marginTop="8dp"
                 app:hapticInterval="10"
                 app:statBackground="@color/tertiary_200"
                 app:statTitle="@string/stat_name_hp"/>
@@ -396,6 +396,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/stats_skill_passive_wis"
             android:layout_marginTop="8dp"
+            android:animateLayoutChanges="true"
             android:orientation="vertical">
 
         </LinearLayout>
@@ -410,10 +411,10 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="4dp"
-            android:textColor="@color/default_white"
-            android:elevation="@dimen/button_elevation"
             android:backgroundTint="@color/tertiary_700"
-            android:text="@string/skill_add_new"/>
+            android:elevation="@dimen/button_elevation"
+            android:text="@string/skill_add_new"
+            android:textColor="@color/default_white"/>
 
     </RelativeLayout>
 

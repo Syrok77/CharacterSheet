@@ -48,7 +48,7 @@
     <string name="stat_health_summary_title">Effective HP</string>
     <string name="stat_health_hit_dice_title">Hit Dice</string>
     <string name="stat_health_hit_dice_roll">Roll</string>
-    <string name="stat_max_hp_updated_format">Your health has increased by %1$d!</string>
+    <string name="stat_max_hp_updated_format">Your max health has increased by %1$d!</string>
     <string name="dice_text_indicator">[%1$d]</string>
     <string name="skill_button_text_format">%1$s: %2$s%3$d</string>
     <string name="stat_ability_score_modifier_format">%1$s</string>
@@ -67,6 +67,10 @@
     <string name="skill_name_wisdom">Wisdom</string>
     <string name="skill_add_new">New Skill</string>
     <string name="stat_skill_passive_wisdom_format">Passive %1$s: %2$s%3$d</string>
+    <string name="skill_new_accept">Add Skill</string>
+    <string name="skill_new_cancel">Cancel</string>
+    <string name="skill_hint_name">Name</string>
+    <string name="skill_hint_value">Value</string>
 
     <string-array name="classes" >
         <item>Rogue</item>

@@ -3,6 +3,7 @@ package com.paragonfervour.charactersheet.stats.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -16,7 +17,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
@@ -34,6 +34,7 @@ import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateStrSu
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateHPSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateMaxHpSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateTempHPSubscriber;
+import com.paragonfervour.charactersheet.stats.widget.SkillDialogFactory;
 import com.paragonfervour.charactersheet.view.SkillValueComponent;
 import com.paragonfervour.charactersheet.view.StatValueComponent;
 
@@ -50,13 +51,16 @@ import rx.subscriptions.CompositeSubscription;
  * Fragment containing a view that shows the user's stats. Stats include HP, character scores, skills,
  * etc.
  * <p/>
- * TODO: Add skills, proficiency bonus
+ * TODO: proficiency bonus
  * TODO: death rolls, change dice
  */
 public class StatsFragment extends RoboFragment {
 
     @Inject
     private CharacterDAO mCharacterDAO;
+
+    @Inject
+    private SkillDialogFactory mSkillDialogFactory;
 
     // region injected views -----------------------------------------------------------------------
 
@@ -149,6 +153,7 @@ public class StatsFragment extends RoboFragment {
     private static final String TAG = StatsFragment.class.getSimpleName();
 
     private CompositeSubscription mCompositeSubscription;
+    private AlertDialog mActiveAlert;
 
     @Nullable
     @Override
@@ -189,6 +194,13 @@ public class StatsFragment extends RoboFragment {
         super.onDestroyView();
         mCompositeSubscription.unsubscribe();
         mCompositeSubscription = null;
+
+        if (mActiveAlert != null) {
+            if (mActiveAlert.isShowing()) {
+                mActiveAlert.dismiss();
+            }
+            mActiveAlert = null;
+        }
     }
 
     /**
@@ -217,29 +229,44 @@ public class StatsFragment extends RoboFragment {
         mAddSkillButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Add a new SKILL", Toast.LENGTH_SHORT).show();
+                mActiveAlert = mSkillDialogFactory.createSkillDialog(new SkillDialogFactory.SkillCreatedListener() {
+                    @Override
+                    public void onSkillCreated(Skill skill) {
+                        addSkillView(skill);
+                    }
+                });
+                mActiveAlert.show();
             }
         });
+    }
+
+    /**
+     * Add a skill to the UI.
+     *
+     * @param skill Skill to add a view for.
+     */
+    private void addSkillView(Skill skill) {
+        SkillValueComponent skillView = new SkillValueComponent(getContext());
+        skillView.setSkillName(skill.getName());
+        skillView.setSkillModifier(skill.getValue());
+
+        //noinspection deprecation
+        skillView.setComponentColor(getResources().getColor(R.color.tertiary_500));
+
+        //android:layout_gravity="end"
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.END;
+        skillView.setLayoutParams(params);
+
+        mSkillsSection.addView(skillView);
     }
 
     private void buildSkillsView(List<Skill> skills) {
         mSkillsSection.removeAllViews();
 
         for (Skill skill : skills) {
-            SkillValueComponent skillView = new SkillValueComponent(getContext());
-            skillView.setSkillName(skill.getName());
-            skillView.setSkillModifier(skill.getValue());
-
-            //noinspection deprecation
-            skillView.setComponentColor(getResources().getColor(R.color.tertiary_500));
-
-            //android:layout_gravity="end"
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.gravity = Gravity.END;
-            skillView.setLayoutParams(params);
-
-            mSkillsSection.addView(skillView);
+            addSkillView(skill);
         }
     }
 
