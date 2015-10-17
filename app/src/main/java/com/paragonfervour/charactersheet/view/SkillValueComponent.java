@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.stats.helper.StatHelper;
@@ -21,6 +20,7 @@ import com.paragonfervour.charactersheet.stats.helper.StatHelper;
 public class SkillValueComponent extends LinearLayout {
 
     private Button mSkillButton;
+    private OnClickListener mClickListener;
 
     private String mSkillName = "";
     private int mModifier = 0;
@@ -48,7 +48,7 @@ public class SkillValueComponent extends LinearLayout {
         mSkillButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Not yet implemented.", Toast.LENGTH_SHORT).show();
+                mClickListener.onClick(v);
             }
         });
 
@@ -88,6 +88,10 @@ public class SkillValueComponent extends LinearLayout {
         mSkillButton.setText(getButtonText());
     }
 
+    public String getSkillName() {
+        return mSkillName;
+    }
+
     /**
      * Set the skill's modifier value.
      *
@@ -96,6 +100,15 @@ public class SkillValueComponent extends LinearLayout {
     public void setSkillModifier(int modifier) {
         mModifier = modifier;
         mSkillButton.setText(getButtonText());
+    }
+
+    /**
+     * Receive click events for this component.
+     *
+     * @param onClickListener click listener for this component.
+     */
+    public void setSkillClickListener(OnClickListener onClickListener) {
+        mClickListener = onClickListener;
     }
 
     /**

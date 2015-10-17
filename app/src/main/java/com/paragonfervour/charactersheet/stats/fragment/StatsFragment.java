@@ -24,6 +24,7 @@ import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.model.Dice;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Skill;
+import com.paragonfervour.charactersheet.helper.SnackbarHelper;
 import com.paragonfervour.charactersheet.stats.helper.StatHelper;
 import com.paragonfervour.charactersheet.stats.observer.UpdateInspirationSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateChaSubscriber;
@@ -38,6 +39,7 @@ import com.paragonfervour.charactersheet.stats.widget.SkillDialogFactory;
 import com.paragonfervour.charactersheet.view.SkillValueComponent;
 import com.paragonfervour.charactersheet.view.StatValueComponent;
 
+import java.util.Iterator;
 import java.util.List;
 
 import roboguice.fragment.RoboFragment;
@@ -154,6 +156,7 @@ public class StatsFragment extends RoboFragment {
 
     private CompositeSubscription mCompositeSubscription;
     private AlertDialog mActiveAlert;
+    private AddUpdateSkillListener mSkillListener = new AddUpdateSkillListener();
 
     @Nullable
     @Override
@@ -229,15 +232,110 @@ public class StatsFragment extends RoboFragment {
         mAddSkillButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mActiveAlert = mSkillDialogFactory.createSkillDialog(new SkillDialogFactory.SkillCreatedListener() {
-                    @Override
-                    public void onSkillCreated(Skill skill) {
-                        addSkillView(skill);
-                    }
-                });
+                mActiveAlert = mSkillDialogFactory.createSkillDialog(mSkillListener);
                 mActiveAlert.show();
             }
         });
+    }
+
+    /**
+     * Remove a skill from UI and game character
+     *
+     * @param skill         skill to remove from ui and character.
+     * @param gameCharacter game character from which to remove the skill.
+     */
+    private void removeSkill(Skill skill, final GameCharacter gameCharacter) {
+        Iterator<Skill> iterator = gameCharacter.getSkills().iterator();
+        while (iterator.hasNext()) {
+            Skill existing = iterator.next();
+            if (existing.getName().equalsIgnoreCase(skill.getName())) {
+                iterator.remove();
+                if (getView() != null) {
+                    // Undo action would use this copy. Just in case.
+                    final Skill existingCopy = new Skill();
+                    existingCopy.setName(existing.getName());
+                    existingCopy.setValue(existing.getValue());
+
+                    SnackbarHelper.showSnackbar(getActivity(), Snackbar.make(getView(), R.string.toast_skill_removed, Snackbar.LENGTH_LONG)
+                            .setAction(R.string.undo, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    addSkill(existingCopy, gameCharacter);
+                                }
+                            }));
+                }
+            }
+        }
+
+        // Find the associated view to delete
+        for (int i = 0; i < mSkillsSection.getChildCount(); ++i) {
+            if (mSkillsSection.getChildAt(i) instanceof SkillValueComponent) {
+                SkillValueComponent skillComponent = (SkillValueComponent) mSkillsSection.getChildAt(i);
+                if (skillComponent.getSkillName().equalsIgnoreCase(skill.getName())) {
+                    mSkillsSection.removeView(skillComponent);
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Update the skill in the GameCharacter and in the UI.
+     *
+     * @param skill         New skill values.
+     * @param gameCharacter Game character to update.
+     */
+    private void updateSkill(Skill skill, GameCharacter gameCharacter) {
+        Iterator<Skill> iterator = gameCharacter.getSkills().iterator();
+        int index = -1;
+        while (iterator.hasNext()) {
+            Skill existing = iterator.next();
+            index++;
+
+            // Replace existing skill with passed in skill.
+            if (existing.getName().equalsIgnoreCase(skill.getName())) {
+                iterator.remove();
+                if (getView() != null) {
+                    String snackbarText = String.format(getString(R.string.toast_skill_updated), skill.getName());
+                    SnackbarHelper.showSnackbar(getActivity(), Snackbar.make(getView(), snackbarText, Snackbar.LENGTH_LONG));
+                }
+            }
+        }
+
+        if (index >= 0 && index < gameCharacter.getSkills().size()) {
+            gameCharacter.getSkills().add(index, skill);
+        } else {
+            gameCharacter.getSkills().add(skill);
+        }
+
+        // Find the associated view to update
+        for (int i = 0; i < mSkillsSection.getChildCount(); ++i) {
+            if (mSkillsSection.getChildAt(i) instanceof SkillValueComponent) {
+                SkillValueComponent skillComponent = (SkillValueComponent) mSkillsSection.getChildAt(i);
+                if (skillComponent.getSkillName().equalsIgnoreCase(skill.getName())) {
+                    skillComponent.setSkillModifier(skill.getValue());
+                }
+            }
+        }
+    }
+
+    /**
+     * Add a skill to the game character and the UI.
+     *
+     * @param skill         skill to add.
+     * @param gameCharacter character to add skill to.
+     */
+    private void addSkill(Skill skill, GameCharacter gameCharacter) {
+        for (Skill existing : gameCharacter.getSkills()) {
+            if (existing.getName().equalsIgnoreCase(skill.getName()) &&
+                    getView() != null) {
+                SnackbarHelper.showSnackbar(getActivity(), Snackbar.make(getView(), R.string.toast_skill_already_exists, Snackbar.LENGTH_LONG));
+                return;
+            }
+        }
+
+        addSkillView(skill);
+        gameCharacter.getSkills().add(skill);
     }
 
     /**
@@ -245,7 +343,7 @@ public class StatsFragment extends RoboFragment {
      *
      * @param skill Skill to add a view for.
      */
-    private void addSkillView(Skill skill) {
+    private void addSkillView(final Skill skill) {
         SkillValueComponent skillView = new SkillValueComponent(getContext());
         skillView.setSkillName(skill.getName());
         skillView.setSkillModifier(skill.getValue());
@@ -258,6 +356,14 @@ public class StatsFragment extends RoboFragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.END;
         skillView.setLayoutParams(params);
+
+        skillView.setSkillClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActiveAlert = mSkillDialogFactory.updateSkillDialog(mSkillListener, skill);
+                mActiveAlert.show();
+            }
+        });
 
         mSkillsSection.addView(skillView);
     }
@@ -434,7 +540,46 @@ public class StatsFragment extends RoboFragment {
         mInitiative.setText(StatHelper.makeInitiativeText(getActivity(), dexterity));
     }
 
-    // region observers ----------------------------------------------------------------------------
+    // region listeners ----------------------------------------------------------------------------
+
+    private class AddUpdateSkillListener implements SkillDialogFactory.SkillListener {
+        @Override
+        public void onSkillCreated(final Skill skill) {
+            mCharacterDAO.getActiveCharacter()
+                    .subscribe(new Action1<GameCharacter>() {
+                        @Override
+                        public void call(GameCharacter gameCharacter) {
+                            addSkill(skill, gameCharacter);
+                            updatePassiveWisdom(gameCharacter);
+
+                        }
+                    });
+        }
+
+        @Override
+        public void onSkillUpdated(final Skill skill) {
+            mCharacterDAO.getActiveCharacter()
+                    .subscribe(new Action1<GameCharacter>() {
+                        @Override
+                        public void call(GameCharacter gameCharacter) {
+                            updateSkill(skill, gameCharacter);
+                            updatePassiveWisdom(gameCharacter);
+                        }
+                    });
+        }
+
+        @Override
+        public void onSkillDeleted(final Skill skill) {
+            mCharacterDAO.getActiveCharacter()
+                    .subscribe(new Action1<GameCharacter>() {
+                        @Override
+                        public void call(GameCharacter gameCharacter) {
+                            removeSkill(skill, gameCharacter);
+                            updatePassiveWisdom(gameCharacter);
+                        }
+                    });
+        }
+    }
 
     private class RollHitDiceSubscriber extends Subscriber<GameCharacter> {
 
@@ -455,19 +600,16 @@ public class StatsFragment extends RoboFragment {
             updateMaxHp(maxHp + roll);
 
             // Display the change to the user.
-            String updateToast = String.format(getString(R.string.stat_max_hp_updated_format), roll);
+            String updateToast = String.format(getString(R.string.toast_max_hp_updated_format), roll);
             if (getView() != null) {
-                Snackbar snackbar = Snackbar.make(getView(), updateToast, Snackbar.LENGTH_LONG);
-                TextView tv = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-                // noinspection deprecation
-                tv.setTextColor(getResources().getColor(R.color.default_white));
-                snackbar.setAction(R.string.undo, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        updateMaxHp(maxHp);
-                        updateHealthSummary();
-                    }
-                }).show();
+                SnackbarHelper.showSnackbar(getActivity(), Snackbar.make(getView(), updateToast, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.undo, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                updateMaxHp(maxHp);
+                                updateHealthSummary();
+                            }
+                        }));
             }
 
             unsubscribe();
