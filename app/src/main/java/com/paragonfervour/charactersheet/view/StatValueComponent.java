@@ -189,9 +189,15 @@ public class StatValueComponent extends LinearLayout {
 
         setValue(value + by);
 
-        // Send haptic feedback
-        if (mHapticInterval > 0 && getValue() % mHapticInterval == 0) {
-            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+        // Send haptic feedback at the correct time.
+        if (mHapticInterval > 0) {
+            // If we are increasing, we check the post-change value
+            if (getValue() % mHapticInterval == 0 && by > 0) {
+                performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            // If we are decreasing, we check the pre-change value.
+            } else if (value % mHapticInterval == 0 && by < 0) {
+                performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            }
         }
     }
 
