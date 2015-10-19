@@ -59,4 +59,25 @@ public class Skill {
     public void setValue(int value) {
         mValue = value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Skill) {
+            Skill s = (Skill) o;
+            return getName().equals(s.getName()) &&
+                    getValue() == s.getValue();
+        } else {
+            return super.equals(o);
+        }
+    }
+
+    /**
+     * Check if this Skill is equal to given skill, ignoring any difference in skill level.
+     *
+     * @param other Other skill to check.
+     * @return True if this skill is equal to other.
+     */
+    public boolean equalsIgnoreValue(Skill other) {
+        return getName().equalsIgnoreCase(other.getName());
+    }
 }

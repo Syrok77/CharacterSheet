@@ -248,7 +248,7 @@ public class StatsFragment extends RoboFragment {
         Iterator<Skill> iterator = gameCharacter.getSkills().iterator();
         while (iterator.hasNext()) {
             Skill existing = iterator.next();
-            if (existing.getName().equalsIgnoreCase(skill.getName())) {
+            if (existing.equalsIgnoreValue(skill)) {
                 iterator.remove();
                 if (getView() != null) {
                     // Undo action would use this copy. Just in case.
@@ -293,7 +293,7 @@ public class StatsFragment extends RoboFragment {
             index++;
 
             // Replace existing skill with passed in skill.
-            if (existing.getName().equalsIgnoreCase(skill.getName())) {
+            if (existing.equalsIgnoreValue(skill)) {
                 iterator.remove();
                 if (getView() != null) {
                     String snackbarText = String.format(getString(R.string.toast_skill_updated), skill.getName());
@@ -327,7 +327,7 @@ public class StatsFragment extends RoboFragment {
      */
     private void addSkill(Skill skill, GameCharacter gameCharacter) {
         for (Skill existing : gameCharacter.getSkills()) {
-            if (existing.getName().equalsIgnoreCase(skill.getName()) &&
+            if (existing.equalsIgnoreValue(skill) &&
                     getView() != null) {
                 SnackbarHelper.showSnackbar(getActivity(), Snackbar.make(getView(), R.string.toast_skill_already_exists, Snackbar.LENGTH_LONG));
                 return;
