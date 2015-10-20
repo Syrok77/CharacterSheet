@@ -164,13 +164,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
 
-                <TextView
+                <ImageView
                     android:id="@+id/stats_health_dice_indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textColor="@color/secondary_500"
-                    tools:text="[4]"/>
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    tools:src="@drawable/d4_black_24dp"
+                    />
 
                 <TextView
                     android:id="@+id/stats_health_dice_roll"

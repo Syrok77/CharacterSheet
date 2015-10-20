@@ -15,12 +15,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.helper.DiceHelper;
 import com.paragonfervour.charactersheet.character.model.Dice;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Skill;
@@ -52,9 +54,6 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Fragment containing a view that shows the user's stats. Stats include HP, character scores, skills,
  * etc.
- * <p/>
- * TODO: proficiency bonus
- * TODO: death rolls, change dice
  */
 public class StatsFragment extends RoboFragment {
 
@@ -88,7 +87,7 @@ public class StatsFragment extends RoboFragment {
     private TextView mHealthSummary;
 
     @InjectView(R.id.stats_health_dice_indicator)
-    private TextView mDiceIndicator;
+    private ImageView mDiceIndicator;
 
     @InjectView(R.id.stats_health_dice_roll)
     private TextView mHitDiceRollButton;
@@ -218,7 +217,7 @@ public class StatsFragment extends RoboFragment {
 
         mHealthComponent.setValue(character.getDefenseStats().getHitPoints());
         mTempHpComponent.setValue(character.getDefenseStats().getTempHp());
-        mDiceIndicator.setText(String.format(getString(R.string.dice_text_indicator), character.getDefenseStats().getHitDice().getValue()));
+        mDiceIndicator.setImageResource(DiceHelper.getDiceDrawable(character.getDefenseStats().getHitDice()));
         updateMaxHp(character.getDefenseStats().getMaxHp());
 
         mStrength.setValue(character.getDefenseStats().getStrScore());
@@ -510,7 +509,7 @@ public class StatsFragment extends RoboFragment {
     }
 
     /**
-     * Update the passive wisdom value for the character. TODO: Do this when perception skill is changed.
+     * Update the passive wisdom value for the character.
      *
      * @param gameCharacter active game character.
      */
