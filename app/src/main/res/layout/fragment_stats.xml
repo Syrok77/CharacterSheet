@@ -71,6 +71,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/stats_ability_score_section"
             android:layout_toRightOf="@+id/stats_ability_score_section"
+            android:animateLayoutChanges="true"
             android:background="@drawable/section_bg"
             android:elevation="4dp"
             android:orientation="vertical"
@@ -143,6 +144,14 @@
                 android:textSize="18sp"
                 tools:text="12 / 10"/>
 
+            <com.paragonfervour.charactersheet.view.DeathSaveViewComponent
+                android:id="@+id/stats_death_saves"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -169,8 +178,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textColor="@color/secondary_500"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:textColor="@color/secondary_500"
                     tools:src="@drawable/d4_black_24dp"
                     />
 

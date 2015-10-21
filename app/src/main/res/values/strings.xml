@@ -85,6 +85,13 @@
     <string name="toast_skill_removed">You no longer have that skill.</string>
     <string name="toast_skill_updated">%1$s updated.</string>
 
+    <!-- Death component -->
+    <string name="death_message_title">You have died!</string>
+    <string name="death_message_description">You failed all your death saving throws, and have died a terrible death. Rest in peace, adventurer. :(</string>
+    <string name="death_message_accept">Mourn</string>
+    <string name="death_save_success">Success</string>
+    <string name="death_save_section_title">Death Saves</string>
+
     <string-array name="classes" >
         <item>Rogue</item>
     </string-array>

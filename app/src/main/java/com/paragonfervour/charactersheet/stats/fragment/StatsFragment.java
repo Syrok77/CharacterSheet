@@ -35,11 +35,11 @@ import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateConSu
 import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateDexSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateIntSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateStrSubscriber;
-import com.paragonfervour.charactersheet.stats.observer.health.UpdateHPSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateMaxHpSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateTempHPSubscriber;
 import com.paragonfervour.charactersheet.stats.widget.DiceDialogFactory;
 import com.paragonfervour.charactersheet.stats.widget.SkillDialogFactory;
+import com.paragonfervour.charactersheet.view.DeathSaveViewComponent;
 import com.paragonfervour.charactersheet.view.SkillValueViewComponent;
 import com.paragonfervour.charactersheet.view.StatValueViewComponent;
 
@@ -47,9 +47,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import roboguice.inject.InjectView;
+import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
 import rx.functions.Action1;
+import rx.functions.Func2;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -83,6 +85,9 @@ public class StatsFragment extends ComponentBaseFragment {
 
     @InjectView(R.id.stats_max_health_stat_component)
     private StatValueViewComponent mMaxHealthComponent;
+
+    @InjectView(R.id.stats_death_saves)
+    private DeathSaveViewComponent mDeathSaveComponent;
 
     @InjectView(R.id.stats_health_summary_value)
     private TextView mHealthSummary;
@@ -469,8 +474,30 @@ public class StatsFragment extends ComponentBaseFragment {
     private void bindHealthValues() {
         mHealthComponent.getValueObservable().subscribe(new Action1<Integer>() {
             @Override
-            public void call(Integer hitPoints) {
-                mCharacterDAO.getActiveCharacter().subscribe(new UpdateHPSubscriber(hitPoints));
+            public void call(final Integer hitPoints) {
+                mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(GameCharacter gameCharacter) {
+                        gameCharacter.getDefenseStats().setHitPoints(hitPoints);
+
+                        if (hitPoints <= 0 && mDeathSaveComponent.getVisibility() != View.VISIBLE) {
+                            mDeathSaveComponent.setVisibility(View.VISIBLE);
+                            mDeathSaveComponent.reset(gameCharacter.getDefenseStats().getFailAttempts());
+                        } else if (hitPoints > 0 && mDeathSaveComponent.getVisibility() == View.VISIBLE) {
+                            mDeathSaveComponent.setVisibility(View.GONE);
+                        }
+
+                        unsubscribe();
+                    }
+                });
                 updateHealthSummary();
             }
         });
@@ -497,6 +524,14 @@ public class StatsFragment extends ComponentBaseFragment {
                 mCharacterDAO.getActiveCharacter().subscribe(new RollHitDiceSubscriber());
             }
         });
+
+        mCompositeSubscription.add(Observable.combineLatest(mDeathSaveComponent.getFailuresObservable(), mCharacterDAO.getActiveCharacter(), new Func2<Integer, GameCharacter, Observable<GameCharacter>>() {
+            @Override
+            public Observable<GameCharacter> call(Integer failCount, GameCharacter gameCharacter) {
+                gameCharacter.getDefenseStats().setFailAttempts(failCount);
+                return Observable.just(gameCharacter);
+            }
+        }).subscribe());
     }
 
     /**

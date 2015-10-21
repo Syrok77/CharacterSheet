@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/dangerous_red"
+        android:text="@string/death_save_section_title"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/default_background_gray"/>
+
+    <LinearLayout
+        android:id="@+id/death_saves_check_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/death_saves_first_fail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            tools:checked="true"/>
+
+        <CheckBox
+            android:id="@+id/death_saves_second_fail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            tools:checked="true"/>
+
+        <CheckBox
+            android:id="@+id/death_saves_third_fail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            tools:checked="false"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/death_saves_success_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/blue_500"
+        android:textColor="@color/default_white"
+        android:text="@string/death_save_success"/>
+
+</LinearLayout>
