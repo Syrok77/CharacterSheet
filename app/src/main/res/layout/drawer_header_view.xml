@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_header_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="153dp"
@@ -8,6 +9,7 @@
 
     <!-- Subtitle -->
     <LinearLayout
+        android:id="@+id/drawer_header_character_info_section"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
@@ -33,5 +35,16 @@
             tools:text="Maldalair"/>
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/drawer_header_edit_character_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/drawer_header_character_info_section"
+        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/ic_add_white_24dp"/>
 
 </RelativeLayout>

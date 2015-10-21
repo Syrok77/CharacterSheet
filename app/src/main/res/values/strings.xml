@@ -92,6 +92,14 @@
     <string name="death_save_success">Success</string>
     <string name="death_save_section_title">Death Saves</string>
 
+    <!-- Edit Character screen -->
+    <string name="edit_hint_name">Name</string>
+    <string name="edit_hint_race">Race</string>
+    <string name="edit_hint_class">Class</string>
+    <string name="edit_hint_level">Level</string>
+    <string name="edit_activity_label">Edit Character</string>
+
+
     <string-array name="classes" >
         <item>Rogue</item>
     </string-array>

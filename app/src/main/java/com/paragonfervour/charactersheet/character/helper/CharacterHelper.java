@@ -2,7 +2,6 @@ package com.paragonfervour.charactersheet.character.helper;
 
 import android.content.Context;
 
-import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 
 /**
@@ -14,11 +13,12 @@ public final class CharacterHelper {
     private CharacterHelper() {}
 
     public static String getToolbarTitle(Context context, GameCharacter character) {
-        String format = context.getString(R.string.toolbar_character_format);
-        String level = stringRankifyValue(character.getInfo().getLevel());
-        return String.format(format, character.getInfo().getName(),
-                level,
-                character.getInfo().getCharacterClass());
+        return character.getInfo().getName();
+//        String format = context.getString(R.string.toolbar_character_format);
+//        String level = stringRankifyValue(character.getInfo().getLevel());
+//        return String.format(format, character.getInfo().getName(),
+//                level,
+//                character.getInfo().getCharacterClass());
     }
 
     /**

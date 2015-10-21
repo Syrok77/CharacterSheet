@@ -4,6 +4,7 @@ import com.google.inject.Singleton;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 
 import rx.Observable;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Provider of Characters to the application. Singleton that provides clients with Observables that
@@ -14,7 +15,10 @@ public class CharacterDAO {
 
     private GameCharacter mActiveCharacter = GameCharacter.createDefaultCharacter();
 
+    private BehaviorSubject<GameCharacter> mActiveCharacterSubject = BehaviorSubject.create();
+
     public CharacterDAO() {
+        mActiveCharacterSubject.onNext(mActiveCharacter);
     }
 
     /**
@@ -25,6 +29,14 @@ public class CharacterDAO {
      * @return Observable that emits the active GameCharacter on the main thread.
      */
     public Observable<GameCharacter> getActiveCharacter() {
-        return Observable.just(mActiveCharacter);
+        return mActiveCharacterSubject.asObservable();
+    }
+
+    /**
+     * Alerts this DAO that it needs to publish the active character again. Use this to signal other
+     * that the game character was changed, or when you switch active characters.
+     */
+    public void activeCharacterUpdated() {
+        mActiveCharacterSubject.onNext(mActiveCharacter);
     }
 }

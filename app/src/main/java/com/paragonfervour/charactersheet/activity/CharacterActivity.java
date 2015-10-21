@@ -1,5 +1,7 @@
 package com.paragonfervour.charactersheet.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -10,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.helper.CharacterHelper;
 import com.paragonfervour.charactersheet.character.model.CharacterInfo;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
+import com.paragonfervour.charactersheet.features.activity.EditCharacterFeaturesActivity;
 import com.paragonfervour.charactersheet.fragment.CharacterPagerFragment;
 import com.paragonfervour.charactersheet.fragment.EquipmentFragment;
 import com.paragonfervour.charactersheet.fragment.SpellsFragment;
@@ -169,18 +171,20 @@ public class CharacterActivity extends BaseToolbarActivity {
                 .subscribe(new Action1<GameCharacter>() {
                     @Override
                     public void call(GameCharacter gameCharacter) {
-                        View headerView = LayoutInflater.from(CharacterActivity.this).inflate(R.layout.drawer_header_view, mNavigationView, false);
+                        // todo: turn Header into a component, and add XP controls to it.
+                        View headerView = mDrawerLayout.findViewById(R.id.drawer_header_layout);
                         CharacterInfo info = gameCharacter.getInfo();
                         TextView description = (TextView) headerView.findViewById(R.id.drawer_header_class_desc);
                         TextView characterName = (TextView) headerView.findViewById(R.id.drawer_header_character_name);
                         description.setText(String.format(headerView.getContext().getString(R.string.character_info_class_format), info.getLevel(), info.getCharacterClass()));
                         characterName.setText(info.getName());
 
-                        mNavigationView.addHeaderView(headerView);
+                        View editButton = headerView.findViewById(R.id.drawer_header_edit_character_button);
+                        editButton.setOnClickListener(new EditCharacterClickListener());
 
                         mToolbar.setTitle(CharacterHelper.getToolbarTitle(CharacterActivity.this, gameCharacter));
                     }
-                }));
+                }, new CharacterErrorAction()));
 
         mNavigationView.setNavigationItemSelectedListener(new DrawerListener());
     }
@@ -208,6 +212,25 @@ public class CharacterActivity extends BaseToolbarActivity {
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .commit();
+    }
+
+    private static class EditCharacterClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Context context = v.getContext();
+            Intent editCharacter = new Intent(context, EditCharacterFeaturesActivity.class);
+            context.startActivity(editCharacter);
+        }
+    }
+
+    /**
+     * Getting the active character should be error-able. This will catch errors emitted by CharacterDAO.
+     */
+    private static class CharacterErrorAction implements Action1<Throwable> {
+        @Override
+        public void call(Throwable throwable) {
+            // nothing
+        }
     }
 
 }
