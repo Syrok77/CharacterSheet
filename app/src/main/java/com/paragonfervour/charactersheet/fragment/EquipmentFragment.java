@@ -8,10 +8,8 @@ import android.view.ViewGroup;
 
 import com.paragonfervour.charactersheet.R;
 
-import roboguice.fragment.RoboFragment;
-
 // TODO: This is a stub.
-public class EquipmentFragment extends RoboFragment {
+public class EquipmentFragment extends ComponentBaseFragment {
 
     public static EquipmentFragment newInstance() {
         return new EquipmentFragment();

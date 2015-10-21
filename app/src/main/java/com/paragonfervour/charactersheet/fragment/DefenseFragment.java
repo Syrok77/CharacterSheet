@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 
 import com.paragonfervour.charactersheet.R;
 
-import roboguice.fragment.RoboFragment;
-
 // TODO: This is a stub.
-public class DefenseFragment extends RoboFragment {
+public class DefenseFragment extends ComponentBaseFragment {
 
     public static DefenseFragment newInstance() {
         return new DefenseFragment();

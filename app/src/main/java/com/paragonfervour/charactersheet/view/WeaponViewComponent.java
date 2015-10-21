@@ -12,7 +12,7 @@ import com.paragonfervour.charactersheet.character.model.Weapon;
 /**
  * View component that displays a Weapon model
  */
-public class WeaponComponent extends LinearLayout {
+public class WeaponViewComponent extends LinearLayout {
 
     private TextView mNameText;
     private TextView mPropertiesText;
@@ -23,17 +23,17 @@ public class WeaponComponent extends LinearLayout {
     private View mNameSeparator;
 
 
-    public WeaponComponent(Context context) {
+    public WeaponViewComponent(Context context) {
         super(context);
         init();
     }
 
-    public WeaponComponent(Context context, AttributeSet attrs) {
+    public WeaponViewComponent(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public WeaponComponent(Context context, AttributeSet attrs, int defStyleAttr) {
+    public WeaponViewComponent(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

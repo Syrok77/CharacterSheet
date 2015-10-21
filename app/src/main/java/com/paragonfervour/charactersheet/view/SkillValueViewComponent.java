@@ -17,7 +17,7 @@ import com.paragonfervour.charactersheet.stats.helper.StatHelper;
  * Control that display a skill. Shows the name of the skill and the current skill modifier. Tapping
  * the control opens a dialog that allows the value to be edited.
  */
-public class SkillValueComponent extends LinearLayout {
+public class SkillValueViewComponent extends LinearLayout {
 
     private Button mSkillButton;
     private OnClickListener mClickListener;
@@ -25,17 +25,17 @@ public class SkillValueComponent extends LinearLayout {
     private String mSkillName = "";
     private int mModifier = 0;
 
-    public SkillValueComponent(Context context) {
+    public SkillValueViewComponent(Context context) {
         super(context);
         init(null);
     }
 
-    public SkillValueComponent(Context context, AttributeSet attrs) {
+    public SkillValueViewComponent(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public SkillValueComponent(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SkillValueViewComponent(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
@@ -55,11 +55,11 @@ public class SkillValueComponent extends LinearLayout {
         if (attrs != null) {
             TypedArray attributes = getContext().obtainStyledAttributes(
                     attrs,
-                    R.styleable.SkillValueComponent);
+                    R.styleable.SkillValueViewComponent);
 
             if (attributes != null) {
-                setSkillName(attributes.getString(R.styleable.SkillValueComponent_skillName));
-                int color = attributes.getColor(R.styleable.SkillValueComponent_skillBackground, 0);
+                setSkillName(attributes.getString(R.styleable.SkillValueViewComponent_skillName));
+                int color = attributes.getColor(R.styleable.SkillValueViewComponent_skillBackground, 0);
                 setComponentColor(color);
 
                 attributes.recycle();

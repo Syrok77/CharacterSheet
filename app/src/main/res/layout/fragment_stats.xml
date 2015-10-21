@@ -90,7 +90,7 @@
                 android:textColor="@color/tertiary_500"
                 android:textSize="9dp"/>
 
-            <com.paragonfervour.charactersheet.view.StatValueComponent
+            <com.paragonfervour.charactersheet.view.StatValueViewComponent
                 android:id="@+id/stats_temp_health_stat_component"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
                 app:statBackground="@color/tertiary_200"
                 app:statTitle="@string/stat_name_tmp_hp"/>
 
-            <com.paragonfervour.charactersheet.view.StatValueComponent
+            <com.paragonfervour.charactersheet.view.StatValueViewComponent
                 android:id="@+id/stats_health_stat_component"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
                 app:statBackground="@color/tertiary_200"
                 app:statTitle="@string/stat_name_hp"/>
 
-            <com.paragonfervour.charactersheet.view.StatValueComponent
+            <com.paragonfervour.charactersheet.view.StatValueViewComponent
                 android:id="@+id/stats_max_health_stat_component"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -226,7 +226,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.paragonfervour.charactersheet.view.StatValueComponent
+                <com.paragonfervour.charactersheet.view.StatValueViewComponent
                     android:id="@+id/stats_score_str_control"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -251,7 +251,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.paragonfervour.charactersheet.view.StatValueComponent
+                <com.paragonfervour.charactersheet.view.StatValueViewComponent
                     android:id="@+id/stats_score_con_control"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -276,7 +276,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.paragonfervour.charactersheet.view.StatValueComponent
+                <com.paragonfervour.charactersheet.view.StatValueViewComponent
                     android:id="@+id/stats_score_dex_control"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -302,7 +302,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.paragonfervour.charactersheet.view.StatValueComponent
+                <com.paragonfervour.charactersheet.view.StatValueViewComponent
                     android:id="@+id/stats_score_int_control"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -328,7 +328,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.paragonfervour.charactersheet.view.StatValueComponent
+                <com.paragonfervour.charactersheet.view.StatValueViewComponent
                     android:id="@+id/stats_score_wis_control"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -354,7 +354,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.paragonfervour.charactersheet.view.StatValueComponent
+                <com.paragonfervour.charactersheet.view.StatValueViewComponent
                     android:id="@+id/stats_score_cha_control"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

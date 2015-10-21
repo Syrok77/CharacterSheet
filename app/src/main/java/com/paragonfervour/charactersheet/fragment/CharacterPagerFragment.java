@@ -12,11 +12,10 @@ import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.activity.BaseToolbarActivity;
 import com.paragonfervour.charactersheet.adapter.CharacterPagerAdapter;
 
-import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 
 
-public class CharacterPagerFragment extends RoboFragment {
+public class CharacterPagerFragment extends ComponentBaseFragment {
 
     @InjectView(R.id.character_view_pager)
     private ViewPager mViewPager;

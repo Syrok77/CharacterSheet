@@ -24,7 +24,7 @@ import rx.subjects.PublishSubject;
  * <p/>
  * In order to react to change events and save changes, subscribe to getValueObservable()
  */
-public class StatValueComponent extends LinearLayout {
+public class StatValueViewComponent extends LinearLayout {
 
     private static final int DELTA_COUNTER_DELAY = 3000;
 
@@ -41,17 +41,17 @@ public class StatValueComponent extends LinearLayout {
     private int mHapticInterval = -1;
     private int mCurrentDelta = 0;
 
-    public StatValueComponent(Context context) {
+    public StatValueViewComponent(Context context) {
         super(context);
         init(null);
     }
 
-    public StatValueComponent(Context context, AttributeSet attrs) {
+    public StatValueViewComponent(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public StatValueComponent(Context context, AttributeSet attrs, int defStyleAttr) {
+    public StatValueViewComponent(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
@@ -70,11 +70,11 @@ public class StatValueComponent extends LinearLayout {
         if (attrs != null) {
             TypedArray attributes = getContext().obtainStyledAttributes(
                     attrs,
-                    R.styleable.StatValueComponent);
+                    R.styleable.StatValueViewComponent);
             if (attributes != null) {
-                mHapticInterval = attributes.getInt(R.styleable.StatValueComponent_hapticInterval, -1);
-                title = attributes.getString(R.styleable.StatValueComponent_statTitle);
-                int color = attributes.getColor(R.styleable.StatValueComponent_statBackground, 0);
+                mHapticInterval = attributes.getInt(R.styleable.StatValueViewComponent_hapticInterval, -1);
+                title = attributes.getString(R.styleable.StatValueViewComponent_statTitle);
+                int color = attributes.getColor(R.styleable.StatValueViewComponent_statBackground, 0);
                 if (color == 0) {
                     //noinspection deprecation
                     color = getResources().getColor(R.color.brand_secondary);

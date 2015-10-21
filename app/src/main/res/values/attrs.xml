@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="StatValueComponent">
+    <declare-styleable name="StatValueViewComponent">
         <attr name="hapticInterval" format="integer"/>
         <attr name="statTitle" format="string"/>
         <attr name="statBackground" format="color"/>
     </declare-styleable>
 
-    <declare-styleable name="SkillValueComponent">
+    <declare-styleable name="SkillValueViewComponent">
         <attr name="skillName" format="string"/>
         <attr name="skillBackground" format="color"/>
     </declare-styleable>

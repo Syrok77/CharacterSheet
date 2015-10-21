@@ -11,9 +11,8 @@ import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
-import com.paragonfervour.charactersheet.view.WeaponComponent;
+import com.paragonfervour.charactersheet.view.WeaponViewComponent;
 
-import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -22,16 +21,16 @@ import rx.functions.Action1;
  * Fragment that displays a character's offensive abilities. This includes equipped weapons, as well as
  * proficiency bonus. Probably.
  */
-public class OffenseFragment extends RoboFragment {
+public class OffenseFragment extends ComponentBaseFragment {
 
     @Inject
     private CharacterDAO mCharacterDAO;
 
     @InjectView(R.id.offense_main_weapon)
-    private WeaponComponent mMainHand;
+    private WeaponViewComponent mMainHand;
 
     @InjectView(R.id.offense_offhand_weapon)
-    private WeaponComponent mOffHand;
+    private WeaponViewComponent mOffHand;
 
     public OffenseFragment() {
         super();
@@ -72,7 +71,7 @@ public class OffenseFragment extends RoboFragment {
     private class EditWeaponComponentClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            WeaponComponent comp = (WeaponComponent)v;
+            WeaponViewComponent comp = (WeaponViewComponent)v;
             Toast.makeText(getActivity(), "Edit " + comp.getWeaponName() + ": unimplemented", Toast.LENGTH_SHORT).show();
         }
     }

@@ -26,6 +26,7 @@ import com.paragonfervour.charactersheet.character.helper.DiceHelper;
 import com.paragonfervour.charactersheet.character.model.Dice;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Skill;
+import com.paragonfervour.charactersheet.fragment.ComponentBaseFragment;
 import com.paragonfervour.charactersheet.helper.SnackbarHelper;
 import com.paragonfervour.charactersheet.stats.helper.StatHelper;
 import com.paragonfervour.charactersheet.stats.observer.UpdateInspirationSubscriber;
@@ -39,13 +40,12 @@ import com.paragonfervour.charactersheet.stats.observer.health.UpdateMaxHpSubscr
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateTempHPSubscriber;
 import com.paragonfervour.charactersheet.stats.widget.DiceDialogFactory;
 import com.paragonfervour.charactersheet.stats.widget.SkillDialogFactory;
-import com.paragonfervour.charactersheet.view.SkillValueComponent;
-import com.paragonfervour.charactersheet.view.StatValueComponent;
+import com.paragonfervour.charactersheet.view.SkillValueViewComponent;
+import com.paragonfervour.charactersheet.view.StatValueViewComponent;
 
 import java.util.Iterator;
 import java.util.List;
 
-import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 import rx.Observer;
 import rx.Subscriber;
@@ -56,7 +56,7 @@ import rx.subscriptions.CompositeSubscription;
  * Fragment containing a view that shows the user's stats. Stats include HP, character scores, skills,
  * etc.
  */
-public class StatsFragment extends RoboFragment {
+public class StatsFragment extends ComponentBaseFragment {
 
     @Inject
     private CharacterDAO mCharacterDAO;
@@ -76,13 +76,13 @@ public class StatsFragment extends RoboFragment {
     private TextView mInitiative;
 
     @InjectView(R.id.stats_health_stat_component)
-    private StatValueComponent mHealthComponent;
+    private StatValueViewComponent mHealthComponent;
 
     @InjectView(R.id.stats_temp_health_stat_component)
-    private StatValueComponent mTempHpComponent;
+    private StatValueViewComponent mTempHpComponent;
 
     @InjectView(R.id.stats_max_health_stat_component)
-    private StatValueComponent mMaxHealthComponent;
+    private StatValueViewComponent mMaxHealthComponent;
 
     @InjectView(R.id.stats_health_summary_value)
     private TextView mHealthSummary;
@@ -94,37 +94,37 @@ public class StatsFragment extends RoboFragment {
     private TextView mHitDiceRollButton;
 
     @InjectView(R.id.stats_score_str_control)
-    private StatValueComponent mStrength;
+    private StatValueViewComponent mStrength;
 
     @InjectView(R.id.stats_score_str_mod)
     private TextView mStrengthModifier;
 
     @InjectView(R.id.stats_score_con_control)
-    private StatValueComponent mConstitution;
+    private StatValueViewComponent mConstitution;
 
     @InjectView(R.id.stats_score_con_mod)
     private TextView mConstitutionModifier;
 
     @InjectView(R.id.stats_score_dex_control)
-    private StatValueComponent mDexterity;
+    private StatValueViewComponent mDexterity;
 
     @InjectView(R.id.stats_score_dex_mod)
     private TextView mDexterityModifier;
 
     @InjectView(R.id.stats_score_int_control)
-    private StatValueComponent mIntelligence;
+    private StatValueViewComponent mIntelligence;
 
     @InjectView(R.id.stats_score_int_mod)
     private TextView mIntelligenceModifier;
 
     @InjectView(R.id.stats_score_wis_control)
-    private StatValueComponent mWisdom;
+    private StatValueViewComponent mWisdom;
 
     @InjectView(R.id.stats_score_wis_mod)
     private TextView mWisdomModifier;
 
     @InjectView(R.id.stats_score_cha_control)
-    private StatValueComponent mCharisma;
+    private StatValueViewComponent mCharisma;
 
     @InjectView(R.id.stats_score_cha_mod)
     private TextView mCharismaModifier;
@@ -277,8 +277,8 @@ public class StatsFragment extends RoboFragment {
 
         // Find the associated view to delete
         for (int i = 0; i < mSkillsSection.getChildCount(); ++i) {
-            if (mSkillsSection.getChildAt(i) instanceof SkillValueComponent) {
-                SkillValueComponent skillComponent = (SkillValueComponent) mSkillsSection.getChildAt(i);
+            if (mSkillsSection.getChildAt(i) instanceof SkillValueViewComponent) {
+                SkillValueViewComponent skillComponent = (SkillValueViewComponent) mSkillsSection.getChildAt(i);
                 if (skillComponent.getSkillName().equalsIgnoreCase(skill.getName())) {
                     mSkillsSection.removeView(skillComponent);
                     break;
@@ -318,8 +318,8 @@ public class StatsFragment extends RoboFragment {
 
         // Find the associated view to update
         for (int i = 0; i < mSkillsSection.getChildCount(); ++i) {
-            if (mSkillsSection.getChildAt(i) instanceof SkillValueComponent) {
-                SkillValueComponent skillComponent = (SkillValueComponent) mSkillsSection.getChildAt(i);
+            if (mSkillsSection.getChildAt(i) instanceof SkillValueViewComponent) {
+                SkillValueViewComponent skillComponent = (SkillValueViewComponent) mSkillsSection.getChildAt(i);
                 if (skillComponent.getSkillName().equalsIgnoreCase(skill.getName())) {
                     skillComponent.setSkillModifier(skill.getValue());
                 }
@@ -352,7 +352,7 @@ public class StatsFragment extends RoboFragment {
      * @param skill Skill to add a view for.
      */
     private void addSkillView(final Skill skill) {
-        SkillValueComponent skillView = new SkillValueComponent(getContext());
+        SkillValueViewComponent skillView = new SkillValueViewComponent(getContext());
         skillView.setSkillName(skill.getName());
         skillView.setSkillModifier(skill.getValue());
 

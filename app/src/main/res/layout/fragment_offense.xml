@@ -25,7 +25,7 @@
             android:textSize="@dimen/text_large"
             android:text="@string/offense_main_hand"/>
 
-        <com.paragonfervour.charactersheet.view.WeaponComponent
+        <com.paragonfervour.charactersheet.view.WeaponViewComponent
             android:id="@+id/offense_main_weapon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             android:textSize="@dimen/text_large"
             android:text="@string/offense_off_hand"/>
 
-        <com.paragonfervour.charactersheet.view.WeaponComponent
+        <com.paragonfervour.charactersheet.view.WeaponViewComponent
             android:id="@+id/offense_offhand_weapon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
