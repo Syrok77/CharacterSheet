@@ -1,7 +1,5 @@
 package com.paragonfervour.charactersheet.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,15 +13,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.helper.CharacterHelper;
-import com.paragonfervour.charactersheet.character.model.CharacterInfo;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
-import com.paragonfervour.charactersheet.features.activity.EditCharacterFeaturesActivity;
+import com.paragonfervour.charactersheet.component.CharacterHeaderComponent;
 import com.paragonfervour.charactersheet.fragment.CharacterPagerFragment;
 import com.paragonfervour.charactersheet.fragment.EquipmentFragment;
 import com.paragonfervour.charactersheet.fragment.SpellsFragment;
@@ -33,7 +29,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
-public class CharacterActivity extends BaseToolbarActivity {
+public class CharacterActivity extends ComponentBaseActivity {
 
     @Inject
     private CharacterDAO mCharacterDAO;
@@ -55,6 +51,7 @@ public class CharacterActivity extends BaseToolbarActivity {
     private CharSequence mTitle;
     private boolean mUserLearnedDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
+    private CharacterHeaderComponent mHeaderComponent;
 
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
@@ -62,6 +59,9 @@ public class CharacterActivity extends BaseToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character);
+
+        mHeaderComponent = new CharacterHeaderComponent(findViewById(R.id.drawer_header_layout));
+        add(mHeaderComponent);
 
         mTitle = getTitle();
 
@@ -90,16 +90,6 @@ public class CharacterActivity extends BaseToolbarActivity {
     }
 
     @Override
-    public Toolbar getToolbar() {
-        return mToolbar;
-    }
-
-    @Override
-    public TabLayout getTabLayout() {
-        return mTabLayout;
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mDrawerLayout.isDrawerOpen(mNavigationView)) {
             // Only show items in the action bar relevant to this screen
@@ -115,6 +105,10 @@ public class CharacterActivity extends BaseToolbarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         mDrawerToggle.onOptionsItemSelected(item);
         return super.onOptionsItemSelected(item);
+    }
+
+    public TabLayout getTabLayout() {
+        return mTabLayout;
     }
 
     private void setUpDrawer(Bundle savedInstanceState) {
@@ -171,17 +165,7 @@ public class CharacterActivity extends BaseToolbarActivity {
                 .subscribe(new Action1<GameCharacter>() {
                     @Override
                     public void call(GameCharacter gameCharacter) {
-                        // todo: turn Header into a component, and add XP controls to it.
-                        View headerView = mDrawerLayout.findViewById(R.id.drawer_header_layout);
-                        CharacterInfo info = gameCharacter.getInfo();
-                        TextView description = (TextView) headerView.findViewById(R.id.drawer_header_class_desc);
-                        TextView characterName = (TextView) headerView.findViewById(R.id.drawer_header_character_name);
-                        description.setText(String.format(headerView.getContext().getString(R.string.character_info_class_format), info.getLevel(), info.getCharacterClass()));
-                        characterName.setText(info.getName());
-
-                        View editButton = headerView.findViewById(R.id.drawer_header_edit_character_button);
-                        editButton.setOnClickListener(new EditCharacterClickListener());
-
+                        mHeaderComponent.onActiveCharacter(gameCharacter);
                         mToolbar.setTitle(CharacterHelper.getToolbarTitle(CharacterActivity.this, gameCharacter));
                     }
                 }, new CharacterErrorAction()));
@@ -212,15 +196,6 @@ public class CharacterActivity extends BaseToolbarActivity {
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .commit();
-    }
-
-    private static class EditCharacterClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            Context context = v.getContext();
-            Intent editCharacter = new Intent(context, EditCharacterFeaturesActivity.class);
-            context.startActivity(editCharacter);
-        }
     }
 
     /**

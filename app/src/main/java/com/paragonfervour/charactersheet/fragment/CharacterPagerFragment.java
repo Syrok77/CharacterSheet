@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.activity.BaseToolbarActivity;
+import com.paragonfervour.charactersheet.activity.CharacterActivity;
 import com.paragonfervour.charactersheet.adapter.CharacterPagerAdapter;
 
 import roboguice.inject.InjectView;
@@ -40,7 +40,7 @@ public class CharacterPagerFragment extends ComponentBaseFragment {
         CharacterPagerAdapter pagerAdapter = new CharacterPagerAdapter(getChildFragmentManager(), getActivity());
         mViewPager.setAdapter(pagerAdapter);
 
-        BaseToolbarActivity activity = (BaseToolbarActivity) getActivity();
+        CharacterActivity activity = (CharacterActivity) getActivity();
         TabLayout tabLayout = activity.getTabLayout();
         tabLayout.setVisibility(View.VISIBLE);
         tabLayout.setupWithViewPager(mViewPager);
@@ -48,7 +48,7 @@ public class CharacterPagerFragment extends ComponentBaseFragment {
 
     @Override
     public void onDestroyView() {
-        BaseToolbarActivity activity = (BaseToolbarActivity) getActivity();
+        CharacterActivity activity = (CharacterActivity) getActivity();
         TabLayout tabLayout = activity.getTabLayout();
         tabLayout.setVisibility(View.GONE);
         super.onDestroyView();
