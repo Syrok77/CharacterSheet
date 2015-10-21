@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="@string/stats_inspired"/>
+                android:text="@string/stat_inspired"/>
 
             <TextView
                 android:id="@+id/stats_initiative"

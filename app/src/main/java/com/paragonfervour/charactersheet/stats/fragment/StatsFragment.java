@@ -37,6 +37,7 @@ import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateStrSu
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateHPSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateMaxHpSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateTempHPSubscriber;
+import com.paragonfervour.charactersheet.stats.widget.DiceDialogFactory;
 import com.paragonfervour.charactersheet.stats.widget.SkillDialogFactory;
 import com.paragonfervour.charactersheet.view.SkillValueComponent;
 import com.paragonfervour.charactersheet.view.StatValueComponent;
@@ -218,6 +219,14 @@ public class StatsFragment extends RoboFragment {
         mHealthComponent.setValue(character.getDefenseStats().getHitPoints());
         mTempHpComponent.setValue(character.getDefenseStats().getTempHp());
         mDiceIndicator.setImageResource(DiceHelper.getDiceDrawable(character.getDefenseStats().getHitDice()));
+        mDiceIndicator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DiceDialogFactory.createDicePickerDialog(getActivity())
+                        .subscribe(new HitDicePickerObserver());
+            }
+        });
+
         updateMaxHp(character.getDefenseStats().getMaxHp());
 
         mStrength.setValue(character.getDefenseStats().getStrScore());
@@ -640,6 +649,41 @@ public class StatsFragment extends RoboFragment {
             updatePassiveWisdom(gameCharacter);
 
             unsubscribe();
+        }
+    }
+
+    private class HitDicePickerObserver implements Observer<Dice> {
+        @Override
+        public void onCompleted() {
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onNext(final Dice dice) {
+            mCompositeSubscription.add(mCharacterDAO.getActiveCharacter()
+                    .subscribe(new Subscriber<GameCharacter>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(GameCharacter gameCharacter) {
+                            gameCharacter.getDefenseStats().setHitDice(dice);
+                            mDiceIndicator.setImageResource(DiceHelper.getDiceDrawable(dice));
+                            unsubscribe();
+                        }
+                    }));
         }
     }
 

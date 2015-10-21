@@ -64,7 +64,7 @@ public final class StatHelper {
      * @return Formatted display string for speed.
      */
     public static String makeSpeedText(Context context, int speed) {
-        return String.format(context.getString(R.string.stats_speed_format), speed);
+        return String.format(context.getString(R.string.stat_speed_format), speed);
     }
 
     /**
@@ -75,7 +75,7 @@ public final class StatHelper {
      * @return Formatted display string for initiative.
      */
     public static String makeInitiativeText(Context context, int dexterity) {
-        return String.format(context.getString(R.string.stats_initiative_format), getScoreModifierString(dexterity));
+        return String.format(context.getString(R.string.stat_initiative_format), getScoreModifierString(dexterity));
     }
 
     /**
