@@ -13,7 +13,8 @@
 
         <item name="android:textColorPrimary">@color/primary_text_default_light</item>
         <item name="android:textColor">@color/primary_text_default_light</item>
-        <item name="colorControlHighlight">@color/default_background_gray</item> <!-- Highlight color for pressed states -->
+        <item name="colorControlHighlight">@color/default_background_gray</item>
+        <!-- Highlight color for pressed states -->
     </style>
 
     <!--Toolbar override of theme, which has dark theme instead of light.-->
@@ -26,7 +27,14 @@
         <item name="colorPrimaryDark">@color/brand_secondary</item>
         <item name="colorAccent">@color/secondary_500</item>
 
-        <item name="colorControlHighlight">@color/default_background_gray</item> <!-- Highlight color for pressed states -->
+        <item name="colorControlHighlight">@color/default_background_gray</item>
+        <!-- Highlight color for pressed states -->
+    </style>
+
+    <!-- Navigation Drawer override of theme, which basically is AppTheme with a different control selected color-->
+    <style name="DrawerAppTheme" parent="AppTheme">
+        <!-- Primary color determines the highlight color of a control -->
+        <item name="colorPrimary">@color/primary_text_default_light</item>
     </style>
 
 </resources>

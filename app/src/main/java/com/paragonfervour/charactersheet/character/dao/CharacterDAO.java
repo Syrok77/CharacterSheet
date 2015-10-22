@@ -37,6 +37,8 @@ public class CharacterDAO {
     private final BehaviorSubject<GameCharacter> mActiveCharacterSubject = BehaviorSubject.create();
 
     private Thread mSaveThread;
+    // TODO: How does lock?
+    private final Object mLock = new Object();
 
     @Inject
     public CharacterDAO(Context context) {
@@ -65,21 +67,23 @@ public class CharacterDAO {
                     @Override
                     public void call() {
                         // Batch changes together. Changes will only be saved every 3 seconds.
-                        if (mSaveThread == null) {
-                            mSaveThread = new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        Thread.sleep(3000);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
+                        synchronized (mLock) {
+                            if (mSaveThread == null) {
+                                mSaveThread = new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            Thread.sleep(3000);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
 
-                                    saveActiveCharacter();
-                                    mSaveThread = null;
-                                }
-                            });
-                            mSaveThread.start();
+                                        saveActiveCharacter();
+                                        mSaveThread = null;
+                                    }
+                                });
+                                mSaveThread.start();
+                            }
                         }
                     }
                 })

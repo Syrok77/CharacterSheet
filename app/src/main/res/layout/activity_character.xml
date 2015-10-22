@@ -67,6 +67,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/default_white"
+        android:theme="@style/DrawerAppTheme"
         app:headerLayout="@layout/drawer_header_view"
         app:menu="@menu/drawer"/>
 
