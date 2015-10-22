@@ -20,11 +20,11 @@
             android:icon="@drawable/ic_remove_black_24dp"
             android:title="@string/nav_equipment"/>
 
-        <!--<item-->
-            <!--android:id="@+id/navigation_settings"-->
-            <!--android:checked="false"-->
-            <!--android:icon="@drawable/ic_drawer"-->
-            <!--android:title="@string/nav_equipment"/>-->
+        <item
+            android:id="@+id/navigation_settings"
+            android:checked="false"
+            android:icon="@drawable/ic_drawer"
+            android:title="@string/nav_settings"/>
 
     </group>
 

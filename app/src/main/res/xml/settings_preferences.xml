@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="@bool/PREF_HAPTIC_FEEDBACK_DEFAULT"
+        android:key="@string/PREF_HAPTIC_FEEDBACK"
+        android:title="@string/pref_haptic_feedback_title"
+        android:summary="@string/pref_haptic_feedback_summary"
+        />
+
+</PreferenceScreen>

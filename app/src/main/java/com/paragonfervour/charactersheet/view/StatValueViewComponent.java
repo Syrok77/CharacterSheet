@@ -13,8 +13,11 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
+import com.paragonfervour.charactersheet.settings.AppPreferences;
 
+import roboguice.RoboGuice;
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
@@ -25,6 +28,9 @@ import rx.subjects.PublishSubject;
  * In order to react to change events and save changes, subscribe to getValueObservable()
  */
 public class StatValueViewComponent extends LinearLayout {
+
+    @Inject
+    private AppPreferences mAppPreferences;
 
     private static final int DELTA_COUNTER_DELAY = 3000;
 
@@ -57,6 +63,8 @@ public class StatValueViewComponent extends LinearLayout {
     }
 
     public void init(AttributeSet attrs) {
+        RoboGuice.injectMembers(getContext(), this);
+
         LayoutInflater.from(getContext()).inflate(R.layout.component_stat_value, this, true);
         String title = null;
 
@@ -190,7 +198,7 @@ public class StatValueViewComponent extends LinearLayout {
         setValue(value + by);
 
         // Send haptic feedback at the correct time.
-        if (mHapticInterval > 0) {
+        if (mHapticInterval > 0 && mAppPreferences.getEnabledHapticFeedback()) {
             // If we are increasing, we check the post-change value
             if (getValue() % mHapticInterval == 0 && by > 0) {
                 performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);

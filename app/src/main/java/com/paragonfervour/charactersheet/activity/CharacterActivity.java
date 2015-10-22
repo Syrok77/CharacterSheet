@@ -1,5 +1,6 @@
 package com.paragonfervour.charactersheet.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -23,6 +24,7 @@ import com.paragonfervour.charactersheet.component.CharacterHeaderComponent;
 import com.paragonfervour.charactersheet.fragment.CharacterPagerFragment;
 import com.paragonfervour.charactersheet.fragment.EquipmentFragment;
 import com.paragonfervour.charactersheet.fragment.SpellsFragment;
+import com.paragonfervour.charactersheet.settings.SettingsActivity;
 
 import roboguice.inject.InjectView;
 import rx.android.schedulers.AndroidSchedulers;
@@ -186,6 +188,10 @@ public class CharacterActivity extends ComponentBaseActivity {
             case R.id.navigation_equipment:
                 fragment = EquipmentFragment.newInstance();
                 break;
+            case R.id.navigation_settings:
+                Intent settings = new Intent(this, SettingsActivity.class);
+                startActivity(settings);
+                return; // Routing to an activity, not a fragment.
             default:
                 // All cases should have already been covered.
                 return;

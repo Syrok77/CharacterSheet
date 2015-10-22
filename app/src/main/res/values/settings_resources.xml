@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Enable Haptic Feedback -->
+    <bool name="PREF_HAPTIC_FEEDBACK_DEFAULT">true</bool>
+    <string name="PREF_HAPTIC_FEEDBACK">PREF_USER_SETTINGS_LOCATION</string>
+    <string name="pref_haptic_feedback_title">Enable Control Haptic Feedback</string>
+    <string name="pref_haptic_feedback_summary">Enable to feel slight feedback whenever a stat control reaches a significant value.</string>
+</resources>
