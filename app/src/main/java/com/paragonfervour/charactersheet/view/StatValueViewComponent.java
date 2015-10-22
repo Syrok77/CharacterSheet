@@ -34,8 +34,8 @@ public class StatValueViewComponent extends LinearLayout {
     private TextView mTitleTextView;
 
     // members
-    private PublishSubject<Integer> mValuePublisher = PublishSubject.create();
-    private Handler mCurrentDeltaHandler = new Handler();
+    private final PublishSubject<Integer> mValuePublisher = PublishSubject.create();
+    private final Handler mCurrentDeltaHandler = new Handler();
     private Runnable mCurrentDeltaRunner = null;
 
     private int mHapticInterval = -1;

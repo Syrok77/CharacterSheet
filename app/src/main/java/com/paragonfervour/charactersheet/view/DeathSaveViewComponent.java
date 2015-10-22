@@ -26,7 +26,7 @@ public class DeathSaveViewComponent extends LinearLayout {
     private CheckBox mSecondFail;
     private CheckBox mThirdFail;
 
-    private PublishSubject<Integer> mFailureCountSubject = PublishSubject.create();
+    private final PublishSubject<Integer> mFailureCountSubject = PublishSubject.create();
 
     private int mFailCount;
 

@@ -59,6 +59,7 @@ public class WeaponViewComponent extends LinearLayout {
         mPropertiesText.setText(weapon.getProperties());
         mDamageText.setText(weapon.getDamage().toString());
         mValueText.setText(String.valueOf(weapon.getValue() + getContext().getString(R.string.standard_value)));
+        // todo: use formatter
         mWeightText.setText(String.valueOf(weapon.getWeight()) + getContext().getString(R.string.standard_weight));
 
         if (weapon.getProperties() == null || weapon.getProperties().isEmpty()) {

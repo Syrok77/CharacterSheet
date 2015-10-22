@@ -5,9 +5,6 @@
     android:id="@+id/character_view_pager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_blue_grey_800"
     tools:context=".activity.CharacterActivity" >
-
-
 
 </android.support.v4.view.ViewPager>

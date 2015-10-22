@@ -15,7 +15,7 @@ public class CharacterDAO {
 
     private GameCharacter mActiveCharacter = GameCharacter.createDefaultCharacter();
 
-    private BehaviorSubject<GameCharacter> mActiveCharacterSubject = BehaviorSubject.create();
+    private final BehaviorSubject<GameCharacter> mActiveCharacterSubject = BehaviorSubject.create();
 
     public CharacterDAO() {
         mActiveCharacterSubject.onNext(mActiveCharacter);

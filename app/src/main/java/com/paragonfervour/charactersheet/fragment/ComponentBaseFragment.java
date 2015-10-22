@@ -19,7 +19,7 @@ import roboguice.fragment.RoboFragment;
  */
 public class ComponentBaseFragment extends RoboFragment {
 
-    private List<Component> mComponents = new ArrayList<>();
+    private final List<Component> mComponents = new ArrayList<>();
 
     protected void add(Component component) {
         mComponents.add(component);

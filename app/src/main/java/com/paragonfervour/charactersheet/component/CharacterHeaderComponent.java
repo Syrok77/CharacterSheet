@@ -19,9 +19,9 @@ import com.paragonfervour.charactersheet.features.activity.EditCharacterFeatures
  */
 public class CharacterHeaderComponent extends Component {
 
-    private View mHeaderView;
-    private TextView mDescription;
-    private TextView mCharacterName;
+    private final View mHeaderView;
+    private final TextView mDescription;
+    private final TextView mCharacterName;
 
     public CharacterHeaderComponent(View headerView) {
         // bind views

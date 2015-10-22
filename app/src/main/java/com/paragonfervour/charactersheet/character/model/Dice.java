@@ -12,7 +12,7 @@ public enum Dice {
     D20(20);
 //    D100(100);
 
-    private int mValue;
+    private final int mValue;
 
     Dice(int value) {
         mValue = value;

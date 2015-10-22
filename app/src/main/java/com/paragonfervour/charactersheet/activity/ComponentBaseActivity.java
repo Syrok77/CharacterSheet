@@ -12,7 +12,7 @@ import roboguice.activity.RoboActionBarActivity;
 
 public abstract class ComponentBaseActivity extends RoboActionBarActivity {
 
-    private List<Component> mComponents = new ArrayList<>();
+    private final List<Component> mComponents = new ArrayList<>();
 
     protected void add(Component component) {
         mComponents.add(component);
