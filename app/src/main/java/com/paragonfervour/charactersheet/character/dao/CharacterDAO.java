@@ -1,9 +1,22 @@
 package com.paragonfervour.charactersheet.character.dao;
 
+import android.content.Context;
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import rx.Observable;
+import rx.functions.Action0;
 import rx.subjects.BehaviorSubject;
 
 /**
@@ -13,12 +26,18 @@ import rx.subjects.BehaviorSubject;
 @Singleton
 public class CharacterDAO {
 
-    private GameCharacter mActiveCharacter = GameCharacter.createDefaultCharacter();
+    private Context mContext;
 
+    private static final String ACTIVE_CHARACTER_FILE_NAME = "active_character.json";
+    private static final String TAG = CharacterDAO.class.getSimpleName();
+
+    private GameCharacter mActiveCharacter = GameCharacter.createDefaultCharacter();
     private final BehaviorSubject<GameCharacter> mActiveCharacterSubject = BehaviorSubject.create();
 
-    public CharacterDAO() {
-        mActiveCharacterSubject.onNext(mActiveCharacter);
+    @Inject
+    public CharacterDAO(Context context) {
+        mContext = context;
+        loadActiveCharacter();
     }
 
     /**
@@ -29,7 +48,15 @@ public class CharacterDAO {
      * @return Observable that emits the active GameCharacter on the main thread.
      */
     public Observable<GameCharacter> getActiveCharacter() {
-        return mActiveCharacterSubject.asObservable();
+        if (mActiveCharacter == null) {
+            loadActiveCharacter();
+        }
+        return mActiveCharacterSubject.asObservable().doOnUnsubscribe(new Action0() {
+            @Override
+            public void call() {
+                saveActiveCharacter();
+            }
+        });
     }
 
     /**
@@ -38,5 +65,54 @@ public class CharacterDAO {
      */
     public void activeCharacterUpdated() {
         mActiveCharacterSubject.onNext(mActiveCharacter);
+    }
+
+    private void loadActiveCharacter() {
+        try {
+            FileInputStream fileStream = mContext.openFileInput(ACTIVE_CHARACTER_FILE_NAME);
+            BufferedInputStream stream = new BufferedInputStream(fileStream);
+
+            byte[] file = new byte[stream.available()];
+            int read = stream.read(file, 0, stream.available());
+
+            stream.close();
+
+            Gson gson = new Gson();
+            GameCharacter character = gson.fromJson(new String(file), GameCharacter.class);
+
+            Log.d(TAG, "Read in character " + character.getInfo().getName() + " (" + read + ") bytes");
+            mActiveCharacter = character;
+            mActiveCharacterSubject.onNext(character);
+        } catch (IOException e) {
+            if (e instanceof FileNotFoundException) {
+                Log.d(TAG, "Character did not exist.");
+                mActiveCharacter = GameCharacter.createDefaultCharacter();
+                activeCharacterUpdated();
+                saveActiveCharacter();
+            } else {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void saveActiveCharacter() {
+        if (mActiveCharacter == null) {
+            return;
+        }
+
+        try {
+            FileOutputStream outputStream = mContext.openFileOutput(ACTIVE_CHARACTER_FILE_NAME, Context.MODE_PRIVATE);
+            BufferedOutputStream stream = new BufferedOutputStream(outputStream);
+
+            Gson gson = new Gson();
+            String json = gson.toJson(mActiveCharacter);
+            stream.write(json.getBytes());
+
+            Log.d(TAG, "Saved active character "  + mActiveCharacter.getInfo().getName());
+
+            stream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

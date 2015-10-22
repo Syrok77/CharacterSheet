@@ -1,15 +1,21 @@
 package com.paragonfervour.charactersheet.character.model;
 
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class OffenseStats {
 
+    @SerializedName("MainHand")
     private Weapon mMainHand;
+    @SerializedName("OffHand")
     private Weapon mOffHand;
 
+    @SerializedName("Weapons")
     private List<Weapon> mWeapons;
+    @SerializedName("SpellList")
     private List<Spell> mSpellList;
 
 

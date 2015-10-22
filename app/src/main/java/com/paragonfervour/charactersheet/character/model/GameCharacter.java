@@ -1,5 +1,7 @@
 package com.paragonfervour.charactersheet.character.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -7,21 +9,28 @@ import java.util.List;
  */
 public class GameCharacter {
     // Name, class, race, level, xp
+    @SerializedName("Info")
     private CharacterInfo mInfo;
 
     // Defense scores; AC, saves, hit points, hit die
+    @SerializedName("DefenseStats")
     private DefenseStats mDefenseStats;
 
     // Offense - weapons, spells
+    @SerializedName("OffenseStats")
     private OffenseStats mOffenseStats;
 
     // Bio - background, bond/ideal/etc.
+    @SerializedName("BioInfo")
     private BioInfo mBioInfo;
 
     // Skill list
+    @SerializedName("Skills")
     private List<Skill> mSkills;
 
+    @SerializedName("isInspired")
     private boolean isInspired;
+    @SerializedName("Speed")
     private int mSpeed;
 
     // Temp - create a default character

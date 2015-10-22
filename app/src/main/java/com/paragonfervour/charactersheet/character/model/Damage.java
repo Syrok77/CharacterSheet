@@ -1,11 +1,16 @@
 package com.paragonfervour.charactersheet.character.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Damage representation. Dice type, # of that dice, and modifier
  */
 public class Damage {
+    @SerializedName("DiceType")
     private Dice mDiceType;
+    @SerializedName("DiceQuantity")
     private int mDiceQuantity;
+    @SerializedName("Modifier")
     private int mModifier;
 
     public static Damage createDefaultWeapon() {

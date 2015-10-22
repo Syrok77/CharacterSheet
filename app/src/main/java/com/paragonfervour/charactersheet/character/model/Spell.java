@@ -1,17 +1,26 @@
 package com.paragonfervour.charactersheet.character.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Model represents a Spell.
  * Spell name, level, description, casting time, components, range
  */
 public class Spell {
 
+    @SerializedName("Name")
     private String mName;
+    @SerializedName("Level")
     private int mLevel;
+    @SerializedName("Description")
     private String mDescription;
+    @SerializedName("CastingTime")
     private String mCastingTime;
+    @SerializedName("Components")
     private String mComponents;
+    @SerializedName("Duration")
     private String mDuration;
+    @SerializedName("Range")
     private String mRange;
 
     public static Spell createDefault() {

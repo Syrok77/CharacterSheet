@@ -1,17 +1,24 @@
 package com.paragonfervour.charactersheet.character.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Model representing a Weapon, with a name (i.e. Rapier), damage, value, weight, and properties
  */
 public class Weapon {
 
+    @SerializedName("Name")
     private String mName;
 
+    @SerializedName("Value")
     private int mValue;
+    @SerializedName("Weight")
     private int mWeight;
 
+    @SerializedName("Damage")
     private Damage mDamage;
 
+    @SerializedName("Properties")
     private String mProperties;
 
     public static Weapon createDefault() {

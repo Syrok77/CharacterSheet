@@ -1,26 +1,41 @@
 package com.paragonfervour.charactersheet.character.model;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class DefenseStats {
 
+    @SerializedName("AC")
     private int mAC;
 
     // ability scores
+    @SerializedName("Str")
     private int mStrScore;
+    @SerializedName("Dex")
     private int mDexScore;
+    @SerializedName("Con")
     private int mConScore;
+    @SerializedName("Int")
     private int mIntScore;
+    @SerializedName("Wis")
     private int mWisScore;
+    @SerializedName("Cha")
     private int mChaScore;
 
     // HP
+    @SerializedName("HitPoints")
     private int mHitPoints;
+    @SerializedName("TempHp")
     private int mTempHp;
+    @SerializedName("MaxHp")
     private int mMaxHp;
+    @SerializedName("HitDice")
     private Dice mHitDice;
 
     // death saves
+    @SerializedName("SuccessAttempts")
     private int mSuccessAttempts;
+    @SerializedName("FailAttempts")
     private int mFailAttempts;
 
     /**

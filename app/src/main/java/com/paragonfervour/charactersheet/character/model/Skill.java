@@ -1,5 +1,7 @@
 package com.paragonfervour.charactersheet.character.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,9 @@ import java.util.List;
  */
 public class Skill {
 
+    @SerializedName("Name")
     private String mName;
+    @SerializedName("Value")
     private int mValue;
 
     /**
