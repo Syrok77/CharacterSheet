@@ -1,8 +1,10 @@
 package com.paragonfervour.charactersheet.stats.fragment;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -195,6 +197,10 @@ public class StatsFragment extends ComponentBaseFragment {
                         initializeView(gameCharacter);
                     }
                 }));
+
+        // dumb view compat stuff
+        int color = getResources().getColor(R.color.tertiary_700);
+        ViewCompat.setBackgroundTintList(mAddSkillButton, ColorStateList.valueOf(color));
     }
 
     @Override
