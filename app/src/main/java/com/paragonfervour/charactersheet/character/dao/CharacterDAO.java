@@ -16,7 +16,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 
 /**
@@ -34,6 +36,8 @@ public class CharacterDAO {
     private GameCharacter mActiveCharacter = GameCharacter.createDefaultCharacter();
     private final BehaviorSubject<GameCharacter> mActiveCharacterSubject = BehaviorSubject.create();
 
+    private Thread mSaveThread;
+
     @Inject
     public CharacterDAO(Context context) {
         mContext = context;
@@ -48,15 +52,40 @@ public class CharacterDAO {
      * @return Observable that emits the active GameCharacter on the main thread.
      */
     public Observable<GameCharacter> getActiveCharacter() {
-        if (mActiveCharacter == null) {
-            loadActiveCharacter();
-        }
-        return mActiveCharacterSubject.asObservable().doOnUnsubscribe(new Action0() {
-            @Override
-            public void call() {
-                saveActiveCharacter();
-            }
-        });
+        return mActiveCharacterSubject.asObservable()
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        if (mActiveCharacter == null) {
+                            loadActiveCharacter();
+                        }
+                    }
+                })
+                .doOnUnsubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        // Batch changes together. Changes will only be saved every 3 seconds.
+                        if (mSaveThread == null) {
+                            mSaveThread = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Thread.sleep(3000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    saveActiveCharacter();
+                                    mSaveThread = null;
+                                }
+                            });
+                            mSaveThread.start();
+                        }
+                    }
+                })
+                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -108,7 +137,7 @@ public class CharacterDAO {
             String json = gson.toJson(mActiveCharacter);
             stream.write(json.getBytes());
 
-            Log.d(TAG, "Saved active character "  + mActiveCharacter.getInfo().getName());
+            Log.d(TAG, "Saved active character " + mActiveCharacter.getInfo().getName());
 
             stream.close();
         } catch (IOException e) {
