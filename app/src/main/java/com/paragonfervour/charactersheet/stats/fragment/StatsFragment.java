@@ -178,7 +178,7 @@ public class StatsFragment extends ComponentBaseFragment {
         bindAbilityScores();
         bindAttributes();
 
-        mCharacterDAO.getActiveCharacter()
+        mCompositeSubscription.add(mCharacterDAO.getActiveCharacter()
                 .subscribe(new Observer<GameCharacter>() {
                     @Override
                     public void onCompleted() {
@@ -194,7 +194,7 @@ public class StatsFragment extends ComponentBaseFragment {
                     public void onNext(GameCharacter gameCharacter) {
                         initializeView(gameCharacter);
                     }
-                });
+                }));
     }
 
     @Override

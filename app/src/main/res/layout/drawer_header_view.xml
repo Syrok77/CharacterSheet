@@ -10,7 +10,7 @@
     <!-- Subtitle -->
     <LinearLayout
         android:id="@+id/drawer_header_character_info_section"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="32dp"
@@ -35,6 +35,21 @@
             tools:text="Maldalair"/>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/drawer_header_xp_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/drawer_header_edit_character_button"
+        android:layout_toStartOf="@+id/drawer_header_edit_character_button"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/secondary_700"
+        android:textColor="@color/default_white"
+        tools:text="325 XP"
+        />
 
     <ImageView
         android:id="@+id/drawer_header_edit_character_button"

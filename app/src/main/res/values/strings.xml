@@ -22,6 +22,15 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_drawer_xp_button_text">%1$d XP</string>
+
+    <string name="dialog_add_xp_title">Add XP</string>
+    <string name="dialog_add_xp_accept">Add</string>
+    <string name="dialog_add_xp_change">Change</string>
+    <string name="dialog_add_xp_hint">XP Earned</string>
+    <string name="dialog_change_xp_title">Change XP</string>
+    <string name="dialog_change_xp_accept">Update</string>
+    <string name="dialog_change_xp_hint">Total XP</string>
 
     <!-- Activity -->
     <string name="character_info_class_format">Level %1$d %2$s</string>
@@ -99,8 +108,7 @@
     <string name="edit_hint_level">Level</string>
     <string name="edit_activity_label">Edit Character</string>
 
-
-    <string-array name="classes" >
+    <string-array name="classes">
         <item>Rogue</item>
     </string-array>
 </resources>

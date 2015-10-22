@@ -2,6 +2,7 @@ package com.paragonfervour.charactersheet.character.helper;
 
 import android.content.Context;
 
+import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 
 /**
@@ -48,6 +49,18 @@ public final class CharacterHelper {
             default:
                 return value + "th";
         }
+    }
+
+    /**
+     * Get displayable String for an XP amount.
+     *
+     * @param context Android context;
+     * @param xp XP amount
+     * @return user's XP as a displayable String.
+     */
+    public static String getXpDisplayText(Context context, int xp) {
+        String format = context.getString(R.string.nav_drawer_xp_button_text);
+        return String.format(format, xp);
     }
 
 }
