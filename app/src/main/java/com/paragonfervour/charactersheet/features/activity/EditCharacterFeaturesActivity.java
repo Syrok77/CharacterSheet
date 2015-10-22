@@ -36,6 +36,9 @@ public class EditCharacterFeaturesActivity extends RoboActivity {
     @InjectView(R.id.edit_character_feature_level)
     private TextView mEditLevel;
 
+    @InjectView(R.id.edit_character_feature_speed)
+    private TextView mEditSpeed;
+
     @InjectView(R.id.activity_edit_feature_toolbar)
     private Toolbar mToolbar;
 
@@ -63,6 +66,7 @@ public class EditCharacterFeaturesActivity extends RoboActivity {
                 mEditRace.setText(gameCharacter.getInfo().getRace());
                 mEditClass.setText(gameCharacter.getInfo().getCharacterClass());
                 mEditLevel.setText(String.valueOf(gameCharacter.getInfo().getLevel()));
+                mEditSpeed.setText(String.valueOf(gameCharacter.getSpeed()));
             }
         }, new Action1<Throwable>() {
             @Override
@@ -96,10 +100,17 @@ public class EditCharacterFeaturesActivity extends RoboActivity {
                 gameCharacter.getInfo().setName(mEditName.getText().toString());
                 gameCharacter.getInfo().setRace(mEditRace.getText().toString());
                 gameCharacter.getInfo().setCharacterClass(mEditClass.getText().toString());
-                gameCharacter.getInfo().setLevel(Integer.valueOf(mEditLevel.getText().toString()));
 
-                mCharacterDAO.activeCharacterUpdated();
+                if (!mEditLevel.getText().toString().isEmpty()) {
+                    gameCharacter.getInfo().setLevel(Integer.valueOf(mEditLevel.getText().toString()));
+                }
+
+                if (!mEditSpeed.getText().toString().isEmpty()) {
+                    gameCharacter.setSpeed(Integer.valueOf(mEditSpeed.getText().toString()));
+                }
+
                 unsubscribe();
+                mCharacterDAO.activeCharacterUpdated();
             }
         });
     }

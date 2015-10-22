@@ -106,6 +106,7 @@
     <string name="edit_hint_race">Race</string>
     <string name="edit_hint_class">Class</string>
     <string name="edit_hint_level">Level</string>
+    <string name="edit_hint_speed">Speed</string>
     <string name="edit_activity_label">Edit Character</string>
 
     <string-array name="classes">
