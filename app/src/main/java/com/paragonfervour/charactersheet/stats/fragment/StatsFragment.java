@@ -595,12 +595,23 @@ public class StatsFragment extends ComponentBaseFragment {
         @Override
         public void onSkillCreated(final Skill skill) {
             mCharacterDAO.getActiveCharacter()
-                    .subscribe(new Action1<GameCharacter>() {
+                    .subscribe(new Subscriber<GameCharacter>() {
                         @Override
-                        public void call(GameCharacter gameCharacter) {
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(GameCharacter gameCharacter) {
+                            unsubscribe();
+
                             addSkill(skill, gameCharacter);
                             updatePassiveWisdom(gameCharacter);
-
                         }
                     });
         }
@@ -608,9 +619,21 @@ public class StatsFragment extends ComponentBaseFragment {
         @Override
         public void onSkillUpdated(final Skill skill) {
             mCharacterDAO.getActiveCharacter()
-                    .subscribe(new Action1<GameCharacter>() {
+                    .subscribe(new Subscriber<GameCharacter>() {
                         @Override
-                        public void call(GameCharacter gameCharacter) {
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(GameCharacter gameCharacter) {
+                            unsubscribe();
+
                             updateSkill(skill, gameCharacter);
                             updatePassiveWisdom(gameCharacter);
                         }
@@ -620,9 +643,21 @@ public class StatsFragment extends ComponentBaseFragment {
         @Override
         public void onSkillDeleted(final Skill skill) {
             mCharacterDAO.getActiveCharacter()
-                    .subscribe(new Action1<GameCharacter>() {
+                    .subscribe(new Subscriber<GameCharacter>() {
                         @Override
-                        public void call(GameCharacter gameCharacter) {
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(GameCharacter gameCharacter) {
+                            unsubscribe();
+
                             removeSkill(skill, gameCharacter);
                             updatePassiveWisdom(gameCharacter);
                         }
