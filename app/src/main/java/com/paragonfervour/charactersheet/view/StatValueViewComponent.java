@@ -63,7 +63,9 @@ public class StatValueViewComponent extends LinearLayout {
     }
 
     public void init(AttributeSet attrs) {
-        RoboGuice.injectMembers(getContext(), this);
+        if (!isInEditMode()) {
+            RoboGuice.injectMembers(getContext(), this);
+        }
 
         LayoutInflater.from(getContext()).inflate(R.layout.component_stat_value, this, true);
         String title = null;
