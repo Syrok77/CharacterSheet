@@ -13,6 +13,11 @@
         android:clipToPadding="false"
         android:paddingBottom="32dp">
 
+        <View android:id="@+id/fakeView"
+              android:layout_width="0dp"
+              android:layout_height="0dp"
+              android:layout_centerInParent="true"/>
+
         <RelativeLayout
             android:id="@+id/stats_attributes_section"
             android:layout_width="match_parent"
@@ -54,7 +59,7 @@
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
-                android:background="@color/default_background_gray"/>
+                android:background="@color/secondary_500"/>
 
         </RelativeLayout>
 
@@ -64,13 +69,15 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/stats_attributes_section"
             android:layout_gravity="end"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/stats_ability_score_section"
-            android:layout_toRightOf="@+id/stats_ability_score_section"
+            android:layout_alignStart="@+id/fakeView"
+            android:layout_alignLeft="@+id/fakeView"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:animateLayoutChanges="true"
             android:background="@drawable/section_bg"
             android:elevation="4dp"
@@ -95,29 +102,29 @@
                 android:id="@+id/stats_temp_health_stat_component"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="center_horizontal"
                 app:hapticInterval="10"
-                app:statBackground="@color/tertiary_200"
+                app:statBackground="@color/tertiary_500"
                 app:statTitle="@string/stat_name_tmp_hp"/>
 
             <com.paragonfervour.charactersheet.view.StatValueViewComponent
                 android:id="@+id/stats_health_stat_component"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 app:hapticInterval="10"
-                app:statBackground="@color/tertiary_200"
+                app:statBackground="@color/tertiary_500"
                 app:statTitle="@string/stat_name_hp"/>
 
             <com.paragonfervour.charactersheet.view.StatValueViewComponent
                 android:id="@+id/stats_max_health_stat_component"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 app:hapticInterval="10"
-                app:statBackground="@color/tertiary_200"
+                app:statBackground="@color/tertiary_500"
                 app:statTitle="@string/stat_name_max_hp"/>
 
             <TextView
@@ -130,11 +137,11 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginStart="16dp"
-                android:background="@color/default_background_gray"/>
+                android:layout_marginEnd="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginStart="32dp"
+                android:background="?attr/colorAccent"/>
 
             <TextView
                 android:id="@+id/stats_health_summary_value"
@@ -148,6 +155,7 @@
                 android:id="@+id/stats_death_saves"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 android:visibility="gone"
                 tools:visibility="visible"/>
@@ -162,11 +170,11 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginStart="16dp"
-                android:background="@color/default_background_gray"/>
+                android:layout_marginEnd="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginStart="32dp"
+                android:background="?attr/colorAccent"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -197,6 +205,7 @@
                     android:paddingStart="8dp"
                     android:paddingTop="4dp"
                     android:text="@string/stat_health_hit_dice_roll"
+                    android:visibility="gone"
                     android:textColor="@color/tertiary_200"
                     android:textSize="18sp"/>
 
@@ -209,9 +218,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/stats_attributes_section"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
+            android:layout_alignEnd="@+id/fakeView"
+            android:layout_alignRight="@+id/fakeView"
             android:background="@drawable/section_bg"
             android:elevation="4dp"
             android:orientation="vertical"
@@ -233,6 +248,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <com.paragonfervour.charactersheet.view.StatValueViewComponent
@@ -258,6 +274,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <com.paragonfervour.charactersheet.view.StatValueViewComponent
@@ -283,6 +300,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <com.paragonfervour.charactersheet.view.StatValueViewComponent
@@ -305,10 +323,10 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <com.paragonfervour.charactersheet.view.StatValueViewComponent
@@ -335,6 +353,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <com.paragonfervour.charactersheet.view.StatValueViewComponent
@@ -361,6 +380,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <com.paragonfervour.charactersheet.view.StatValueViewComponent

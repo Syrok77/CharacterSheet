@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Primary color pallette -->
+    <!-- Primary color palette -->
     <color name="brand_primary">#ff00d4c6</color> <!--00BCD4-->
     <color name="brand_secondary">#ff00B1A4</color>
     <color name="brand_bright">#ff55DED4</color>

@@ -19,7 +19,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
-        android:background="@color/default_background_gray"/>
+        android:background="?attr/colorAccent"/>
 
     <LinearLayout
         android:id="@+id/death_saves_check_section"
