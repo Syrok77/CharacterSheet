@@ -140,6 +140,25 @@
             android:textSize="18sp"
             tools:text="2 d4 + 6"/>
 
+        <Button
+            android:id="@+id/add_weapon_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:backgroundTint="@color/tertiary_500"
+            android:paddingStart="64dp"
+            android:paddingLeft="64dp"
+            android:paddingRight="64dp"
+            android:paddingEnd="64dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
+            android:textColor="@color/default_white"
+            android:layout_marginBottom="48dp"
+            android:text="@string/save"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
     </RelativeLayout>
 
     <android.support.v7.widget.Toolbar

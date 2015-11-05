@@ -9,6 +9,7 @@
     <!-- General purpose -->
     <string name="undo">Undo</string>
     <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
     <string name="standard_value">gp</string>
     <string name="standard_weight">lb</string>
     <string name="standard_distance">feet</string>
