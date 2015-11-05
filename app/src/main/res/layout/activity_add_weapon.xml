@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/default_white">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/activity_add_weapon_toolbar"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp">
+
+        <TextView
+            android:id="@+id/weapon_stats_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/add_weapon_stats_title"
+            android:textColor="@color/tertiary_500"
+            android:textSize="@dimen/text_large"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/weapon_name_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/weapon_stats_title"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp">
+
+            <EditText
+                android:id="@+id/weapon_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/add_weapon_weapon_name_hint"
+                tools:text="Short Sword"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- TODO: More weapon stats here (value, weight, hand) -->
+
+        <TextView
+            android:id="@+id/weapon_damage_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/weapon_name_layout"
+            android:layout_marginTop="16dp"
+            android:text="@string/add_weapon_damage_title"
+            android:textColor="@color/tertiary_500"
+            android:textSize="@dimen/text_large"/>
+
+        <LinearLayout
+            android:id="@+id/add_weapon_damage_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/weapon_damage_title"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/weapon_dice_multiplier"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="@string/add_weapon_dice_multiplier_hint"
+                    android:inputType="number"
+                    tools:text="2"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/add_weapon_dice_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/description_weapon_dice"
+                android:src="@drawable/d4_black_24dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:text="@string/plus"
+                android:textSize="24sp"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/weapon_modifier"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="@string/add_weapon_modifier_hint"
+                    android:inputType="number"
+                    tools:text="6"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/add_weapon_damage_summary_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/add_weapon_damage_layout"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/add_weapon_damage_summary"
+            android:textColor="@color/tertiary_500"
+            android:textSize="@dimen/text_large"/>
+
+        <!-- TODO: Make this pretty. -->
+        <TextView
+            android:id="@+id/add_weapon_summary_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/add_weapon_damage_summary_title"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:text="2 d4 + 6"
+            android:textSize="18sp"
+            tools:text="2 d4 + 6"/>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/activity_add_weapon_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/brand_primary"
+        android:clipToPadding="false"
+        android:elevation="@dimen/appbar_elevation"
+        android:theme="@style/ToolbarAppTheme"/>
+
+</RelativeLayout>

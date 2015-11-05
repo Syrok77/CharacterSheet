@@ -1,16 +1,19 @@
 package com.paragonfervour.charactersheet.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
+import com.paragonfervour.charactersheet.offense.activity.AddWeaponActivity;
 import com.paragonfervour.charactersheet.view.WeaponViewComponent;
 
 import roboguice.inject.InjectView;
@@ -31,6 +34,9 @@ public class OffenseFragment extends ComponentBaseFragment {
 
     @InjectView(R.id.offense_offhand_weapon)
     private WeaponViewComponent mOffHand;
+
+    @InjectView(R.id.offense_add_weapon_button)
+    private Button mAddWeaponButton;
 
     public OffenseFragment() {
         super();
@@ -61,6 +67,7 @@ public class OffenseFragment extends ComponentBaseFragment {
 
         mMainHand.setOnClickListener(new EditWeaponComponentClickListener());
         mOffHand.setOnClickListener(new EditWeaponComponentClickListener());
+        mAddWeaponButton.setOnClickListener(new AddWeaponClickListener());
     }
 
     private void updateUI(GameCharacter character) {
@@ -71,8 +78,17 @@ public class OffenseFragment extends ComponentBaseFragment {
     private class EditWeaponComponentClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            // TODO:
             WeaponViewComponent comp = (WeaponViewComponent)v;
             Toast.makeText(getActivity(), "Edit " + comp.getWeaponName() + ": unimplemented", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private class AddWeaponClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), AddWeaponActivity.class);
+            startActivity(intent);
         }
     }
 }

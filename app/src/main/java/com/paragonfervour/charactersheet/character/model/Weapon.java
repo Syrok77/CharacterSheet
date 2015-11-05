@@ -23,11 +23,11 @@ public class Weapon {
 
     public static Weapon createDefault() {
         Weapon w = new Weapon();
-        w.mName = "Rapier";
+        w.mName = "Short Sword";
         w.mValue = 25;
         w.mWeight = 2;
         w.mDamage = Damage.createDefaultWeapon();
-        w.mProperties = "Finesse, Light";
+        w.mProperties = "Light";
         return w;
     }
 

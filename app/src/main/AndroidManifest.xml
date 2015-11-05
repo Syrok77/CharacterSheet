@@ -24,6 +24,10 @@
         <activity
             android:name=".settings.SettingsActivity"
             android:label="@string/nav_settings"/>
+
+        <activity
+            android:name=".offense.activity.AddWeaponActivity"
+            android:label="@string/nav_add_weapon_title"/>
     </application>
 
 </manifest>
