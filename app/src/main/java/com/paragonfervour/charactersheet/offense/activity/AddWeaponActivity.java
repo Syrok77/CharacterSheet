@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,8 @@ import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.activity.ComponentBaseActivity;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.model.Damage;
+import com.paragonfervour.charactersheet.character.model.Dice;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Weapon;
 
@@ -45,6 +48,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     @InjectView(R.id.add_weapon_hand_group)
     private RadioGroup mHandGroup;
 
+    private static final String TAG = AddWeaponActivity.class.getSimpleName();
     public static final String EXTRA_WEAPON_MODEL = "extra_weapon_model";
 
     // temp
@@ -132,6 +136,33 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         }
     }
 
+    private Damage createDamage() {
+        Damage damage = new Damage();
+        // TODO:
+        damage.setDiceQuantity(2);
+        damage.setDiceType(Dice.D8);
+        damage.setModifier(4);
+        return damage;
+    }
+
+    /**
+     * Create the Weapon model that this AddWeaponActivity is creating/editing.
+     *
+     * @return updated Weapon model from this page.
+     */
+    private Weapon createWeapon() {
+        Weapon weapon = new Weapon();
+        weapon.setName(mWeaponName.getText().toString());
+        weapon.setDamage(createDamage());
+        // TODO:
+        weapon.setValue(10);
+        // TODO:
+        weapon.setWeight(2);
+        // TODO:
+        weapon.setProperties("");
+        return weapon;
+    }
+
     /**
      * Set this weapon to the main hand. If we are editing, make the update into the model immediately,
      * otherwise just set the value on the Weapon.
@@ -177,13 +208,34 @@ public class AddWeaponActivity extends ComponentBaseActivity {
                 }
         }
 
-        Toast.makeText(this, "Switching hands is currently not supported.", Toast.LENGTH_SHORT).show();
+        if (isEditing) {
+            Toast.makeText(this, "Switching hands is currently not supported.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private class SaveButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            // TODO: Save this weapon into the character.
+            mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+                @Override
+                public void onCompleted() {}
+
+                @Override
+                public void onError(Throwable e) {}
+
+                @Override
+                public void onNext(GameCharacter gameCharacter) {
+                    Log.d(TAG, "Updated weapon " + isMainHand);
+                    if (isMainHand) {
+                        gameCharacter.getOffenseStats().setMainHand(createWeapon());
+                    } else {
+                        gameCharacter.getOffenseStats().setOffHand(createWeapon());
+                    }
+
+                    mCharacterDAO.activeCharacterUpdated();
+                    unsubscribe();
+                }
+            });
             finish();
         }
     }

@@ -128,7 +128,7 @@
     <string name="add_weapon_hand_main">Main Hand</string>
     <string name="add_weapon_hand_off">Off Hand</string>
     <string name="add_weapon_weight">Weight (lb)</string>
-    <string name="add_weapon_value">Value</string>
+    <string name="add_weapon_value">Value (gp)</string>
 
     <string-array name="classes">
         <item>Rogue</item>
