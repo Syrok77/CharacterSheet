@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
@@ -39,6 +41,9 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
     @InjectView(R.id.weapon_name)
     private EditText mWeaponName;
+
+    @InjectView(R.id.add_weapon_hand_group)
+    private RadioGroup mHandGroup;
 
     public static final String EXTRA_WEAPON_MODEL = "extra_weapon_model";
 
@@ -105,6 +110,11 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
     private void updateWeaponView(Weapon weapon) {
         mWeaponName.setText(weapon.getName());
+        if (isMainHand) {
+            mHandGroup.check(R.id.add_weapon_hand_main_button);
+        } else {
+            mHandGroup.check(R.id.add_weapon_hand_off_button);
+        }
     }
 
     /**
@@ -166,6 +176,8 @@ public class AddWeaponActivity extends ComponentBaseActivity {
                     break;
                 }
         }
+
+        Toast.makeText(this, "Switching hands is currently not supported.", Toast.LENGTH_SHORT).show();
     }
 
     private class SaveButtonClickListener implements View.OnClickListener {
