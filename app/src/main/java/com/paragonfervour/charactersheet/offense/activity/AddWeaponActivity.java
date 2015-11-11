@@ -48,6 +48,12 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     @InjectView(R.id.add_weapon_hand_group)
     private RadioGroup mHandGroup;
 
+    @InjectView(R.id.add_weapon_weight)
+    private EditText mWeightText;
+
+    @InjectView(R.id.add_weapon_value)
+    private EditText mValueText;
+
     private static final String TAG = AddWeaponActivity.class.getSimpleName();
     public static final String EXTRA_WEAPON_MODEL = "extra_weapon_model";
 
@@ -93,7 +99,12 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         }
 
         mSaveButton.setOnClickListener(new SaveButtonClickListener());
-        mWeaponName.addTextChangedListener(new NameTextWatcher());
+
+        if (isEditing) {
+            mWeaponName.addTextChangedListener(new NameTextWatcher());
+            mWeightText.addTextChangedListener(new WeightTextWatcher());
+            mValueText.addTextChangedListener(new ValueTextWatcher());
+        }
 
         updateWeaponView(weapon);
     }
@@ -119,6 +130,8 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         } else {
             mHandGroup.check(R.id.add_weapon_hand_off_button);
         }
+        mWeightText.setText(String.valueOf(weapon.getWeight()));
+        mValueText.setText(String.valueOf(weapon.getValue()));
     }
 
     /**
@@ -154,10 +167,8 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         Weapon weapon = new Weapon();
         weapon.setName(mWeaponName.getText().toString());
         weapon.setDamage(createDamage());
-        // TODO:
-        weapon.setValue(10);
-        // TODO:
-        weapon.setWeight(2);
+        weapon.setValue(Integer.valueOf(mValueText.getText().toString()));
+        weapon.setWeight(Integer.valueOf(mWeightText.getText().toString()));
         // TODO:
         weapon.setProperties("");
         return weapon;
@@ -241,6 +252,26 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     }
 
     /**
+     * Update the weapon's weight value in the GameCharacter.
+     */
+    private class WeightTextWatcher extends UpdateTextWatcher {
+        @Override
+        public void updateValue(Weapon weapon, String value) {
+            weapon.setWeight(Integer.valueOf(value));
+        }
+    }
+
+    /**
+     * Update the weapon's value in the GameCharacter.
+     */
+    private class ValueTextWatcher extends UpdateTextWatcher {
+        @Override
+        public void updateValue(Weapon weapon, String value) {
+            weapon.setValue(Integer.valueOf(value));
+        }
+    }
+
+    /**
      * Update the weapon's name value in the GameCharacter.
      */
     private class NameTextWatcher extends UpdateTextWatcher {
@@ -290,7 +321,6 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     /**
      * Observer for character events. Right now we don't listen to this, but unsubscribing is a key
      * component to updating the model.
-     * TODO: Evaluate if this is even necessary.
      */
     private class CharacterObserver implements Observer<GameCharacter> {
 

@@ -58,22 +58,22 @@
                 android:id="@+id/add_weapon_hand_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:checkedButton="@+id/add_weapon_hand_main_button">
+                android:checkedButton="@+id/add_weapon_hand_main_button"
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/add_weapon_hand_main_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_weapon_hand_main"
-                    android:onClick="onHandOptionClicked"/>
+                    android:onClick="onHandOptionClicked"
+                    android:text="@string/add_weapon_hand_main"/>
 
                 <RadioButton
                     android:id="@+id/add_weapon_hand_off_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_weapon_hand_off"
-                    android:onClick="onHandOptionClicked"/>
+                    android:onClick="onHandOptionClicked"
+                    android:text="@string/add_weapon_hand_off"/>
 
             </RadioGroup>
 
@@ -89,12 +89,12 @@
                     android:layout_weight="1">
 
                     <EditText
-                        android:id="@+id/add_weapon_weight"
+                        android:id="@+id/add_weapon_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/add_weapon_weight"
+                        android:hint="@string/add_weapon_value"
                         android:inputType="number"
-                        tools:text="4"/>
+                        tools:text="20"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -104,12 +104,12 @@
                     android:layout_weight="1">
 
                     <EditText
-                        android:id="@+id/add_weapon_value"
+                        android:id="@+id/add_weapon_weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/add_weapon_value"
+                        android:hint="@string/add_weapon_weight"
                         android:inputType="number"
-                        tools:text="20"/>
+                        tools:text="4"/>
 
                 </android.support.design.widget.TextInputLayout>
 
