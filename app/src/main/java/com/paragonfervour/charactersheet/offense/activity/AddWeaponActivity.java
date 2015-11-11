@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
@@ -20,7 +22,6 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Activity that allows the user to create or edit a Weapon model, and posts a CharacterDAO change
  * event if a change was made.
- * TODO: Weight, value, name, hand type
  */
 public class AddWeaponActivity extends ComponentBaseActivity {
 
@@ -32,6 +33,9 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
     @InjectView(R.id.add_weapon_save_button)
     private Button mSaveButton;
+
+    @InjectView(R.id.weapon_name)
+    private EditText mWeaponName;
 
     public static final String EXTRA_WEAPON_MODEL = "extra_weapon_model";
 
@@ -100,6 +104,49 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
     }
 
+    /**
+     * Set this weapon to the main hand. If we are editing, make the update into the model immediately,
+     * otherwise just set the value on the Weapon.
+     */
+    private void setMainHand() {
+        isMainHand = true;
+        if (isEditing) {
+            // TODO: Update the character model
+        }
+    }
+
+    /**
+     * Set this weapon to the off hand. If we are editing, make the update into the model immediately,
+     * otherwise just set the value on the Weapon.
+     */
+    private void setOffHand() {
+        isMainHand = false;
+        if (isEditing) {
+            // TODO: Update the character model.
+            // Remove mWeapon from the main hand list
+
+            // Add mWeapon to the offhand list.
+        }
+    }
+
+    public void onHandOptionClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.add_weapon_hand_main_button:
+                if (checked) {
+                    setMainHand();
+                    break;
+                }
+            case R.id.add_weapon_hand_off_button:
+                if (checked) {
+                    setOffHand();
+                    break;
+                }
+        }
+    }
+
     private class SaveButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -111,6 +158,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     /**
      * Observer for character events. Right now we don't listen to this, but unsubscribing is a key
      * component to updating the model.
+     * TODO: Evaluate if this is even necessary.
      */
     private class CharacterObserver implements Observer<GameCharacter> {
 
