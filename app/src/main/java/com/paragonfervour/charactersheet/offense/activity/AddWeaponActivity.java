@@ -3,6 +3,8 @@ package com.paragonfervour.charactersheet.offense.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +19,7 @@ import com.paragonfervour.charactersheet.character.model.Weapon;
 
 import roboguice.inject.InjectView;
 import rx.Observer;
+import rx.Subscriber;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -44,7 +47,6 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     private boolean isMainHand = true;
 
     private CompositeSubscription mCompositeSubscription;
-    private Weapon mWeapon;
     private boolean isEditing;
 
     @Override
@@ -65,15 +67,15 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
 
         Intent i = getIntent();
-        mWeapon = (Weapon) i.getSerializableExtra(EXTRA_WEAPON_MODEL);
+        Weapon weapon = (Weapon) i.getSerializableExtra(EXTRA_WEAPON_MODEL);
         isMainHand = i.getBooleanExtra(EXTRA_IS_MAIN_HAND, true);
 
-        if (mWeapon == null) {
+        if (weapon == null) {
             // We are creating a new weapon
             mToolbar.setTitle(R.string.nav_add_weapon_title);
             mSaveButton.setVisibility(View.VISIBLE);
 
-            mWeapon = Weapon.createDefault();
+            weapon = Weapon.createDefault();
         } else {
             // We are editing an existing weapon.
             mToolbar.setTitle(R.string.nav_edit_weapon_title);
@@ -81,9 +83,10 @@ public class AddWeaponActivity extends ComponentBaseActivity {
             isEditing = true;
         }
 
-         mSaveButton.setOnClickListener(new SaveButtonClickListener());
+        mSaveButton.setOnClickListener(new SaveButtonClickListener());
+        mWeaponName.addTextChangedListener(new NameTextWatcher());
 
-        updateWeaponView();
+        updateWeaponView(weapon);
     }
 
     @Override
@@ -100,8 +103,23 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         mCompositeSubscription.unsubscribe();
     }
 
-    private void updateWeaponView() {
+    private void updateWeaponView(Weapon weapon) {
+        mWeaponName.setText(weapon.getName());
+    }
 
+    /**
+     * Get the active weapon model directly from the GameCharacter.
+     *
+     * @param gameCharacter game character model being edited.
+     * @return the weapon inner-model from the passed in gameCharacter.
+     */
+    private Weapon getActiveWeapon(GameCharacter gameCharacter) {
+        // TODO: Support multiple weapons in each hand
+        if (isMainHand) {
+            return gameCharacter.getOffenseStats().getMainHand();
+        } else {
+            return gameCharacter.getOffenseStats().getOffHand();
+        }
     }
 
     /**
@@ -112,6 +130,9 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         isMainHand = true;
         if (isEditing) {
             // TODO: Update the character model
+            // Remove mWeapon from the offhand list
+
+            // Add mWeapon to the offhand list.
         }
     }
 
@@ -133,7 +154,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         boolean checked = ((RadioButton) view).isChecked();
 
         // Check which radio button was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.add_weapon_hand_main_button:
                 if (checked) {
                     setMainHand();
@@ -152,6 +173,53 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         public void onClick(View v) {
             // TODO: Save this weapon into the character.
             finish();
+        }
+    }
+
+    /**
+     * Update the weapon's name value in the GameCharacter.
+     */
+    private class NameTextWatcher extends UpdateTextWatcher {
+        @Override
+        public void updateValue(Weapon weapon, String value) {
+            weapon.setName(value);
+        }
+    }
+
+    /**
+     * Abstract base TextWatcher class for the EditText classes to use. Handles subscribing and
+     * unsubscribing from the GameCharacter model, allowing subclasses to simply implement updateValue()
+     * to get their work done.
+     */
+    private abstract class UpdateTextWatcher implements TextWatcher {
+
+        public abstract void updateValue(Weapon weapon, String value);
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(final Editable s) {
+            mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+                @Override
+                public void onCompleted() {
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                }
+
+                @Override
+                public void onNext(GameCharacter gameCharacter) {
+                    updateValue(getActiveWeapon(gameCharacter), s.toString());
+                    unsubscribe();
+                }
+            });
         }
     }
 

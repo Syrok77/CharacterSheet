@@ -10,7 +10,7 @@ import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.model.Weapon;
 
 /**
- * View component that displays a Weapon model
+ * View component that displays, but does not update, a Weapon model.
  */
 public class WeaponViewComponent extends LinearLayout {
 
@@ -21,6 +21,8 @@ public class WeaponViewComponent extends LinearLayout {
     private TextView mWeightText;
 
     private View mNameSeparator;
+
+    private Weapon mWeapon;
 
 
     public WeaponViewComponent(Context context) {
@@ -59,8 +61,7 @@ public class WeaponViewComponent extends LinearLayout {
         mPropertiesText.setText(weapon.getProperties());
         mDamageText.setText(weapon.getDamage().toString());
         mValueText.setText(String.valueOf(weapon.getValue() + getContext().getString(R.string.standard_value)));
-        // todo: use formatter
-        mWeightText.setText(String.valueOf(weapon.getWeight()) + getContext().getString(R.string.standard_weight));
+        mWeightText.setText(getContext().getString(R.string.standard_weight_format, weapon.getWeight()));
 
         if (weapon.getProperties() == null || weapon.getProperties().isEmpty()) {
             mNameSeparator.setVisibility(View.GONE);
@@ -68,10 +69,17 @@ public class WeaponViewComponent extends LinearLayout {
         else {
             mNameSeparator.setVisibility(View.VISIBLE);
         }
+
+        mWeapon = weapon;
     }
 
-    public String getWeaponName() {
-        return mNameText.getText().toString();
+    /**
+     * Create a Weapon model that represents this view component.
+     *
+     * @return a new Weapon model representing this component.
+     */
+    public Weapon getWeapon() {
+        return mWeapon;
     }
 
 }

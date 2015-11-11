@@ -2,10 +2,12 @@ package com.paragonfervour.charactersheet.character.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Damage representation. Dice type, # of that dice, and modifier
  */
-public class Damage {
+public class Damage implements Serializable {
     @SerializedName("DiceType")
     private Dice mDiceType;
     @SerializedName("DiceQuantity")

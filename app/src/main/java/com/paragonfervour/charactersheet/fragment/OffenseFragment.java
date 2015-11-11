@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
@@ -78,9 +77,13 @@ public class OffenseFragment extends ComponentBaseFragment {
     private class EditWeaponComponentClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            // TODO:
             WeaponViewComponent comp = (WeaponViewComponent)v;
-            Toast.makeText(getActivity(), "Edit " + comp.getWeaponName() + ": unimplemented", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(getActivity(), AddWeaponActivity.class);
+            intent.putExtra(AddWeaponActivity.EXTRA_WEAPON_MODEL, comp.getWeapon());
+            boolean isMainHand = mMainHand == comp;
+            intent.putExtra(AddWeaponActivity.EXTRA_IS_MAIN_HAND, isMainHand);
+            startActivity(intent);
         }
     }
 

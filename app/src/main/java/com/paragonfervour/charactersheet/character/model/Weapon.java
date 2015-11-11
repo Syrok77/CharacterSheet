@@ -2,10 +2,12 @@ package com.paragonfervour.charactersheet.character.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Model representing a Weapon, with a name (i.e. Rapier), damage, value, weight, and properties
  */
-public class Weapon {
+public class Weapon implements Serializable {
 
     @SerializedName("Name")
     private String mName;
