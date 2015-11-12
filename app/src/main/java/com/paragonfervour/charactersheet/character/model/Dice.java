@@ -23,10 +23,10 @@ public enum Dice {
     }
 
     /**
-     * @return D[value] i.e. "D4"
+     * @return d[value] i.e. "d4"
      */
     public String toString() {
-        return "D" + getValue();
+        return "d" + getValue();
     }
 
     /**

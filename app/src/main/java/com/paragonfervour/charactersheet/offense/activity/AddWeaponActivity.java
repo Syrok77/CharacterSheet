@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.inject.Inject;
@@ -53,6 +54,15 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
     @InjectView(R.id.add_weapon_value)
     private EditText mValueText;
+
+    @InjectView(R.id.add_weapon_dice_multiplier)
+    private EditText mDamageDiceMultiplier;
+
+    @InjectView(R.id.add_weapon_modifier)
+    private EditText mDamageModifier;
+
+    @InjectView(R.id.add_weapon_summary_text)
+    private TextView mDamageSummary;
 
     private static final String TAG = AddWeaponActivity.class.getSimpleName();
     public static final String EXTRA_WEAPON_MODEL = "extra_weapon_model";
@@ -101,10 +111,14 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         mSaveButton.setOnClickListener(new SaveButtonClickListener());
 
         if (isEditing) {
+            // Set CharacterDAO update text watchers.
             mWeaponName.addTextChangedListener(new NameTextWatcher());
             mWeightText.addTextChangedListener(new WeightTextWatcher());
             mValueText.addTextChangedListener(new ValueTextWatcher());
         }
+        // These watchers are used whether we are editing or not.
+        mDamageDiceMultiplier.addTextChangedListener(new DamageDiceMultiplierTextWatcher());
+        mDamageModifier.addTextChangedListener(new DamageModifierTextWatcher());
 
         updateWeaponView(weapon);
     }
@@ -123,6 +137,29 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         mCompositeSubscription.unsubscribe();
     }
 
+    /**
+     * Get a TextView's input as an integer.
+     *
+     * @param view TextView input.
+     * @return int form of the TextView's input, which should represent an integer.
+     */
+    private int getIntFromTextView(TextView view) {
+        return getIntFromString(view.getText().toString());
+    }
+
+    /**
+     * Get a String's value as an integer. Essentially Integer.valueOf(), but will return 0 for the empty string.
+     *
+     * @param s String to turn into an integer.
+     * @return integer that the String represents. i.e. "5" would return 5.
+     */
+    private int getIntFromString(String s) {
+        if (s != null && !s.isEmpty()) {
+            return Integer.valueOf(s);
+        }
+        return 0;
+    }
+
     private void updateWeaponView(Weapon weapon) {
         mWeaponName.setText(weapon.getName());
         if (isMainHand) {
@@ -132,6 +169,17 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         }
         mWeightText.setText(String.valueOf(weapon.getWeight()));
         mValueText.setText(String.valueOf(weapon.getValue()));
+        mDamageDiceMultiplier.setText(String.valueOf(weapon.getDamage().getDiceQuantity()));
+        mDamageModifier.setText(String.valueOf(weapon.getDamage().getModifier()));
+        mDamageSummary.setText(weapon.getDamage().toString());
+    }
+
+    /**
+     * Update the Damage Summary view to reflect the current Damage input values.
+     */
+    private void updateDamageSummary() {
+        Log.d(TAG, "Updating damage summary text.");
+        mDamageSummary.setText(createDamage().toString());
     }
 
     /**
@@ -149,12 +197,17 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         }
     }
 
+    /**
+     * Create a Damage model corresponding to the input views.
+     *
+     * @return a Damage model from the user input.
+     */
     private Damage createDamage() {
         Damage damage = new Damage();
         // TODO:
-        damage.setDiceQuantity(2);
         damage.setDiceType(Dice.D8);
-        damage.setModifier(4);
+        damage.setDiceQuantity(getIntFromTextView(mDamageDiceMultiplier));
+        damage.setModifier(getIntFromTextView(mDamageModifier));
         return damage;
     }
 
@@ -167,8 +220,8 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         Weapon weapon = new Weapon();
         weapon.setName(mWeaponName.getText().toString());
         weapon.setDamage(createDamage());
-        weapon.setValue(Integer.valueOf(mValueText.getText().toString()));
-        weapon.setWeight(Integer.valueOf(mWeightText.getText().toString()));
+        weapon.setValue(getIntFromTextView(mValueText));
+        weapon.setWeight(getIntFromTextView(mWeightText));
         // TODO:
         weapon.setProperties("");
         return weapon;
@@ -202,6 +255,11 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         }
     }
 
+    /**
+     * A Hand radio button was clicked, which is probably the user switching the weapon's hand.
+     *
+     * @param view RadioButton view that was clicked.
+     */
     public void onHandOptionClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
 
@@ -257,17 +315,47 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     private class WeightTextWatcher extends UpdateTextWatcher {
         @Override
         public void updateValue(Weapon weapon, String value) {
-            weapon.setWeight(Integer.valueOf(value));
+            weapon.setWeight(getIntFromString(value));
         }
     }
 
     /**
      * Update the weapon's value in the GameCharacter.
      */
+    private class DamageDiceMultiplierTextWatcher extends UpdateTextWatcher {
+        @Override
+        public void updateValue(Weapon weapon, String value) {
+            weapon.getDamage().setDiceQuantity(getIntFromString(value));
+        }
+    }
+
+    /**
+     * Update the weapon's value in the GameCharacter. If we are creating a new Weapon, this class
+     * ignores the GameCharacter update and just updates the Damage Summary.
+     */
+    private class DamageModifierTextWatcher extends UpdateTextWatcher {
+        @Override
+        public void updateValue(Weapon weapon, String value) {
+            weapon.getDamage().setModifier(getIntFromString(value));
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (isEditing) {
+                super.afterTextChanged(s);
+            }
+            updateDamageSummary();
+        }
+    }
+
+    /**
+     * Update the weapon's value in the GameCharacter. If we are creating a new Weapon, this class
+     * ignores the GameCharacter update and just updates the Damage Summary.
+     */
     private class ValueTextWatcher extends UpdateTextWatcher {
         @Override
         public void updateValue(Weapon weapon, String value) {
-            weapon.setValue(Integer.valueOf(value));
+            weapon.setValue(getIntFromString(value));
         }
     }
 

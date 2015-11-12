@@ -36,7 +36,7 @@ public class Damage implements Serializable {
      * @return i.e. "2D4 + 2"
      */
     public String toString() {
-        String quantity = mDiceQuantity > 1 ? String.valueOf(mDiceQuantity) : "";   // Do not show "1D4", should show "D4"
+        String quantity = mDiceQuantity > 1 ? String.valueOf(mDiceQuantity) : "";   // Do not show "1d4", should show "d4"
         return quantity + mDiceType.toString() + " + " + mModifier;
     }
 
