@@ -8,6 +8,7 @@ import java.io.Serializable;
  * Damage representation. Dice type, # of that dice, and modifier
  */
 public class Damage implements Serializable {
+
     @SerializedName("DiceType")
     private Dice mDiceType;
     @SerializedName("DiceQuantity")
@@ -33,6 +34,7 @@ public class Damage implements Serializable {
 
     /**
      * Represents this Damage as a string.
+     *
      * @return i.e. "2D4 + 2"
      */
     public String toString() {

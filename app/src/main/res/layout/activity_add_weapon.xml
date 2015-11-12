@@ -159,15 +159,13 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <ImageButton
-                    android:id="@+id/add_weapon_dice_selector"
+                <com.paragonfervour.charactersheet.component.DicePickerViewComponent
+                    android:id="@+id/add_weapon_dice_picker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_marginBottom="8dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/description_weapon_dice"
-                    android:src="@drawable/d4_black_24dp"/>
+                    android:contentDescription="@string/description_weapon_dice"/>
 
                 <TextView
                     android:layout_width="wrap_content"

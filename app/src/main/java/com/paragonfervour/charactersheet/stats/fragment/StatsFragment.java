@@ -17,17 +17,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
-import com.paragonfervour.charactersheet.character.helper.DiceHelper;
 import com.paragonfervour.charactersheet.character.model.Dice;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Skill;
+import com.paragonfervour.charactersheet.component.DicePickerViewComponent;
 import com.paragonfervour.charactersheet.fragment.ComponentBaseFragment;
 import com.paragonfervour.charactersheet.helper.SnackbarHelper;
 import com.paragonfervour.charactersheet.stats.helper.StatHelper;
@@ -39,7 +38,6 @@ import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateIntSu
 import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateStrSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateMaxHpSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.health.UpdateTempHPSubscriber;
-import com.paragonfervour.charactersheet.stats.widget.DiceDialogFactory;
 import com.paragonfervour.charactersheet.stats.widget.SkillDialogFactory;
 import com.paragonfervour.charactersheet.view.DeathSaveViewComponent;
 import com.paragonfervour.charactersheet.view.SkillValueViewComponent;
@@ -95,7 +93,7 @@ public class StatsFragment extends ComponentBaseFragment {
     private TextView mHealthSummary;
 
     @InjectView(R.id.stats_health_dice_indicator)
-    private ImageView mDiceIndicator;
+    private DicePickerViewComponent mHitDicePickerComponent;
 
     @InjectView(R.id.stats_health_dice_roll)
     private TextView mHitDiceRollButton;
@@ -229,14 +227,8 @@ public class StatsFragment extends ComponentBaseFragment {
 
         mHealthComponent.setValue(character.getDefenseStats().getHitPoints());
         mTempHpComponent.setValue(character.getDefenseStats().getTempHp());
-        mDiceIndicator.setImageResource(DiceHelper.getDiceDrawable(character.getDefenseStats().getHitDice()));
-        mDiceIndicator.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DiceDialogFactory.createDicePickerDialog(getActivity())
-                        .subscribe(new HitDicePickerObserver());
-            }
-        });
+        mHitDicePickerComponent.setDice(character.getDefenseStats().getHitDice());
+        mHitDicePickerComponent.getDiceObservable().subscribe(new HitDicePickerObserver());
 
         updateMaxHp(character.getDefenseStats().getMaxHp());
 
@@ -756,7 +748,6 @@ public class StatsFragment extends ComponentBaseFragment {
                         @Override
                         public void onNext(GameCharacter gameCharacter) {
                             gameCharacter.getDefenseStats().setHitDice(dice);
-                            mDiceIndicator.setImageResource(DiceHelper.getDiceDrawable(dice));
                             unsubscribe();
                         }
                     }));

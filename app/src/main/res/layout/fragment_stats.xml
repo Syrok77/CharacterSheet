@@ -181,14 +181,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
 
-                <ImageView
+                <com.paragonfervour.charactersheet.component.DicePickerViewComponent
                     android:id="@+id/stats_health_dice_indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:textColor="@color/secondary_500"
-                    tools:src="@drawable/d4_black_24dp"
                     />
 
                 <TextView

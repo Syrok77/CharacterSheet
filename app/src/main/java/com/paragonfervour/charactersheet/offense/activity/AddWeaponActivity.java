@@ -22,6 +22,7 @@ import com.paragonfervour.charactersheet.character.model.Damage;
 import com.paragonfervour.charactersheet.character.model.Dice;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Weapon;
+import com.paragonfervour.charactersheet.component.DicePickerViewComponent;
 
 import roboguice.inject.InjectView;
 import rx.Observer;
@@ -63,6 +64,9 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
     @InjectView(R.id.add_weapon_summary_text)
     private TextView mDamageSummary;
+
+    @InjectView(R.id.add_weapon_dice_picker)
+    private DicePickerViewComponent mDamageDiceComponent;
 
     private static final String TAG = AddWeaponActivity.class.getSimpleName();
     public static final String EXTRA_WEAPON_MODEL = "extra_weapon_model";
@@ -107,6 +111,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
             mSaveButton.setVisibility(View.GONE);
             isEditing = true;
         }
+        updateWeaponView(weapon);
 
         mSaveButton.setOnClickListener(new SaveButtonClickListener());
 
@@ -120,7 +125,23 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         mDamageDiceMultiplier.addTextChangedListener(new DamageDiceMultiplierTextWatcher());
         mDamageModifier.addTextChangedListener(new DamageModifierTextWatcher());
 
-        updateWeaponView(weapon);
+        mDamageDiceComponent.getDiceObservable().subscribe(new Observer<Dice>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(Dice dice) {
+                updateDamageSummary();
+                if (isEditing) {
+                    updateCharacterWeaponDice(dice);
+                }
+            }
+        });
     }
 
     @Override
@@ -172,6 +193,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         mDamageDiceMultiplier.setText(String.valueOf(weapon.getDamage().getDiceQuantity()));
         mDamageModifier.setText(String.valueOf(weapon.getDamage().getModifier()));
         mDamageSummary.setText(weapon.getDamage().toString());
+        mDamageDiceComponent.setDice(weapon.getDamage().getDiceType());
     }
 
     /**
@@ -180,6 +202,27 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     private void updateDamageSummary() {
         Log.d(TAG, "Updating damage summary text.");
         mDamageSummary.setText(createDamage().toString());
+    }
+
+    /**
+     * Update active character's weapon dice to the given value.
+     *
+     * @param dice Dice the weapon is now using.
+     */
+    private void updateCharacterWeaponDice(final Dice dice) {
+        mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+            @Override
+            public void onCompleted() {}
+
+            @Override
+            public void onError(Throwable e) {}
+
+            @Override
+            public void onNext(GameCharacter gameCharacter) {
+                getActiveWeapon(gameCharacter).getDamage().setDiceType(dice);
+                unsubscribe();
+            }
+        });
     }
 
     /**
@@ -204,8 +247,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
      */
     private Damage createDamage() {
         Damage damage = new Damage();
-        // TODO:
-        damage.setDiceType(Dice.D8);
+        damage.setDiceType(mDamageDiceComponent.getDice());
         damage.setDiceQuantity(getIntFromTextView(mDamageDiceMultiplier));
         damage.setModifier(getIntFromTextView(mDamageModifier));
         return damage;
