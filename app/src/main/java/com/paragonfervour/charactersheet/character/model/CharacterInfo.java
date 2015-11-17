@@ -1,23 +1,18 @@
 package com.paragonfervour.charactersheet.character.model;
 
 
-import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
 /**
  * Character info model, containing name, class, level, XP, and race info.
  */
-public class CharacterInfo {
+public class CharacterInfo extends SugarRecord<CharacterInfo> {
 
-    @SerializedName("CharacterClass")
-    private String mCharacterClass; // TODO: Create a CharacterClass model?
-    @SerializedName("Race")
-    private String mRace;
-    @SerializedName("Level")
-    private int mLevel;
-    @SerializedName("Name")
-    private String mName;
-    @SerializedName("XP")
-    private int mXp;
+    String mCharacterClass; // TODO: Create a CharacterClass model?
+    String mRace;
+    int mLevel;
+    String mName;
+    int mXp;
 
     public static CharacterInfo createDefault() {
         CharacterInfo info = new CharacterInfo();

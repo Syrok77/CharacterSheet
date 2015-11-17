@@ -1,24 +1,19 @@
 package com.paragonfervour.charactersheet.character.model;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
+import com.orm.SugarRecord;
 
 /**
  * Damage representation. Dice type, # of that dice, and modifier
  */
-public class Damage implements Serializable {
+public class Damage extends SugarRecord<Damage> {
 
-    @SerializedName("DiceType")
-    private Dice mDiceType;
-    @SerializedName("DiceQuantity")
-    private int mDiceQuantity;
-    @SerializedName("Modifier")
-    private int mModifier;
+    int mDiceTypeValue;
+    int mDiceQuantity;
+    int mModifier;
 
     public static Damage createDefaultWeapon() {
         Damage d = new Damage();
-        d.mDiceType = Dice.D8;
+        d.setDiceType(Dice.D8);
         d.mDiceQuantity = 1;
         d.mModifier = 2;
         return d;
@@ -26,7 +21,7 @@ public class Damage implements Serializable {
 
     public static Damage createDefaultOffhand() {
         Damage d = new Damage();
-        d.mDiceType = Dice.D4;
+        d.setDiceType(Dice.D4);
         d.mDiceQuantity = 1;
         d.mModifier = 2;
         return d;
@@ -39,15 +34,15 @@ public class Damage implements Serializable {
      */
     public String toString() {
         String quantity = mDiceQuantity > 1 ? String.valueOf(mDiceQuantity) : "";   // Do not show "1d4", should show "d4"
-        return quantity + mDiceType.toString() + " + " + mModifier;
+        return quantity + getDiceType().toString() + " + " + mModifier;
     }
 
     public Dice getDiceType() {
-        return mDiceType;
+        return Dice.diceFromValue(mDiceTypeValue);
     }
 
     public void setDiceType(Dice diceType) {
-        mDiceType = diceType;
+        mDiceTypeValue = diceType.getValue();
     }
 
     public int getDiceQuantity() {

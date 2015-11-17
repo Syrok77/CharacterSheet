@@ -1,37 +1,33 @@
 package com.paragonfervour.charactersheet.character.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.orm.StringUtil;
+import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 
 import java.util.List;
 
 /**
  * Hierarchy of models that contains all the data of a D&D Character.
  */
-public class GameCharacter {
+public class GameCharacter extends SugarRecord<GameCharacter> {
     // Name, class, race, level, xp
-    @SerializedName("Info")
-    private CharacterInfo mInfo;
+    CharacterInfo mInfo;
 
     // Defense scores; AC, saves, hit points, hit die
-    @SerializedName("DefenseStats")
-    private DefenseStats mDefenseStats;
+    DefenseStats mDefenseStats;
 
     // Offense - weapons, spells
-    @SerializedName("OffenseStats")
-    private OffenseStats mOffenseStats;
+    OffenseStats mOffenseStats;
 
     // Bio - background, bond/ideal/etc.
-    @SerializedName("BioInfo")
-    private BioInfo mBioInfo;
+    BioInfo mBioInfo;
 
     // Skill list
-    @SerializedName("Skills")
-    private List<Skill> mSkills;
+    @Ignore
+    List<Skill> mSkills;
 
-    @SerializedName("isInspired")
-    private boolean isInspired;
-    @SerializedName("Speed")
-    private int mSpeed;
+    boolean isInspired;
+    int mSpeed;
 
     // Temp - create a default character
     public static GameCharacter createDefaultCharacter() {
@@ -44,6 +40,20 @@ public class GameCharacter {
         maldalair.isInspired = false;
         maldalair.mSpeed = 30;
         return maldalair;
+    }
+
+    @Override
+    public void save() {
+        super.save();
+        // Save sub models
+        mBioInfo.save();
+        mInfo.save();
+        mDefenseStats.save();
+        mOffenseStats.save();
+        for (Skill s : getSkills()) {
+            s.setCharacterId(getId());
+            s.save();
+        }
     }
 
     public CharacterInfo getInfo() {
@@ -63,11 +73,11 @@ public class GameCharacter {
     }
 
     public List<Skill> getSkills() {
+        if (mSkills == null) {
+            String query = StringUtil.toSQLName("mCharacterId") + " = ?";
+            mSkills = Skill.find(Skill.class, query, String.valueOf(getId()));
+        }
         return mSkills;
-    }
-
-    public void setSkills(List<Skill> skills) {
-        mSkills = skills;
     }
 
     public boolean isInspired() {

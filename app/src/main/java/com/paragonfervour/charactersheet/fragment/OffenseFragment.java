@@ -3,6 +3,7 @@ package com.paragonfervour.charactersheet.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,9 @@ import com.paragonfervour.charactersheet.offense.activity.AddWeaponActivity;
 import com.paragonfervour.charactersheet.offense.component.WeaponListViewComponent;
 
 import roboguice.inject.InjectView;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Fragment that displays a character's offensive abilities. This includes equipped weapons, as well as
@@ -37,6 +39,10 @@ public class OffenseFragment extends ComponentBaseFragment {
     @InjectView(R.id.offense_add_weapon_button)
     private Button mAddWeaponButton;
 
+    private static final String TAG = OffenseFragment.class.getSimpleName();
+
+    private CompositeSubscription mCompositeSubscription;
+
     public OffenseFragment() {
         super();
     }
@@ -54,17 +60,33 @@ public class OffenseFragment extends ComponentBaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mCompositeSubscription = new CompositeSubscription();
 
-        mCharacterDAO.getActiveCharacter()
+        mCompositeSubscription.add(mCharacterDAO.getActiveCharacter()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<GameCharacter>() {
+                .subscribe(new Observer<GameCharacter>() {
                     @Override
-                    public void call(GameCharacter character) {
-                        updateUI(character);
+                    public void onCompleted() {
                     }
-                });
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "Error getting game character", e);
+                    }
+
+                    @Override
+                    public void onNext(GameCharacter gameCharacter) {
+                        updateUI(gameCharacter);
+                    }
+                }));
 
         mAddWeaponButton.setOnClickListener(new AddWeaponClickListener());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mCompositeSubscription.unsubscribe();
     }
 
     private void updateUI(GameCharacter character) {

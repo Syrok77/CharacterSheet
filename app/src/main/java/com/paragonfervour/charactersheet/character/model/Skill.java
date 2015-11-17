@@ -1,6 +1,6 @@
 package com.paragonfervour.charactersheet.character.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +8,12 @@ import java.util.List;
 /**
  * Represent a character's skill. A Skill has a name (i.e. Sneak or
  */
-public class Skill {
+public class Skill extends SugarRecord<Skill> {
 
-    @SerializedName("Name")
-    private String mName;
-    @SerializedName("Value")
-    private int mValue;
+    String mName;
+    int mValue;
+
+    Long mCharacterId;
 
     /**
      * Create a default Skill model, mainly used in temporary test values.
@@ -34,7 +34,8 @@ public class Skill {
      */
     public static List<Skill> createMaldalairList() {
         List<Skill> skills = new ArrayList<>();
-        skills.add(createDefault());
+        Skill skill = createDefault();
+        skills.add(skill);
 
         Skill perception = new Skill();
         perception.setName("Acrobatics");
@@ -45,7 +46,6 @@ public class Skill {
     }
 
     public Skill() {
-
     }
 
     public String getName() {
@@ -62,6 +62,14 @@ public class Skill {
 
     public void setValue(int value) {
         mValue = value;
+    }
+
+    public Long getCharacterId() {
+        return mCharacterId;
+    }
+
+    public void setCharacterId(Long characterId) {
+        mCharacterId = characterId;
     }
 
     @Override

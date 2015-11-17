@@ -1,30 +1,24 @@
 package com.paragonfervour.charactersheet.character.model;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
+import com.orm.SugarRecord;
 
 /**
  * Model representing a Weapon, with a name (i.e. Rapier), damage, value, weight, and properties
  */
-public class Weapon implements Serializable {
+public class Weapon extends SugarRecord<Weapon> {
 
-    @SerializedName("Name")
-    private String mName;
+    String mName;
 
-    @SerializedName("Value")
-    private int mValue;
-    @SerializedName("Weight")
-    private int mWeight;
+    int mValue;
+    int mWeight;
 
-    @SerializedName("Damage")
-    private Damage mDamage;
+    Damage mDamage;
 
-    @SerializedName("Properties")
-    private String mProperties;
+    String mProperties;
 
-    @SerializedName("isMainHand")
-    private boolean isMainHand;
+    boolean isMainHand;
+
+    Long mOffenseStatId;
 
     public static Weapon createDefault() {
         Weapon w = new Weapon();
@@ -45,6 +39,12 @@ public class Weapon implements Serializable {
         w.mDamage = Damage.createDefaultOffhand();
         w.isMainHand = false;
         return w;
+    }
+
+    @Override
+    public void save() {
+        super.save();
+        mDamage.save();
     }
 
     public String getName() {
@@ -93,5 +93,13 @@ public class Weapon implements Serializable {
 
     public void setIsMainHand(boolean isMainHand) {
         this.isMainHand = isMainHand;
+    }
+
+    public Long getOffenseStatId() {
+        return mOffenseStatId;
+    }
+
+    public void setOffenseStatId(Long offenseStatId) {
+        mOffenseStatId = offenseStatId;
     }
 }

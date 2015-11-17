@@ -1,42 +1,29 @@
 package com.paragonfervour.charactersheet.character.model;
 
 
-import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
-public class DefenseStats {
+public class DefenseStats extends SugarRecord<DefenseStats> {
 
-    @SerializedName("AC")
-    private int mAC;
+    int mAC;
 
     // ability scores
-    @SerializedName("Str")
-    private int mStrScore;
-    @SerializedName("Dex")
-    private int mDexScore;
-    @SerializedName("Con")
-    private int mConScore;
-    @SerializedName("Int")
-    private int mIntScore;
-    @SerializedName("Wis")
-    private int mWisScore;
-    @SerializedName("Cha")
-    private int mChaScore;
+    int mStrScore;
+    int mDexScore;
+    int mConScore;
+    int mIntScore;
+    int mWisScore;
+    int mChaScore;
 
     // HP
-    @SerializedName("HitPoints")
-    private int mHitPoints;
-    @SerializedName("TempHp")
-    private int mTempHp;
-    @SerializedName("MaxHp")
-    private int mMaxHp;
-    @SerializedName("HitDice")
-    private Dice mHitDice;
+    int mHitPoints;
+    int mTempHp;
+    int mMaxHp;
+    int mHitDiceValue;
 
     // death saves
-    @SerializedName("SuccessAttempts")
-    private int mSuccessAttempts;
-    @SerializedName("FailAttempts")
-    private int mFailAttempts;
+    int mSuccessAttempts;
+    int mFailAttempts;
 
     /**
      * Create a new, default set of DefenseStats.
@@ -56,7 +43,7 @@ public class DefenseStats {
         d.mHitPoints = 14;
         d.mTempHp = 0;
         d.mMaxHp = 14;
-        d.mHitDice = Dice.D6;
+        d.setHitDice(Dice.D6);
 
         d.mSuccessAttempts = 0;
         d.mFailAttempts = 0;
@@ -82,7 +69,7 @@ public class DefenseStats {
         d.mHitPoints = 22;
         d.mTempHp = 0;
         d.mMaxHp = 24;
-        d.mHitDice = Dice.D8;
+        d.setHitDice(Dice.D8);
 
         d.mSuccessAttempts = 0;
         d.mFailAttempts = 0;
@@ -171,11 +158,11 @@ public class DefenseStats {
     }
 
     public Dice getHitDice() {
-        return mHitDice;
+        return Dice.diceFromValue(mHitDiceValue);
     }
 
     public void setHitDice(Dice hitDice) {
-        mHitDice = hitDice;
+        mHitDiceValue = hitDice.getValue();
     }
 
     public int getSuccessAttempts() {

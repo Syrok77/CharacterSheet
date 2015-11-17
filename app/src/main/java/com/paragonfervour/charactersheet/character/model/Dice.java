@@ -18,6 +18,20 @@ public enum Dice {
         mValue = value;
     }
 
+    public static Dice diceFromValue(int value) {
+        switch(value) {
+            case 4: return D4;
+            case 6: return D6;
+            case 8: return D8;
+            case 10: return D10;
+            case 12: return D12;
+            case 20: return D20;
+//            case 100: return D100;
+            default: return D4;
+        }
+    }
+
+
     public int getValue() {
         return mValue;
     }

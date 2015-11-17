@@ -1,27 +1,20 @@
 package com.paragonfervour.charactersheet.character.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
 /**
  * Model represents a Spell.
  * Spell name, level, description, casting time, components, range
  */
-public class Spell {
+public class Spell extends SugarRecord<Spell> {
 
-    @SerializedName("Name")
-    private String mName;
-    @SerializedName("Level")
-    private int mLevel;
-    @SerializedName("Description")
-    private String mDescription;
-    @SerializedName("CastingTime")
-    private String mCastingTime;
-    @SerializedName("Components")
-    private String mComponents;
-    @SerializedName("Duration")
-    private String mDuration;
-    @SerializedName("Range")
-    private String mRange;
+    String mName;
+    int mLevel;
+    String mDescription;
+    String mCastingTime;
+    String mComponents;
+    String mDuration;
+    String mRange;
 
     public static Spell createDefault() {
         Spell s = new Spell();

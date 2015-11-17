@@ -72,7 +72,8 @@ public class WeaponListViewComponent extends LinearLayout {
             WeaponViewComponent comp = (WeaponViewComponent)v;
 
             Intent intent = new Intent(getContext(), AddWeaponActivity.class);
-            intent.putExtra(AddWeaponActivity.EXTRA_WEAPON_MODEL, comp.getWeapon());
+            // TODO: Pass in weapon ID.
+//            intent.putExtra(AddWeaponActivity.EXTRA_WEAPON_MODEL, comp.getWeapon());
             getContext().startActivity(intent);
         }
     }
