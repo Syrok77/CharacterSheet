@@ -159,6 +159,8 @@ public class StatsFragment extends ComponentBaseFragment {
     @SuppressWarnings("unused") // doesn't matter if TAG is unused, it's nice to keep it around.
     private static final String TAG = StatsFragment.class.getSimpleName();
 
+    private String mModifierFormat;
+
     private CompositeSubscription mCompositeSubscription;
     private AlertDialog mActiveAlert;
     private AddUpdateSkillListener mSkillListener = new AddUpdateSkillListener();
@@ -172,6 +174,8 @@ public class StatsFragment extends ComponentBaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mModifierFormat = getString(R.string.stat_ability_score_modifier_format);
         mCompositeSubscription = new CompositeSubscription();
 
         bindHealthValues();
@@ -225,19 +229,37 @@ public class StatsFragment extends ComponentBaseFragment {
         mInspiration.setChecked(character.isInspired());
         updateInitiative(character.getDefenseStats().getDexScore());
 
-        mHealthComponent.setValue(character.getDefenseStats().getHitPoints());
-        mTempHpComponent.setValue(character.getDefenseStats().getTempHp());
+        mHealthComponent.initializeValue(character.getDefenseStats().getHitPoints());
+        mTempHpComponent.initializeValue(character.getDefenseStats().getTempHp());
         mHitDicePickerComponent.setDice(character.getDefenseStats().getHitDice());
         mHitDicePickerComponent.getDiceObservable().subscribe(new HitDicePickerObserver());
+        updateHealthSummary();
 
-        updateMaxHp(character.getDefenseStats().getMaxHp());
+        mMaxHealthComponent.initializeValue(character.getDefenseStats().getMaxHp());
 
-        mStrength.setValue(character.getDefenseStats().getStrScore());
-        mConstitution.setValue(character.getDefenseStats().getConScore());
-        mDexterity.setValue(character.getDefenseStats().getDexScore());
-        mIntelligence.setValue(character.getDefenseStats().getIntScore());
-        mWisdom.setValue(character.getDefenseStats().getWisScore());
-        mCharisma.setValue(character.getDefenseStats().getChaScore());
+        int strength = character.getDefenseStats().getStrScore();
+        mStrength.initializeValue(strength);
+        updateCounterModifier(strength, mStrengthModifier);
+
+        int constitution = character.getDefenseStats().getConScore();
+        mConstitution.initializeValue(constitution);
+        updateCounterModifier(constitution, mConstitutionModifier);
+
+        int dexterity = character.getDefenseStats().getDexScore();
+        mDexterity.initializeValue(dexterity);
+        updateCounterModifier(dexterity, mDexterityModifier);
+
+        int intelligence = character.getDefenseStats().getIntScore();
+        mIntelligence.initializeValue(intelligence);
+        updateCounterModifier(intelligence, mIntelligenceModifier);
+
+        int wisdom = character.getDefenseStats().getWisScore();
+        mWisdom.initializeValue(wisdom);
+        updateCounterModifier(wisdom, mWisdomModifier);
+
+        int charisma = character.getDefenseStats().getChaScore();
+        mCharisma.initializeValue(charisma);
+        updateCounterModifier(charisma, mCharismaModifier);
 
         buildSkillsView(character.getSkills());
         mAddSkillButton.setOnClickListener(new View.OnClickListener() {
@@ -400,15 +422,12 @@ public class StatsFragment extends ComponentBaseFragment {
      * Bind stat components for ability scores to the active GameCharacter model.
      */
     private void bindAbilityScores() {
-        final String modFormat = getString(R.string.stat_ability_score_modifier_format);
-
         mStrength.getValueObservable().subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer strength) {
                 mCharacterDAO.getActiveCharacter().subscribe(new UpdateStrSubscriber(strength));
 
-                String strMod = String.format(modFormat, StatHelper.getScoreModifierString(strength));
-                mStrengthModifier.setText(strMod);
+                updateCounterModifier(strength, mStrengthModifier);
             }
         });
 
@@ -417,8 +436,7 @@ public class StatsFragment extends ComponentBaseFragment {
             public void call(Integer constitution) {
                 mCharacterDAO.getActiveCharacter().subscribe(new UpdateConSubscriber(constitution));
 
-                String conMod = String.format(modFormat, StatHelper.getScoreModifierString(constitution));
-                mConstitutionModifier.setText(conMod);
+                updateCounterModifier(constitution, mConstitutionModifier);
             }
         });
 
@@ -427,8 +445,8 @@ public class StatsFragment extends ComponentBaseFragment {
             public void call(Integer dexterity) {
                 mCharacterDAO.getActiveCharacter().subscribe(new UpdateDexSubscriber(dexterity));
 
-                String dexMod = String.format(modFormat, StatHelper.getScoreModifierString(dexterity));
-                mDexterityModifier.setText(dexMod);
+                updateCounterModifier(dexterity, mDexterityModifier);
+
                 updateInitiative(dexterity);
             }
         });
@@ -438,8 +456,7 @@ public class StatsFragment extends ComponentBaseFragment {
             public void call(Integer intelligence) {
                 mCharacterDAO.getActiveCharacter().subscribe(new UpdateIntSubscriber(intelligence));
 
-                String intMod = String.format(modFormat, StatHelper.getScoreModifierString(intelligence));
-                mIntelligenceModifier.setText(intMod);
+                updateCounterModifier(intelligence, mIntelligenceModifier);
             }
         });
 
@@ -449,8 +466,7 @@ public class StatsFragment extends ComponentBaseFragment {
                 Log.d(TAG, "Updating wisdom: " + wisdom);
                 mCharacterDAO.getActiveCharacter().subscribe(new UpdateWisSubscriber(wisdom));
 
-                String wisMod = String.format(modFormat, StatHelper.getScoreModifierString(wisdom));
-                mWisdomModifier.setText(wisMod);
+                updateCounterModifier(wisdom, mWisdomModifier);
             }
         });
 
@@ -459,8 +475,7 @@ public class StatsFragment extends ComponentBaseFragment {
             public void call(Integer charisma) {
                 mCharacterDAO.getActiveCharacter().subscribe(new UpdateChaSubscriber(charisma));
 
-                String chaMod = String.format(modFormat, StatHelper.getScoreModifierString(charisma));
-                mCharismaModifier.setText(chaMod);
+                updateCounterModifier(charisma, mCharismaModifier);
             }
         });
 
@@ -530,6 +545,17 @@ public class StatsFragment extends ComponentBaseFragment {
                 return Observable.just(gameCharacter);
             }
         }).subscribe());
+    }
+
+    /**
+     * Update a modifier's text view for the given score.
+     *
+     * @param score        score to get modifier from.
+     * @param modifierView TextView that displays the modifier.
+     */
+    private void updateCounterModifier(int score, TextView modifierView) {
+        String strMod = String.format(mModifierFormat, StatHelper.getScoreModifierString(score));
+        modifierView.setText(strMod);
     }
 
     /**

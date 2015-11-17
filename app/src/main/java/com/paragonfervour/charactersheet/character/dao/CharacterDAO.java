@@ -17,6 +17,7 @@ import rx.subjects.BehaviorSubject;
 @Singleton
 public class CharacterDAO {
 
+    @SuppressWarnings("unused")
     private static final String TAG = CharacterDAO.class.getSimpleName();
 
     private GameCharacter mActiveCharacter = GameCharacter.createDefaultCharacter();
@@ -47,7 +48,6 @@ public class CharacterDAO {
                 .doOnUnsubscribe(new Action0() {
                     @Override
                     public void call() {
-                        // Batch changes together. Changes will only be saved every 3 seconds.
                         mActiveCharacter.save();
                     }
                 })

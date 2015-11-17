@@ -139,6 +139,17 @@ public class StatValueViewComponent extends LinearLayout {
     }
 
     /**
+     * Initialize this counter's value, without publishing the change.
+     *
+     * @param value Integer value for this view to express.
+     */
+    public void initializeValue(int value) {
+        if (mValueTextView != null) {
+            mValueTextView.setText(String.valueOf(value));
+        }
+    }
+
+    /**
      * Set the counter's value
      *
      * @param value Integer value for this view to express.
