@@ -8,46 +8,24 @@ import java.util.List;
 
 public class OffenseStats {
 
-    @SerializedName("MainHand")
-    private Weapon mMainHand;
-    @SerializedName("OffHand")
-    private Weapon mOffHand;
-
     @SerializedName("Weapons")
     private List<Weapon> mWeapons;
+
     @SerializedName("SpellList")
     private List<Spell> mSpellList;
 
 
     public static OffenseStats createDefault() {
         OffenseStats os = new OffenseStats();
-        os.mMainHand = Weapon.createDefault();
-        os.mOffHand = Weapon.createOffhand();
 
         os.mWeapons = new ArrayList<>();
-        os.mWeapons.add(os.mMainHand);
-        os.mWeapons.add(os.mOffHand);
+        os.mWeapons.add(Weapon.createDefault());
+        os.mWeapons.add(Weapon.createOffhand());
 
         os.mSpellList = new ArrayList<>();
         os.mSpellList.add(Spell.createDefault());
 
         return os;
-    }
-
-    public Weapon getMainHand() {
-        return mMainHand;
-    }
-
-    public void setMainHand(Weapon mainHand) {
-        mMainHand = mainHand;
-    }
-
-    public Weapon getOffHand() {
-        return mOffHand;
-    }
-
-    public void setOffHand(Weapon offHand) {
-        mOffHand = offHand;
     }
 
     public List<Weapon> getWeapons() {
@@ -56,6 +34,36 @@ public class OffenseStats {
 
     public void setWeapons(List<Weapon> weapons) {
         mWeapons = weapons;
+    }
+
+    /**
+     * Get a List of Weapons that are equipped in the main hand.
+     *
+     * @return a List<Weapon> containing Weapons for the main hand.
+     */
+    public List<Weapon> getMainHandWeapons() {
+        List<Weapon> list = new ArrayList<>();
+        for (Weapon w : mWeapons) {
+            if (w.isMainHand()) {
+                list.add(w);
+            }
+        }
+        return list;
+    }
+
+    /**
+     * Get a List of Weapons that are equipped in the off hand.
+     *
+     * @return a List<Weapon> containing Weapons for the off hand.
+     */
+    public List<Weapon> getOffHandWeapons() {
+        List<Weapon> list = new ArrayList<>();
+        for (Weapon w : mWeapons) {
+            if (!w.isMainHand()) {
+                list.add(w);
+            }
+        }
+        return list;
     }
 
     public List<Spell> getSpellList() {

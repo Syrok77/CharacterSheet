@@ -71,10 +71,6 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     private static final String TAG = AddWeaponActivity.class.getSimpleName();
     public static final String EXTRA_WEAPON_MODEL = "extra_weapon_model";
 
-    // temp
-    public static final String EXTRA_IS_MAIN_HAND = "extra_is_main_hand";
-    private boolean isMainHand = true;
-
     private CompositeSubscription mCompositeSubscription;
     private boolean isEditing;
 
@@ -97,7 +93,6 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
         Intent i = getIntent();
         Weapon weapon = (Weapon) i.getSerializableExtra(EXTRA_WEAPON_MODEL);
-        isMainHand = i.getBooleanExtra(EXTRA_IS_MAIN_HAND, true);
 
         if (weapon == null) {
             // We are creating a new weapon
@@ -154,6 +149,10 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
     @Override
     protected void onDestroy() {
+        if (isEditing) {
+            // TODO: Remove this log
+            Toast.makeText(getApplicationContext(), "Updating weapons not yet supported.", Toast.LENGTH_SHORT).show();
+        }
         super.onDestroy();
         mCompositeSubscription.unsubscribe();
     }
@@ -183,7 +182,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
     private void updateWeaponView(Weapon weapon) {
         mWeaponName.setText(weapon.getName());
-        if (isMainHand) {
+        if (weapon.isMainHand()) {
             mHandGroup.check(R.id.add_weapon_hand_main_button);
         } else {
             mHandGroup.check(R.id.add_weapon_hand_off_button);
@@ -233,11 +232,12 @@ public class AddWeaponActivity extends ComponentBaseActivity {
      */
     private Weapon getActiveWeapon(GameCharacter gameCharacter) {
         // TODO: Support multiple weapons in each hand
-        if (isMainHand) {
-            return gameCharacter.getOffenseStats().getMainHand();
-        } else {
-            return gameCharacter.getOffenseStats().getOffHand();
-        }
+//        if (isMainHand) {
+//            return gameCharacter.getOffenseStats().getMainHand();
+//        } else {
+//            return gameCharacter.getOffenseStats().getOffHand();
+//        }
+        return null;
     }
 
     /**
@@ -264,6 +264,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         weapon.setDamage(createDamage());
         weapon.setValue(getIntFromTextView(mValueText));
         weapon.setWeight(getIntFromTextView(mWeightText));
+        weapon.setIsMainHand(mHandGroup.getCheckedRadioButtonId() == R.id.add_weapon_hand_main_button);
         // TODO:
         weapon.setProperties("");
         return weapon;
@@ -274,12 +275,9 @@ public class AddWeaponActivity extends ComponentBaseActivity {
      * otherwise just set the value on the Weapon.
      */
     private void setMainHand() {
-        isMainHand = true;
         if (isEditing) {
             // TODO: Update the character model
-            // Remove mWeapon from the offhand list
-
-            // Add mWeapon to the offhand list.
+            // Change the Weapon's isMainHand flag to true
         }
     }
 
@@ -288,12 +286,9 @@ public class AddWeaponActivity extends ComponentBaseActivity {
      * otherwise just set the value on the Weapon.
      */
     private void setOffHand() {
-        isMainHand = false;
         if (isEditing) {
             // TODO: Update the character model.
-            // Remove mWeapon from the main hand list
-
-            // Add mWeapon to the offhand list.
+            // Change the Weapon's isMainHand flag to false
         }
     }
 
@@ -336,12 +331,8 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
                 @Override
                 public void onNext(GameCharacter gameCharacter) {
-                    Log.d(TAG, "Updated weapon " + isMainHand);
-                    if (isMainHand) {
-                        gameCharacter.getOffenseStats().setMainHand(createWeapon());
-                    } else {
-                        gameCharacter.getOffenseStats().setOffHand(createWeapon());
-                    }
+                    Weapon weapon = createWeapon();
+                    gameCharacter.getOffenseStats().getWeapons().add(weapon);
 
                     mCharacterDAO.activeCharacterUpdated();
                     unsubscribe();

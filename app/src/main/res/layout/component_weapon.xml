@@ -3,9 +3,9 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content" >
+              android:layout_height="wrap_content"
+              android:background="?attr/selectableItemBackground">
 
-    <!-- TODO: Make this look good -->
     <ImageView
         android:id="@+id/weapon_icon"
         android:layout_width="36dp"

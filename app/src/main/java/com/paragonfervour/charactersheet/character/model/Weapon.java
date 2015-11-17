@@ -23,6 +23,9 @@ public class Weapon implements Serializable {
     @SerializedName("Properties")
     private String mProperties;
 
+    @SerializedName("isMainHand")
+    private boolean isMainHand;
+
     public static Weapon createDefault() {
         Weapon w = new Weapon();
         w.mName = "Short Sword";
@@ -30,6 +33,7 @@ public class Weapon implements Serializable {
         w.mWeight = 2;
         w.mDamage = Damage.createDefaultWeapon();
         w.mProperties = "Light";
+        w.isMainHand = true;
         return w;
     }
 
@@ -39,6 +43,7 @@ public class Weapon implements Serializable {
         w.mValue = 2;
         w.mWeight = 1;
         w.mDamage = Damage.createDefaultOffhand();
+        w.isMainHand = false;
         return w;
     }
 
@@ -80,5 +85,13 @@ public class Weapon implements Serializable {
 
     public void setProperties(String properties) {
         mProperties = properties;
+    }
+
+    public boolean isMainHand() {
+        return isMainHand;
+    }
+
+    public void setIsMainHand(boolean isMainHand) {
+        this.isMainHand = isMainHand;
     }
 }

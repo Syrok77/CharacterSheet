@@ -18,4 +18,6 @@
     <dimen name="appbar_elevation">4dp</dimen>
     <dimen name="button_elevation">2dp</dimen>
 
+    <dimen name="weapon_list_item_top_margin">8dp</dimen>
+
 </resources>

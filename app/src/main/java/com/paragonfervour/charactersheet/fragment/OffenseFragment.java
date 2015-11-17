@@ -13,7 +13,7 @@ import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.offense.activity.AddWeaponActivity;
-import com.paragonfervour.charactersheet.view.WeaponViewComponent;
+import com.paragonfervour.charactersheet.offense.component.WeaponListViewComponent;
 
 import roboguice.inject.InjectView;
 import rx.android.schedulers.AndroidSchedulers;
@@ -29,10 +29,10 @@ public class OffenseFragment extends ComponentBaseFragment {
     private CharacterDAO mCharacterDAO;
 
     @InjectView(R.id.offense_main_weapon)
-    private WeaponViewComponent mMainHand;
+    private WeaponListViewComponent mMainHandList;
 
     @InjectView(R.id.offense_offhand_weapon)
-    private WeaponViewComponent mOffHand;
+    private WeaponListViewComponent mOffHandList;
 
     @InjectView(R.id.offense_add_weapon_button)
     private Button mAddWeaponButton;
@@ -64,27 +64,12 @@ public class OffenseFragment extends ComponentBaseFragment {
                     }
                 });
 
-        mMainHand.setOnClickListener(new EditWeaponComponentClickListener());
-        mOffHand.setOnClickListener(new EditWeaponComponentClickListener());
         mAddWeaponButton.setOnClickListener(new AddWeaponClickListener());
     }
 
     private void updateUI(GameCharacter character) {
-        mMainHand.applyWeaponModel(character.getOffenseStats().getMainHand());
-        mOffHand.applyWeaponModel(character.getOffenseStats().getOffHand());
-    }
-
-    private class EditWeaponComponentClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            WeaponViewComponent comp = (WeaponViewComponent)v;
-
-            Intent intent = new Intent(getActivity(), AddWeaponActivity.class);
-            intent.putExtra(AddWeaponActivity.EXTRA_WEAPON_MODEL, comp.getWeapon());
-            boolean isMainHand = mMainHand == comp;
-            intent.putExtra(AddWeaponActivity.EXTRA_IS_MAIN_HAND, isMainHand);
-            startActivity(intent);
-        }
+        mMainHandList.setWeapons(character.getOffenseStats().getMainHandWeapons());
+        mOffHandList.setWeapons(character.getOffenseStats().getOffHandWeapons());
     }
 
     private class AddWeaponClickListener implements View.OnClickListener {
