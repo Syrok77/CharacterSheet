@@ -15,6 +15,7 @@
     <string name="standard_weight_format">%1$s lbs</string>
     <string name="standard_distance">feet</string>
     <string name="plus">+</string>
+    <string name="delete">delete</string>
 
     <!-- Navigation -->
     <string name="nav_stats_title">Stats</string>

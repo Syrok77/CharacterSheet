@@ -6,6 +6,9 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -83,6 +86,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         mCompositeSubscription.add(mCharacterDAO.getActiveCharacter()
                 .subscribe(new CharacterObserver()));
 
+        setSupportActionBar(mToolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,6 +142,22 @@ public class AddWeaponActivity extends ComponentBaseActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.add_weapon, menu);
+        return isEditing;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.add_weapon_menu_delete && isEditing) {
+            mWeapon.delete();
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
