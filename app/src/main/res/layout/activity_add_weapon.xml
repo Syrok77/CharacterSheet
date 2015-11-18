@@ -1,241 +1,285 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/default_white">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/default_white">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/activity_add_weapon_toolbar"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/weapon_stats_title"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/add_weapon_stats_title"
-            android:textColor="@color/tertiary_500"
-            android:textSize="@dimen/text_large"/>
-
-        <LinearLayout
-            android:id="@+id/add_weapon_info_section"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/weapon_stats_title"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/activity_add_weapon_toolbar"
             android:layout_marginEnd="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:orientation="vertical">
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/weapon_name_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/weapon_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/add_weapon_weapon_name_hint"
-                    tools:text="Short Sword"/>
-
-            </android.support.design.widget.TextInputLayout>
+            android:layout_marginStart="16dp">
 
             <TextView
+                android:id="@+id/weapon_stats_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_weapon_hand_chooser_title"/>
-
-            <RadioGroup
-                android:id="@+id/add_weapon_hand_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checkedButton="@+id/add_weapon_hand_main_button"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/add_weapon_hand_main_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="onHandOptionClicked"
-                    android:text="@string/add_weapon_hand_main"/>
-
-                <RadioButton
-                    android:id="@+id/add_weapon_hand_off_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="onHandOptionClicked"
-                    android:text="@string/add_weapon_hand_off"/>
-
-            </RadioGroup>
+                android:layout_marginTop="16dp"
+                android:text="@string/add_weapon_stats_title"
+                android:textColor="@color/tertiary_500"
+                android:textSize="@dimen/text_large"/>
 
             <LinearLayout
+                android:id="@+id/add_weapon_info_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
+                android:layout_below="@+id/weapon_stats_title"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical">
 
                 <android.support.design.widget.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/add_weapon_value"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/add_weapon_value"
-                        android:inputType="number"
-                        tools:text="20"/>
-
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/add_weapon_weight"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/add_weapon_weight"
-                        android:inputType="number"
-                        tools:text="4"/>
-
-                </android.support.design.widget.TextInputLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- TODO: More weapon stats here (value, weight, hand) -->
-
-        <TextView
-            android:id="@+id/weapon_damage_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/add_weapon_info_section"
-            android:layout_marginTop="16dp"
-            android:text="@string/add_weapon_damage_title"
-            android:textColor="@color/tertiary_500"
-            android:textSize="@dimen/text_large"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/weapon_damage_title"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/add_weapon_damage_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/weapon_name_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/add_weapon_dice_multiplier"
-                        android:layout_width="64dp"
+                        android:id="@+id/weapon_name"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:hint="@string/add_weapon_dice_multiplier_hint"
-                        android:inputType="number"
-                        tools:text="2"/>
+                        android:hint="@string/add_weapon_weapon_name_hint"
+                        tools:text="Short Sword"/>
 
                 </android.support.design.widget.TextInputLayout>
-
-                <com.paragonfervour.charactersheet.component.DicePickerViewComponent
-                    android:id="@+id/add_weapon_dice_picker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="8dp"
-                    android:contentDescription="@string/description_weapon_dice"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/plus"
-                    android:textSize="24sp"/>
+                    android:text="@string/add_weapon_hand_chooser_title"/>
+
+                <RadioGroup
+                    android:id="@+id/add_weapon_hand_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkedButton="@+id/add_weapon_hand_main_button"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/add_weapon_hand_main_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onHandOptionClicked"
+                        android:text="@string/add_weapon_hand_main"/>
+
+                    <RadioButton
+                        android:id="@+id/add_weapon_hand_off_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onHandOptionClicked"
+                        android:text="@string/add_weapon_hand_off"/>
+
+                </RadioGroup>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/add_weapon_value"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/add_weapon_value"
+                            android:inputType="number"
+                            tools:text="20"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/add_weapon_weight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/add_weapon_weight"
+                            android:inputType="number"
+                            tools:text="4"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/weapon_damage_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/add_weapon_info_section"
+                android:layout_marginTop="16dp"
+                android:text="@string/add_weapon_damage_title"
+                android:textColor="@color/tertiary_500"
+                android:textSize="@dimen/text_large"/>
+
+            <LinearLayout
+                android:id="@+id/add_weapon_damage_section"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/weapon_damage_title"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/add_weapon_damage_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/add_weapon_dice_multiplier"
+                            android:layout_width="64dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:hint="@string/add_weapon_dice_multiplier_hint"
+                            android:inputType="number"
+                            tools:text="2"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <com.paragonfervour.charactersheet.component.DicePickerViewComponent
+                        android:id="@+id/add_weapon_dice_picker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="8dp"
+                        android:contentDescription="@string/description_weapon_dice"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/plus"
+                        android:textSize="24sp"/>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/add_weapon_modifier"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:hint="@string/add_weapon_modifier_hint"
+                            android:inputType="number"
+                            tools:text="6"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/add_weapon_summary_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:text="2 d4 + 6 (TODO)"
+                    android:textSize="20sp"
+                    tools:text="2 d4 + 6"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/add_weapon_properties_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/add_weapon_damage_section"
+                android:layout_marginTop="16dp"
+                android:text="@string/add_weapon_properties_title"
+                android:textColor="@color/tertiary_500"
+                android:textSize="@dimen/text_large"/>
+
+            <LinearLayout
+                android:id="@+id/add_weapon_properties_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/add_weapon_properties_title"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical">
 
                 <android.support.design.widget.TextInputLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
 
                     <EditText
-                        android:id="@+id/add_weapon_modifier"
-                        android:layout_width="80dp"
+                        android:id="@+id/add_weapon_properties_text"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:hint="@string/add_weapon_modifier_hint"
-                        android:inputType="number"
-                        tools:text="6"/>
+                        android:gravity="top|start"
+                        android:hint="@string/add_weapon_properties_hint"
+                        android:maxLines="6"
+                        android:minLines="1"
+                        android:scrollbars="vertical"/>
 
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/add_weapon_summary_text"
+            <Button
+                android:id="@+id/add_weapon_save_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:text="2 d4 + 6 (TODO)"
-                android:textSize="20sp"
-                tools:text="2 d4 + 6"/>
+                android:layout_below="@+id/add_weapon_properties_section"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="48dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/tertiary_500"
+                android:paddingBottom="18dp"
+                android:paddingEnd="64dp"
+                android:paddingLeft="64dp"
+                android:paddingRight="64dp"
+                android:paddingStart="64dp"
+                android:paddingTop="18dp"
+                android:text="@string/save"
+                android:textColor="@color/default_white"
+                android:visibility="gone"
+                tools:visibility="visible"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <Button
-            android:id="@+id/add_weapon_save_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="48dp"
-            android:backgroundTint="@color/tertiary_500"
-            android:paddingBottom="18dp"
-            android:paddingEnd="64dp"
-            android:paddingLeft="64dp"
-            android:paddingRight="64dp"
-            android:paddingStart="64dp"
-            android:paddingTop="18dp"
-            android:text="@string/save"
-            android:textColor="@color/default_white"
-            android:visibility="gone"
-            tools:visibility="visible"/>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/activity_add_weapon_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/brand_primary"
+            android:clipToPadding="false"
+            android:elevation="@dimen/appbar_elevation"
+            android:theme="@style/ToolbarAppTheme"/>
 
     </RelativeLayout>
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/activity_add_weapon_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/brand_primary"
-        android:clipToPadding="false"
-        android:elevation="@dimen/appbar_elevation"
-        android:theme="@style/ToolbarAppTheme"/>
-
-</RelativeLayout>
+</ScrollView>

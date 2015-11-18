@@ -70,6 +70,9 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     @InjectView(R.id.add_weapon_dice_picker)
     private DicePickerViewComponent mDamageDiceComponent;
 
+    @InjectView(R.id.add_weapon_properties_text)
+    private EditText mProperties;
+
     private static final String TAG = AddWeaponActivity.class.getSimpleName();
     public static final String EXTRA_WEAPON_ID = "extra_weapon_id";
 
@@ -120,6 +123,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
             mWeaponName.addTextChangedListener(new NameTextWatcher());
             mWeightText.addTextChangedListener(new WeightTextWatcher());
             mValueText.addTextChangedListener(new ValueTextWatcher());
+            mProperties.addTextChangedListener(new PropertiesTextWatcher());
         }
         // These watchers are used whether we are editing or not.
         mDamageDiceMultiplier.addTextChangedListener(new DamageDiceMultiplierTextWatcher());
@@ -210,6 +214,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         mDamageModifier.setText(String.valueOf(weapon.getDamage().getModifier()));
         mDamageSummary.setText(weapon.getDamage().toString());
         mDamageDiceComponent.setDice(weapon.getDamage().getDiceType());
+        mProperties.setText(weapon.getProperties());
     }
 
     /**
@@ -257,8 +262,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         weapon.setValue(getIntFromTextView(mValueText));
         weapon.setWeight(getIntFromTextView(mWeightText));
         weapon.setIsMainHand(mHandGroup.getCheckedRadioButtonId() == R.id.add_weapon_hand_main_button);
-        // TODO:
-        weapon.setProperties("");
+        weapon.setProperties(mProperties.getText().toString());
         return weapon;
     }
 
@@ -334,6 +338,16 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     }
 
     /**
+     * Update the weapon's Properties value in the GameCharacter as it is edited.
+     */
+    private class PropertiesTextWatcher extends UpdateTextWatcher {
+        @Override
+        public void updateValue(Weapon weapon, String value) {
+            weapon.setProperties(value);
+        }
+    }
+
+    /**
      * Update the weapon's weight value in the GameCharacter.
      */
     private class WeightTextWatcher extends UpdateTextWatcher {
@@ -344,12 +358,20 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     }
 
     /**
-     * Update the weapon's value in the GameCharacter.
+     * Update the weapon's value in the GameCharacter. If we are creating a new Weapon, this class
+     * ignores the GameCharacter update and just updates the Damage Summary.
      */
     private class DamageDiceMultiplierTextWatcher extends UpdateTextWatcher {
         @Override
         public void updateValue(Weapon weapon, String value) {
             weapon.getDamage().setDiceQuantity(getIntFromString(value));
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (isEditing) {
+                super.afterTextChanged(s);
+            }
         }
     }
 
