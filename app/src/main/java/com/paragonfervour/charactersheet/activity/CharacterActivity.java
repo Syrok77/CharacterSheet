@@ -62,7 +62,7 @@ public class CharacterActivity extends ComponentBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character);
 
-        mHeaderComponent = new CharacterHeaderComponent(findViewById(R.id.drawer_header_layout));
+        mHeaderComponent = new CharacterHeaderComponent(mNavigationView.getHeaderView(0));
         add(mHeaderComponent);
 
         mTitle = getTitle();

@@ -41,7 +41,7 @@
     <color name="button_gray">#878787</color>
     <color name="dangerous_red">#da0000</color>
 
-    <color name="page_color">#e2e2e2</color>
-    <color name="page_section_color">#efefef</color>
+    <color name="page_color">#EFEFEF</color>
+    <color name="page_section_color">#FDFDFD</color>
 
 </resources>
