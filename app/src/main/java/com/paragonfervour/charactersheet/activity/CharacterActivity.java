@@ -72,7 +72,9 @@ public class CharacterActivity extends ComponentBaseActivity {
         setSupportActionBar(mToolbar);
 
         setUpDrawer(savedInstanceState);
-        navigateToTarget(R.id.navigation_character_info);
+        if (savedInstanceState == null) {
+            navigateToTarget(R.id.navigation_character_info);
+        }
     }
 
     @Override
