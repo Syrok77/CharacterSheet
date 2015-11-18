@@ -43,8 +43,8 @@ public class Weapon extends SugarRecord<Weapon> {
 
     @Override
     public void save() {
-        super.save();
         mDamage.save();
+        super.save();
     }
 
     public String getName() {

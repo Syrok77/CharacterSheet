@@ -3,6 +3,7 @@ package com.paragonfervour.charactersheet.character.dao;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
+import com.paragonfervour.charactersheet.character.model.Weapon;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -57,6 +58,19 @@ public class CharacterDAO {
     }
 
     /**
+     * Get a weapon by the model's ID.
+     *
+     * @param id Weapon model's ID.
+     * @return Weapon matching the ID, or null if it doesn't exist.
+     */
+    public Weapon getWeaponById(Long id) {
+        if (id != null) {
+            return Weapon.findById(Weapon.class, id);
+        }
+        return null;
+    }
+
+    /**
      * Alerts this DAO that it needs to publish the active character again. Use this to signal other
      * that the game character was changed, or when you switch active characters.
      */
@@ -71,6 +85,15 @@ public class CharacterDAO {
             // Create a new one
             mActiveCharacter = GameCharacter.createDefaultCharacter();
             mActiveCharacter.save();
+
+            // Add default weapons
+            Weapon main = Weapon.createDefault();
+            main.setOffenseStatId(mActiveCharacter.getOffenseStats().getId());
+            main.save();
+
+            Weapon off = Weapon.createOffhand();
+            off.setOffenseStatId(mActiveCharacter.getOffenseStats().getId());
+            off.save();
         }
 
         mActiveCharacterSubject.onNext(mActiveCharacter);

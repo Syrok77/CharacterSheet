@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
@@ -69,9 +68,10 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     private DicePickerViewComponent mDamageDiceComponent;
 
     private static final String TAG = AddWeaponActivity.class.getSimpleName();
-    public static final String EXTRA_WEAPON_MODEL = "extra_weapon_model";
+    public static final String EXTRA_WEAPON_ID = "extra_weapon_id";
 
     private CompositeSubscription mCompositeSubscription;
+    private Weapon mWeapon;
     private boolean isEditing;
 
     @Override
@@ -92,21 +92,22 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
 
         Intent i = getIntent();
-        Weapon weapon = (Weapon) i.getSerializableExtra(EXTRA_WEAPON_MODEL);
+        Long weaponId = i.getLongExtra(EXTRA_WEAPON_ID, 0L);
+        mWeapon = mCharacterDAO.getWeaponById(weaponId);
 
-        if (weapon == null) {
+        if (mWeapon == null) {
             // We are creating a new weapon
             mToolbar.setTitle(R.string.nav_add_weapon_title);
             mSaveButton.setVisibility(View.VISIBLE);
 
-            weapon = Weapon.createDefault();
+            mWeapon = Weapon.createDefault();
         } else {
             // We are editing an existing weapon.
             mToolbar.setTitle(R.string.nav_edit_weapon_title);
             mSaveButton.setVisibility(View.GONE);
             isEditing = true;
         }
-        updateWeaponView(weapon);
+        updateWeaponView(mWeapon);
 
         mSaveButton.setOnClickListener(new SaveButtonClickListener());
 
@@ -149,10 +150,6 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
     @Override
     protected void onDestroy() {
-        if (isEditing) {
-            // TODO: Remove this log
-            Toast.makeText(getApplicationContext(), "Updating weapons not yet supported.", Toast.LENGTH_SHORT).show();
-        }
         super.onDestroy();
         mCompositeSubscription.unsubscribe();
     }
@@ -209,35 +206,10 @@ public class AddWeaponActivity extends ComponentBaseActivity {
      * @param dice Dice the weapon is now using.
      */
     private void updateCharacterWeaponDice(final Dice dice) {
-        mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
-            @Override
-            public void onCompleted() {}
-
-            @Override
-            public void onError(Throwable e) {}
-
-            @Override
-            public void onNext(GameCharacter gameCharacter) {
-                getActiveWeapon(gameCharacter).getDamage().setDiceType(dice);
-                unsubscribe();
-            }
-        });
-    }
-
-    /**
-     * Get the active weapon model directly from the GameCharacter.
-     *
-     * @param gameCharacter game character model being edited.
-     * @return the weapon inner-model from the passed in gameCharacter.
-     */
-    private Weapon getActiveWeapon(GameCharacter gameCharacter) {
-        // TODO: Support multiple weapons in each hand
-//        if (isMainHand) {
-//            return gameCharacter.getOffenseStats().getMainHand();
-//        } else {
-//            return gameCharacter.getOffenseStats().getOffHand();
-//        }
-        return null;
+        if (mWeapon != null) {
+            mWeapon.getDamage().setDiceType(dice);
+            mWeapon.save();
+        }
     }
 
     /**
@@ -275,9 +247,9 @@ public class AddWeaponActivity extends ComponentBaseActivity {
      * otherwise just set the value on the Weapon.
      */
     private void setMainHand() {
-        if (isEditing) {
-            // TODO: Update the character model
-            // Change the Weapon's isMainHand flag to true
+        if (isEditing && mWeapon != null) {
+            mWeapon.setIsMainHand(true);
+            mWeapon.save();
         }
     }
 
@@ -286,9 +258,9 @@ public class AddWeaponActivity extends ComponentBaseActivity {
      * otherwise just set the value on the Weapon.
      */
     private void setOffHand() {
-        if (isEditing) {
-            // TODO: Update the character model.
-            // Change the Weapon's isMainHand flag to false
+        if (isEditing && mWeapon != null) {
+            mWeapon.setIsMainHand(false);
+            mWeapon.save();
         }
     }
 
@@ -313,10 +285,6 @@ public class AddWeaponActivity extends ComponentBaseActivity {
                     break;
                 }
         }
-
-        if (isEditing) {
-            Toast.makeText(this, "Switching hands is currently not supported.", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private class SaveButtonClickListener implements View.OnClickListener {
@@ -324,15 +292,18 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         public void onClick(View v) {
             mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
                 @Override
-                public void onCompleted() {}
+                public void onCompleted() {
+                }
 
                 @Override
-                public void onError(Throwable e) {}
+                public void onError(Throwable e) {
+                }
 
                 @Override
                 public void onNext(GameCharacter gameCharacter) {
                     Weapon weapon = createWeapon();
-                    gameCharacter.getOffenseStats().getWeapons().add(weapon);
+                    weapon.setOffenseStatId(gameCharacter.getOffenseStats().getId());
+                    weapon.save();
 
                     mCharacterDAO.activeCharacterUpdated();
                     unsubscribe();
@@ -421,21 +392,8 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
         @Override
         public void afterTextChanged(final Editable s) {
-            mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
-                @Override
-                public void onCompleted() {
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                }
-
-                @Override
-                public void onNext(GameCharacter gameCharacter) {
-                    updateValue(getActiveWeapon(gameCharacter), s.toString());
-                    unsubscribe();
-                }
-            });
+            updateValue(mWeapon, s.toString());
+            mWeapon.save();
         }
     }
 

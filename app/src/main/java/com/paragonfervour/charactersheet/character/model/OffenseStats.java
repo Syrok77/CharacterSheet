@@ -11,9 +11,6 @@ import java.util.List;
 public class OffenseStats extends SugarRecord<OffenseStats> {
 
     @Ignore
-    private List<Weapon> mWeapons;
-
-    @Ignore
     private List<Spell> mSpellList;
 
     // This is just here so that Sugar saves this.
@@ -25,35 +22,15 @@ public class OffenseStats extends SugarRecord<OffenseStats> {
     public static OffenseStats createDefault() {
         OffenseStats os = new OffenseStats();
 
-        Weapon main = Weapon.createDefault();
-        Weapon off = Weapon.createOffhand();
-
-        os.mWeapons = new ArrayList<>();
-        os.mWeapons.add(main);
-        os.mWeapons.add(off);
-
         os.mSpellList = new ArrayList<>();
         os.mSpellList.add(Spell.createDefault());
 
         return os;
     }
 
-    @Override
-    public void save() {
-        super.save();
-        for (Weapon w : getWeapons()) {
-            w.setOffenseStatId(getId());
-            w.save();
-        }
-    }
-
     public List<Weapon> getWeapons() {
-        if (mWeapons == null) {
-            String varName = StringUtil.toSQLName("mOffenseStatId");
-            mWeapons = Weapon.find(Weapon.class, varName + " = ?", String.valueOf(getId()));
-        }
-
-        return mWeapons;
+        String varName = StringUtil.toSQLName("mOffenseStatId");
+        return Weapon.find(Weapon.class, varName + " = ?", String.valueOf(getId()));
     }
 
     /**
@@ -62,7 +39,7 @@ public class OffenseStats extends SugarRecord<OffenseStats> {
      * @return a List<Weapon> containing Weapons for the main hand.
      */
     public List<Weapon> getMainHandWeapons() {
-        String query = StringUtil.toSQLName("mOffenseStatId") + " = ? and " + StringUtil.toSQLName("isMainHand")+ " = ?";
+        String query = StringUtil.toSQLName("mOffenseStatId") + " = ? and " + StringUtil.toSQLName("isMainHand") + " = ?";
         return Weapon.find(Weapon.class, query, String.valueOf(getId()), "1");
     }
 
@@ -72,7 +49,7 @@ public class OffenseStats extends SugarRecord<OffenseStats> {
      * @return a List<Weapon> containing Weapons for the off hand.
      */
     public List<Weapon> getOffHandWeapons() {
-        String query = StringUtil.toSQLName("mOffenseStatId") + " = ? and " + StringUtil.toSQLName("isMainHand")+ " = ?";
+        String query = StringUtil.toSQLName("mOffenseStatId") + " = ? and " + StringUtil.toSQLName("isMainHand") + " = ?";
         return Weapon.find(Weapon.class, query, String.valueOf(getId()), "0");
     }
 
