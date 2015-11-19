@@ -2,7 +2,6 @@ package com.paragonfervour.charactersheet.character.model;
 
 import com.orm.StringUtil;
 import com.orm.SugarRecord;
-import com.orm.dsl.Ignore;
 
 import java.util.List;
 
@@ -22,10 +21,6 @@ public class GameCharacter extends SugarRecord<GameCharacter> {
     // Bio - background, bond/ideal/etc.
     BioInfo mBioInfo;
 
-    // Skill list
-    @Ignore
-    List<Skill> mSkills;
-
     boolean isInspired;
     int mSpeed;
 
@@ -36,7 +31,6 @@ public class GameCharacter extends SugarRecord<GameCharacter> {
         maldalair.mDefenseStats = DefenseStats.createMaldalair();
         maldalair.mOffenseStats = OffenseStats.createDefault();
         maldalair.mBioInfo = BioInfo.createDefault();
-        maldalair.mSkills = Skill.createMaldalairList();
         maldalair.isInspired = false;
         maldalair.mSpeed = 30;
         return maldalair;
@@ -50,10 +44,6 @@ public class GameCharacter extends SugarRecord<GameCharacter> {
         mInfo.save();
         mDefenseStats.save();
         mOffenseStats.save();
-        for (Skill s : getSkills()) {
-            s.setCharacterId(getId());
-            s.save();
-        }
     }
 
     public CharacterInfo getInfo() {
@@ -73,11 +63,8 @@ public class GameCharacter extends SugarRecord<GameCharacter> {
     }
 
     public List<Skill> getSkills() {
-        if (mSkills == null) {
-            String query = StringUtil.toSQLName("mCharacterId") + " = ?";
-            mSkills = Skill.find(Skill.class, query, String.valueOf(getId()));
-        }
-        return mSkills;
+        String query = StringUtil.toSQLName("mCharacterId") + " = ?";
+        return Skill.find(Skill.class, query, String.valueOf(getId()));
     }
 
     public boolean isInspired() {

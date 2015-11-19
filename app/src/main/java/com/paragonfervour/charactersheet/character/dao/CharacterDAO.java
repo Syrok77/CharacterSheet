@@ -1,9 +1,14 @@
 package com.paragonfervour.charactersheet.character.dao;
 
+import android.util.Log;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
+import com.paragonfervour.charactersheet.character.model.Skill;
 import com.paragonfervour.charactersheet.character.model.Weapon;
+
+import java.util.List;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -13,7 +18,8 @@ import rx.subjects.BehaviorSubject;
 
 /**
  * Provider of Characters to the application. Singleton that provides clients with Observables that
- * emit the character(s) requested.
+ * emit the character(s) requested. This class also provides access to the Skills and Weapons of a
+ * GameCharacter.
  */
 @Singleton
 public class CharacterDAO {
@@ -71,6 +77,47 @@ public class CharacterDAO {
     }
 
     /**
+     * Get the Skill with the given name.
+     *
+     * @param name          skill's name to identify the skill.
+     * @param gameCharacter GameCharacter who knows the skill.
+     * @return Skill with the given name, or null if it doesn't exist.
+     */
+    public Skill getSkillByName(String name, GameCharacter gameCharacter) {
+        if (name != null) {
+            String query = Skill.getNameFieldSqlValue() + " = ? and " + Skill.getCharacterIdFieldSqlValue() + " = ?";
+            List<Skill> skillsByName = Skill.find(Skill.class, query, name.toLowerCase(), String.valueOf(gameCharacter.getId()));
+            if (skillsByName != null && skillsByName.size() > 0) {
+                if (skillsByName.size() > 1) {
+                    Log.w(TAG, "Multiple skills found named " + name);
+                }
+                return skillsByName.get(0);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Save a given skill to the given GameCharacter.
+     *
+     * @param skill         skill to save.
+     * @param gameCharacter GameCharacter who knows the skill.
+     * @return true if a new skill was created, false if the skill already existed.
+     */
+    public boolean saveSkill(Skill skill, GameCharacter gameCharacter) {
+        Skill existing = getSkillByName(skill.getName(), gameCharacter);
+        if (existing != null) {
+            skill.setId(existing.getId());
+            skill.save();
+            return false;
+        } else {
+            skill.setCharacterId(gameCharacter.getId());
+            skill.save();
+            return true;
+        }
+    }
+
+    /**
      * Alerts this DAO that it needs to publish the active character again. Use this to signal other
      * that the game character was changed, or when you switch active characters.
      */
@@ -94,6 +141,13 @@ public class CharacterDAO {
             Weapon off = Weapon.createOffhand();
             off.setOffenseStatId(mActiveCharacter.getOffenseStats().getId());
             off.save();
+
+            // Create default skills
+            List<Skill> skills = Skill.createMaldalairList();
+            for (Skill s : skills) {
+                s.setCharacterId(mActiveCharacter.getId());
+                s.save();
+            }
         }
 
         mActiveCharacterSubject.onNext(mActiveCharacter);

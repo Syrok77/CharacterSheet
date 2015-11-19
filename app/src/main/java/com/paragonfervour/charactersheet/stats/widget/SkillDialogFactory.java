@@ -56,7 +56,7 @@ public class SkillDialogFactory {
 
 
                         skill.setValue(Integer.valueOf(valueText.getText().toString()));
-                        skill.setName(nameText.getText().toString());
+                        skill.setName(nameText.getText().toString().toLowerCase());
 
                         listener.onSkillCreated(skill);
                     }

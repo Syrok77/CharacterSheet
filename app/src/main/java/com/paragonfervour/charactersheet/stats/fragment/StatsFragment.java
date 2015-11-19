@@ -43,7 +43,6 @@ import com.paragonfervour.charactersheet.view.DeathSaveViewComponent;
 import com.paragonfervour.charactersheet.view.SkillValueViewComponent;
 import com.paragonfervour.charactersheet.view.StatValueViewComponent;
 
-import java.util.Iterator;
 import java.util.List;
 
 import roboguice.inject.InjectView;
@@ -186,12 +185,10 @@ public class StatsFragment extends ComponentBaseFragment {
                 .subscribe(new Observer<GameCharacter>() {
                     @Override
                     public void onCompleted() {
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
                     }
 
                     @Override
@@ -201,6 +198,7 @@ public class StatsFragment extends ComponentBaseFragment {
                 }));
 
         // dumb view compat stuff
+        //noinspection deprecation
         int color = getResources().getColor(R.color.tertiary_700);
         ViewCompat.setBackgroundTintList(mAddSkillButton, ColorStateList.valueOf(color));
     }
@@ -277,27 +275,18 @@ public class StatsFragment extends ComponentBaseFragment {
      * @param skill         skill to remove from ui and character.
      * @param gameCharacter game character from which to remove the skill.
      */
-    private void removeSkill(Skill skill, final GameCharacter gameCharacter) {
-        Iterator<Skill> iterator = gameCharacter.getSkills().iterator();
-        while (iterator.hasNext()) {
-            Skill existing = iterator.next();
-            if (existing.equalsIgnoreValue(skill)) {
-                iterator.remove();
-                if (getView() != null) {
-                    // Undo action would use this copy. Just in case.
-                    final Skill existingCopy = new Skill();
-                    existingCopy.setName(existing.getName());
-                    existingCopy.setValue(existing.getValue());
+    private void removeSkill(final Skill skill, final GameCharacter gameCharacter) {
+        skill.delete();
 
-                    SnackbarHelper.showSnackbar(getActivity(), Snackbar.make(getView(), R.string.toast_skill_removed, Snackbar.LENGTH_LONG)
-                            .setAction(R.string.undo, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    addSkill(existingCopy, gameCharacter);
-                                }
-                            }));
-                }
-            }
+        // Show an 'undo' snackbar for this action.
+        if (getView() != null) {
+            SnackbarHelper.showSnackbar(getActivity(), Snackbar.make(getView(), R.string.toast_skill_removed, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.undo, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            saveSkill(skill, gameCharacter);
+                        }
+                    }));
         }
 
         // Find the associated view to delete
@@ -319,26 +308,10 @@ public class StatsFragment extends ComponentBaseFragment {
      * @param gameCharacter Game character to update.
      */
     private void updateSkill(Skill skill, GameCharacter gameCharacter) {
-        Iterator<Skill> iterator = gameCharacter.getSkills().iterator();
-        int index = -1;
-        while (iterator.hasNext()) {
-            Skill existing = iterator.next();
-            index++;
-
-            // Replace existing skill with passed in skill.
-            if (existing.equalsIgnoreValue(skill)) {
-                iterator.remove();
-                if (getView() != null) {
-                    String snackbarText = String.format(getString(R.string.toast_skill_updated), skill.getName());
-                    SnackbarHelper.showSnackbar(getActivity(), Snackbar.make(getView(), snackbarText, Snackbar.LENGTH_LONG));
-                }
-            }
-        }
-
-        if (index >= 0 && index < gameCharacter.getSkills().size()) {
-            gameCharacter.getSkills().add(index, skill);
-        } else {
-            gameCharacter.getSkills().add(skill);
+        saveSkill(skill, gameCharacter);
+        if (getView() != null) {
+            String snackbarText = String.format(getString(R.string.toast_skill_updated), skill.getName());
+            SnackbarHelper.showSnackbar(getActivity(), Snackbar.make(getView(), snackbarText, Snackbar.LENGTH_LONG));
         }
 
         // Find the associated view to update
@@ -352,23 +325,12 @@ public class StatsFragment extends ComponentBaseFragment {
         }
     }
 
-    /**
-     * Add a skill to the game character and the UI.
-     *
-     * @param skill         skill to add.
-     * @param gameCharacter character to add skill to.
-     */
-    private void addSkill(Skill skill, GameCharacter gameCharacter) {
-        for (Skill existing : gameCharacter.getSkills()) {
-            if (existing.equalsIgnoreValue(skill) &&
-                    getView() != null) {
-                SnackbarHelper.showSnackbar(getActivity(), Snackbar.make(getView(), R.string.toast_skill_already_exists, Snackbar.LENGTH_LONG));
-                return;
-            }
+    private void saveSkill(Skill skill, GameCharacter gameCharacter) {
+        if (mCharacterDAO.saveSkill(skill, gameCharacter)) {
+            addSkillView(skill);
         }
 
-        addSkillView(skill);
-        gameCharacter.getSkills().add(skill);
+        updatePassiveWisdom(gameCharacter);
     }
 
     /**
@@ -628,8 +590,7 @@ public class StatsFragment extends ComponentBaseFragment {
                         public void onNext(GameCharacter gameCharacter) {
                             unsubscribe();
 
-                            addSkill(skill, gameCharacter);
-                            updatePassiveWisdom(gameCharacter);
+                            saveSkill(skill, gameCharacter);
                         }
                     });
         }

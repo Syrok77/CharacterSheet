@@ -1,5 +1,6 @@
 package com.paragonfervour.charactersheet.character.model;
 
+import com.orm.StringUtil;
 import com.orm.SugarRecord;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class Skill extends SugarRecord<Skill> {
      */
     public static Skill createDefault() {
         Skill skill = new Skill();
-        skill.setName("Stealth");
+        skill.setName("stealth");
         skill.setValue(1);
         return skill;
     }
@@ -38,7 +39,7 @@ public class Skill extends SugarRecord<Skill> {
         skills.add(skill);
 
         Skill perception = new Skill();
-        perception.setName("Acrobatics");
+        perception.setName("acrobatics");
         perception.setValue(2);
         skills.add(perception);
 
@@ -46,6 +47,24 @@ public class Skill extends SugarRecord<Skill> {
     }
 
     public Skill() {
+    }
+
+    /**
+     * Get the "name" field name for SQL queries.
+     *
+     * @return StringUtils.toSQLName() for the "Name" field.
+     */
+    public static String getNameFieldSqlValue() {
+        return StringUtil.toSQLName("mName");
+    }
+
+    /**
+     * Get the "Character ID" field name for SQL queries.
+     *
+     * @return StringUtils.toSQLName() for the "Character Id" field.
+     */
+    public static String getCharacterIdFieldSqlValue() {
+        return StringUtil.toSQLName("mCharacterId");
     }
 
     public String getName() {
