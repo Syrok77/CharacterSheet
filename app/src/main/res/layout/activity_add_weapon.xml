@@ -20,12 +20,11 @@
 
             <TextView
                 android:id="@+id/weapon_stats_title"
+                style="@style/SectionTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/add_weapon_stats_title"
-                android:textColor="@color/tertiary_500"
-                android:textSize="@dimen/text_large"/>
+                android:text="@string/add_weapon_stats_title"/>
 
             <LinearLayout
                 android:id="@+id/add_weapon_info_section"
@@ -77,8 +76,8 @@
                         android:id="@+id/add_weapon_hand_off_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
                         android:onClick="onHandOptionClicked"
                         android:text="@string/add_weapon_hand_off"/>
 
@@ -126,13 +125,12 @@
 
             <TextView
                 android:id="@+id/weapon_damage_title"
+                style="@style/SectionTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/add_weapon_info_section"
                 android:layout_marginTop="16dp"
-                android:text="@string/add_weapon_damage_title"
-                android:textColor="@color/tertiary_500"
-                android:textSize="@dimen/text_large"/>
+                android:text="@string/add_weapon_damage_title"/>
 
             <LinearLayout
                 android:id="@+id/add_weapon_damage_section"
@@ -216,13 +214,12 @@
 
             <TextView
                 android:id="@+id/add_weapon_properties_title"
+                style="@style/SectionTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/add_weapon_damage_section"
                 android:layout_marginTop="16dp"
-                android:text="@string/add_weapon_properties_title"
-                android:textColor="@color/tertiary_500"
-                android:textSize="@dimen/text_large"/>
+                android:text="@string/add_weapon_properties_title"/>
 
             <LinearLayout
                 android:id="@+id/add_weapon_properties_section"

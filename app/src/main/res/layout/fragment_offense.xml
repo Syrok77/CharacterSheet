@@ -24,12 +24,11 @@
 
             <TextView
                 android:id="@+id/offense_main_title"
+                style="@style/SectionTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="@string/offense_main_hand"
-                android:textColor="@color/tertiary_500"
-                android:textSize="@dimen/text_large"/>
+                android:text="@string/offense_main_hand"/>
 
             <com.paragonfervour.charactersheet.offense.component.WeaponListViewComponent
                 android:id="@+id/offense_main_weapon"
@@ -44,13 +43,12 @@
 
             <TextView
                 android:id="@+id/offense_offhand_title"
+                style="@style/SectionTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/offense_main_weapon"
                 android:layout_marginBottom="8dp"
-                android:text="@string/offense_off_hand"
-                android:textColor="@color/tertiary_500"
-                android:textSize="@dimen/text_large"/>
+                android:text="@string/offense_off_hand"/>
 
             <com.paragonfervour.charactersheet.offense.component.WeaponListViewComponent
                 android:id="@+id/offense_offhand_weapon"
@@ -93,12 +91,11 @@
 
             <TextView
                 android:id="@+id/offense_spells_title"
+                style="@style/SectionTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="8dp"
-                android:text="@string/offense_spells"
-                android:textColor="@color/tertiary_500"
-                android:textSize="@dimen/text_large"/>
+                android:text="@string/offense_spells"/>
 
         </RelativeLayout>
 

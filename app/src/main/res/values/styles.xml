@@ -37,4 +37,9 @@
         <item name="colorPrimary">@color/primary_text_default_light</item>
     </style>
 
+    <style name="SectionTitle" >
+        <item name="android:textColor">@color/tertiary_500</item>
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
 </resources>
