@@ -36,7 +36,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical">
 
                 <android.support.design.widget.TextInputLayout
@@ -56,6 +56,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="@string/add_weapon_hand_chooser_title"/>
 
                 <RadioGroup
@@ -76,6 +77,8 @@
                         android:id="@+id/add_weapon_hand_off_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
                         android:onClick="onHandOptionClicked"
                         android:text="@string/add_weapon_hand_off"/>
 
