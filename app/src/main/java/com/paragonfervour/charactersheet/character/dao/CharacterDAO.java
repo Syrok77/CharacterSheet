@@ -24,10 +24,9 @@ import rx.subjects.BehaviorSubject;
 @Singleton
 public class CharacterDAO {
 
-    @SuppressWarnings("unused")
     private static final String TAG = CharacterDAO.class.getSimpleName();
 
-    private GameCharacter mActiveCharacter = GameCharacter.createDefaultCharacter();
+    private GameCharacter mActiveCharacter;
     private final BehaviorSubject<GameCharacter> mActiveCharacterSubject = BehaviorSubject.create();
 
     @Inject
