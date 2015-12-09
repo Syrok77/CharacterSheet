@@ -14,7 +14,7 @@ public class SettingsActivity extends ComponentBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_empty_fragment);
+        setContentView(R.layout.fragment_container_activity);
 
         getFragmentManager()
                 .beginTransaction()

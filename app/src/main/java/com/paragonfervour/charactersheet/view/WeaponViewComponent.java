@@ -41,7 +41,7 @@ public class WeaponViewComponent extends LinearLayout {
     }
 
     private void init() {
-        inflate(getContext(), R.layout.component_weapon, this);
+        inflate(getContext(), R.layout.weapon_component, this);
 
         mNameText = (TextView) findViewById(R.id.component_weapon_name);
         mPropertiesText = (TextView) findViewById(R.id.component_weapon_properties);

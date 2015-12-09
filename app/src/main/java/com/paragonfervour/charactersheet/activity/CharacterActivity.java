@@ -60,7 +60,7 @@ public class CharacterActivity extends ComponentBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_character);
+        setContentView(R.layout.character_activity);
 
         mHeaderComponent = new CharacterHeaderComponent(mNavigationView.getHeaderView(0));
         add(mHeaderComponent);

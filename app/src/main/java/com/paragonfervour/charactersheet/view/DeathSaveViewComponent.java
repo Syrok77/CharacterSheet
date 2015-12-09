@@ -46,7 +46,7 @@ public class DeathSaveViewComponent extends LinearLayout {
     }
 
     private void init() {
-        inflate(getContext(), R.layout.component_death_saves, this);
+        inflate(getContext(), R.layout.death_saves_component, this);
 
         View checkboxSection = findViewById(R.id.death_saves_check_section);
         Button successButton = (Button) findViewById(R.id.death_saves_success_button);

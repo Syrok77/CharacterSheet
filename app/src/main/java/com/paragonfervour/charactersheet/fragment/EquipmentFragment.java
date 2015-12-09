@@ -20,7 +20,7 @@ public class EquipmentFragment extends ComponentBaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_equipment, container, false);
+        return inflater.inflate(R.layout.equipment_fragment, container, false);
     }
 }
 

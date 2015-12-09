@@ -83,7 +83,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_weapon);
+        setContentView(R.layout.add_weapon_activity);
 
         mCompositeSubscription = new CompositeSubscription();
         mCompositeSubscription.add(mCharacterDAO.getActiveCharacter()

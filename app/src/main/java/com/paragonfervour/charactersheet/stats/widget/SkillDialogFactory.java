@@ -41,7 +41,7 @@ public class SkillDialogFactory {
     public AlertDialog createSkillDialog(final SkillListener listener) {
         // Is there a better way to access the fields in the custom view than keeping a reference
         // to this inflated view?
-        final View customView = LayoutInflater.from(mContext).inflate(R.layout.dialog_skill, null, false);
+        final View customView = LayoutInflater.from(mContext).inflate(R.layout.skill_dialog, null, false);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setCancelable(true)
@@ -83,7 +83,7 @@ public class SkillDialogFactory {
     public AlertDialog updateSkillDialog(final SkillListener listener, final Skill updateSkill) {
         // Is there a better way to access the fields in the custom view than keeping a reference
         // to this inflated view?
-        final View customView = LayoutInflater.from(mContext).inflate(R.layout.dialog_skill, null, false);
+        final View customView = LayoutInflater.from(mContext).inflate(R.layout.skill_dialog, null, false);
 
         // Initialize text views with updateSkill's value
         EditText nameText = (EditText) customView.findViewById(R.id.skill_dialog_name);

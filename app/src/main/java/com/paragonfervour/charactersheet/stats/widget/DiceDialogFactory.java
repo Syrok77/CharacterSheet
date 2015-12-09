@@ -32,7 +32,7 @@ public final class DiceDialogFactory {
     public static Observable<Dice> createDicePickerDialog(Context context) {
         final PublishSubject<Dice> dialogResult = PublishSubject.create();
 
-        View customView = LayoutInflater.from(context).inflate(R.layout.dialog_dice_picker, null, false);
+        View customView = LayoutInflater.from(context).inflate(R.layout.dice_picker_dialog, null, false);
 
         AlertDialog dialog = new AlertDialog.Builder(context)
                 .setCancelable(true)

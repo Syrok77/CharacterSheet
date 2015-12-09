@@ -47,7 +47,7 @@ public class EditCharacterFeaturesActivity extends RoboActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_features);
+        setContentView(R.layout.edit_features_activity);
 
         mCompositeSubscription = new CompositeSubscription();
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {

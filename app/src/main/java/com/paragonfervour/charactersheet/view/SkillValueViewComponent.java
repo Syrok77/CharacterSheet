@@ -41,7 +41,7 @@ public class SkillValueViewComponent extends LinearLayout {
     }
 
     private void init(AttributeSet attrs) {
-        inflate(getContext(), R.layout.component_skill_value, this);
+        inflate(getContext(), R.layout.skill_value_component, this);
 
         mSkillButton = (Button) findViewById(R.id.component_skill_button);
 

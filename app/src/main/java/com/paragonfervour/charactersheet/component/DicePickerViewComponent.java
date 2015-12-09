@@ -41,7 +41,7 @@ public class DicePickerViewComponent extends LinearLayout {
     }
 
     private void init() {
-        inflate(getContext(), R.layout.component_dice_picker, this);
+        inflate(getContext(), R.layout.dice_picker_component, this);
 
         mDiceImageView = (ImageView) findViewById(R.id.component_dice_picker_image);
         mDiceImageView.setOnClickListener(new OnClickListener() {
