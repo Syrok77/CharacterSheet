@@ -9,14 +9,12 @@ import java.util.List;
  * Hierarchy of models that contains all the data of a D&D Character.
  */
 public class GameCharacter extends SugarRecord<GameCharacter> {
+
     // Name, class, race, level, xp
     CharacterInfo mInfo;
 
     // Defense scores; AC, saves, hit points, hit die
     DefenseStats mDefenseStats;
-
-    // Offense - weapons, spells
-    OffenseStats mOffenseStats;
 
     // Bio - background, bond/ideal/etc.
     BioInfo mBioInfo;
@@ -29,7 +27,6 @@ public class GameCharacter extends SugarRecord<GameCharacter> {
         GameCharacter maldalair = new GameCharacter();
         maldalair.mInfo = CharacterInfo.createDefault();
         maldalair.mDefenseStats = DefenseStats.createMaldalair();
-        maldalair.mOffenseStats = OffenseStats.createDefault();
         maldalair.mBioInfo = BioInfo.createDefault();
         maldalair.isInspired = false;
         maldalair.mSpeed = 30;
@@ -43,7 +40,36 @@ public class GameCharacter extends SugarRecord<GameCharacter> {
         mBioInfo.save();
         mInfo.save();
         mDefenseStats.save();
-        mOffenseStats.save();
+    }
+
+    /**
+     * Get a list of all Weapons this Character has equipped. This is both main-hand and off-hand weapons.
+     *
+     * @return a List of all the character's Weapons.
+     */
+    public List<Weapon> getWeapons() {
+        String varName = StringUtil.toSQLName("mCharacterId");
+        return Weapon.find(Weapon.class, varName + " = ?", String.valueOf(getId()));
+    }
+
+    /**
+     * Get a List of Weapons that are equipped in the main hand.
+     *
+     * @return a List<Weapon> containing Weapons for the main hand.
+     */
+    public List<Weapon> getMainHandWeapons() {
+        String query = StringUtil.toSQLName("mCharacterId") + " = ? and " + StringUtil.toSQLName("isMainHand") + " = ?";
+        return Weapon.find(Weapon.class, query, String.valueOf(getId()), "1");
+    }
+
+    /**
+     * Get a List of Weapons that are equipped in the off hand.
+     *
+     * @return a List<Weapon> containing Weapons for the off hand.
+     */
+    public List<Weapon> getOffHandWeapons() {
+        String query = StringUtil.toSQLName("mCharacterId") + " = ? and " + StringUtil.toSQLName("isMainHand") + " = ?";
+        return Weapon.find(Weapon.class, query, String.valueOf(getId()), "0");
     }
 
     public CharacterInfo getInfo() {
@@ -52,10 +78,6 @@ public class GameCharacter extends SugarRecord<GameCharacter> {
 
     public DefenseStats getDefenseStats() {
         return mDefenseStats;
-    }
-
-    public OffenseStats getOffenseStats() {
-        return mOffenseStats;
     }
 
     public BioInfo getBioInfo() {

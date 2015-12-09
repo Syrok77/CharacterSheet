@@ -134,11 +134,11 @@ public class CharacterDAO {
 
             // Add default weapons
             Weapon main = Weapon.createDefault();
-            main.setOffenseStatId(mActiveCharacter.getOffenseStats().getId());
+            main.setCharacterId(mActiveCharacter.getId());
             main.save();
 
             Weapon off = Weapon.createOffhand();
-            off.setOffenseStatId(mActiveCharacter.getOffenseStats().getId());
+            off.setCharacterId(mActiveCharacter.getId());
             off.save();
 
             // Create default skills

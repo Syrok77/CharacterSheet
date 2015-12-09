@@ -326,7 +326,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
                 @Override
                 public void onNext(GameCharacter gameCharacter) {
                     Weapon weapon = createWeapon();
-                    weapon.setOffenseStatId(gameCharacter.getOffenseStats().getId());
+                    weapon.setCharacterId(gameCharacter.getId());
                     weapon.save();
 
                     mCharacterDAO.activeCharacterUpdated();

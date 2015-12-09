@@ -18,7 +18,7 @@ public class Weapon extends SugarRecord<Weapon> {
 
     boolean isMainHand;
 
-    Long mOffenseStatId;
+    Long mCharacterId;
 
     public static Weapon createDefault() {
         Weapon w = new Weapon();
@@ -95,11 +95,11 @@ public class Weapon extends SugarRecord<Weapon> {
         this.isMainHand = isMainHand;
     }
 
-    public Long getOffenseStatId() {
-        return mOffenseStatId;
+    public Long getCharacterId() {
+        return mCharacterId;
     }
 
-    public void setOffenseStatId(Long offenseStatId) {
-        mOffenseStatId = offenseStatId;
+    public void setCharacterId(Long characterId) {
+        mCharacterId = characterId;
     }
 }
