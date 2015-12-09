@@ -254,6 +254,7 @@ public class StatsFragment extends ComponentBaseFragment {
         int wisdom = character.getDefenseStats().getWisScore();
         mWisdom.initializeValue(wisdom);
         updateCounterModifier(wisdom, mWisdomModifier);
+        updatePassiveWisdom(character);
 
         int charisma = character.getDefenseStats().getChaScore();
         mCharisma.initializeValue(charisma);

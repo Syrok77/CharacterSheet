@@ -4,7 +4,7 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/page_color"
+            android:background="@color/default_white"
             android:orientation="vertical">
 
     <RelativeLayout
@@ -22,7 +22,7 @@
             android:id="@+id/stats_attributes_section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp">
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:id="@+id/stats_speed"
@@ -40,6 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_marginBottom="8dp"
                 android:text="@string/stat_inspired"/>
 
             <TextView
@@ -71,16 +72,12 @@
             android:layout_gravity="end"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginTop="12dp"
             android:layout_alignStart="@+id/fakeView"
             android:layout_alignLeft="@+id/fakeView"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:animateLayoutChanges="true"
-            android:background="@drawable/section_bg"
-            android:elevation="4dp"
             android:orientation="vertical"
             android:paddingBottom="8dp"
             android:paddingEnd="12dp"
@@ -137,10 +134,10 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
-                android:layout_marginStart="32dp"
+                android:layout_marginEnd="42dp"
+                android:layout_marginLeft="42dp"
+                android:layout_marginRight="42dp"
+                android:layout_marginStart="42dp"
                 android:background="?attr/colorAccent"/>
 
             <TextView
@@ -170,10 +167,10 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
-                android:layout_marginStart="32dp"
+                android:layout_marginEnd="42dp"
+                android:layout_marginLeft="42dp"
+                android:layout_marginRight="42dp"
+                android:layout_marginStart="42dp"
                 android:background="?attr/colorAccent"/>
 
             <LinearLayout
@@ -219,13 +216,9 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginTop="12dp"
             android:layout_alignEnd="@+id/fakeView"
             android:layout_alignRight="@+id/fakeView"
-            android:background="@drawable/section_bg"
-            android:elevation="4dp"
             android:orientation="vertical"
             android:paddingBottom="11dp"
             android:paddingEnd="8dp"
