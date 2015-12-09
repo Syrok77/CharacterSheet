@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:id="@+id/drawer_header_layout"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="153dp"
-                android:background="@color/tertiary_700"
-                android:orientation="vertical">
+<RelativeLayout
+    android:id="@+id/drawer_header_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="153dp"
+    android:background="@color/tertiary_700"
+    android:orientation="vertical">
 
     <!-- Subtitle -->
     <LinearLayout
@@ -60,6 +61,10 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/drawer_header_character_info_section"
         android:background="?attr/selectableItemBackground"
-        android:src="@drawable/ic_add_white_24dp"/>
+        android:paddingEnd="4dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingStart="4dp"
+        android:src="@drawable/ic_create_white_24dp"/>
 
 </RelativeLayout>
