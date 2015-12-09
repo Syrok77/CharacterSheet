@@ -11,7 +11,8 @@ import com.paragonfervour.charactersheet.character.model.GameCharacter;
 public final class CharacterHelper {
 
     // cannot instantiate
-    private CharacterHelper() {}
+    private CharacterHelper() {
+    }
 
     public static String getToolbarTitle(Context context, GameCharacter character) {
         return character.getInfo().getName();
@@ -31,15 +32,15 @@ public final class CharacterHelper {
      */
     public static String stringRankifyValue(int number) {
         String value = String.valueOf(number);
-        if(value.length() > 1) {
+        if (value.length() > 1) {
             // Check for special case: 11 - 13 are all "th".
             // So if the second to last digit is 1, it is "th".
-            char secondToLastDigit = value.charAt(value.length()-2);
-            if(secondToLastDigit == '1')
+            char secondToLastDigit = value.charAt(value.length() - 2);
+            if (secondToLastDigit == '1')
                 return value + "th";
         }
-        char lastDigit = value.charAt(value.length()-1);
-        switch(lastDigit) {
+        char lastDigit = value.charAt(value.length() - 1);
+        switch (lastDigit) {
             case '1':
                 return value + "st";
             case '2':
@@ -55,12 +56,23 @@ public final class CharacterHelper {
      * Get displayable String for an XP amount.
      *
      * @param context Android context;
-     * @param xp XP amount
+     * @param xp      XP amount
      * @return user's XP as a displayable String.
      */
     public static String getXpDisplayText(Context context, int xp) {
         String format = context.getString(R.string.nav_drawer_xp_button_text);
         return String.format(format, xp);
+    }
+
+    /**
+     * Get the proficiency bonus for a character's level.
+     *
+     * @param characterLevel Character level, which determines the proficiency bonus value.
+     * @return proficiency bonus for the given character level.
+     */
+    public static int getProficiencyBonus(int characterLevel) {
+        // TODO: implement a level->bonus lookup table.
+        return 0;
     }
 
 }

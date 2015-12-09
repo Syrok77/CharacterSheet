@@ -11,7 +11,7 @@ import java.util.List;
 public class OffenseStats extends SugarRecord<OffenseStats> {
 
     @Ignore
-    private List<Spell> mSpellList;
+    private List<Spell> mSpellList; // TODO: Remove this field and implement for realz (see Weapon or Skill).
 
     // This is just here so that Sugar saves this.
     // TODO: Maybe move all of this functionality up into GameCharacter,

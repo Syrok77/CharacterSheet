@@ -8,10 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.helper.CharacterHelper;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.offense.activity.AddWeaponActivity;
 import com.paragonfervour.charactersheet.offense.component.WeaponListViewComponent;
@@ -29,6 +31,9 @@ public class OffenseFragment extends ComponentBaseFragment {
 
     @Inject
     private CharacterDAO mCharacterDAO;
+
+    @InjectView(R.id.offense_proficiency_bonus)
+    private TextView mProficiencyBonus;
 
     @InjectView(R.id.offense_main_weapon)
     private WeaponListViewComponent mMainHandList;
@@ -92,6 +97,10 @@ public class OffenseFragment extends ComponentBaseFragment {
     private void updateUI(GameCharacter character) {
         mMainHandList.setWeapons(character.getOffenseStats().getMainHandWeapons());
         mOffHandList.setWeapons(character.getOffenseStats().getOffHandWeapons());
+
+        int proficiency = CharacterHelper.getProficiencyBonus(character.getInfo().getLevel());
+        String displayableProficiencyBonus= getString(R.string.offense_proficiency_summary, proficiency);
+        mProficiencyBonus.setText(displayableProficiencyBonus);
     }
 
     private class AddWeaponClickListener implements View.OnClickListener {
