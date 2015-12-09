@@ -232,6 +232,7 @@ public class StatsFragment extends ComponentBaseFragment {
         mHitDicePickerComponent.setDice(character.getDefenseStats().getHitDice());
         mHitDicePickerComponent.getDiceObservable().subscribe(new HitDicePickerObserver());
         updateHealthSummary();
+        updateDeathSummary(character);
 
         mMaxHealthComponent.initializeValue(character.getDefenseStats().getMaxHp());
 
@@ -464,13 +465,7 @@ public class StatsFragment extends ComponentBaseFragment {
                     public void onNext(GameCharacter gameCharacter) {
                         gameCharacter.getDefenseStats().setHitPoints(hitPoints);
 
-                        if (hitPoints <= 0 && mDeathSaveComponent.getVisibility() != View.VISIBLE) {
-                            mDeathSaveComponent.setVisibility(View.VISIBLE);
-                            mDeathSaveComponent.reset(gameCharacter.getDefenseStats().getFailAttempts());
-                        } else if (hitPoints > 0 && mDeathSaveComponent.getVisibility() == View.VISIBLE) {
-                            mDeathSaveComponent.setVisibility(View.GONE);
-                        }
-
+                        updateDeathSummary(gameCharacter);
                         unsubscribe();
                     }
                 });
@@ -550,6 +545,23 @@ public class StatsFragment extends ComponentBaseFragment {
                 gameCharacter.getDefenseStats().getWisScore());
         Log.d(TAG, "Update passive wisdom: " + passiveWisdom);
         mPassiveWisdom.setText(passiveWisdom);
+    }
+
+    /**
+     * Update the death save section for the game character. This will hide/reset the view if the
+     * character is alive, and show if the character has <= 0 hit points.
+     *
+     * @param gameCharacter active game character.
+     */
+    private void updateDeathSummary(GameCharacter gameCharacter) {
+        int hitPoints = gameCharacter.getDefenseStats().getHitPoints();
+
+        if (hitPoints <= 0 && mDeathSaveComponent.getVisibility() != View.VISIBLE) {
+            mDeathSaveComponent.setVisibility(View.VISIBLE);
+            mDeathSaveComponent.reset(gameCharacter.getDefenseStats().getFailAttempts());
+        } else if (hitPoints > 0 && mDeathSaveComponent.getVisibility() == View.VISIBLE) {
+            mDeathSaveComponent.setVisibility(View.GONE);
+        }
     }
 
     /**
