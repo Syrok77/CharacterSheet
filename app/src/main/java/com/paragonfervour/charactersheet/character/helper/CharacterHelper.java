@@ -71,8 +71,15 @@ public final class CharacterHelper {
      * @return proficiency bonus for the given character level.
      */
     public static int getProficiencyBonus(int characterLevel) {
-        // TODO: implement a level->bonus lookup table.
-        return 0;
+        int proficiency;
+
+        if (characterLevel <= 0) {
+            proficiency = 0;
+        } else {
+            proficiency = ((characterLevel - 1) / 4) + 2;
+        }
+
+        return  proficiency;
     }
 
 }
