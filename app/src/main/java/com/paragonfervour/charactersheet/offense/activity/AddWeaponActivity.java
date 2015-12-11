@@ -10,21 +10,29 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.activity.ComponentBaseActivity;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.helper.CharacterHelper;
 import com.paragonfervour.charactersheet.character.model.Damage;
 import com.paragonfervour.charactersheet.character.model.Dice;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Weapon;
 import com.paragonfervour.charactersheet.component.DicePickerViewComponent;
+import com.paragonfervour.charactersheet.stats.helper.StatHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import roboguice.inject.InjectView;
 import rx.Observer;
@@ -58,6 +66,12 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     @InjectView(R.id.add_weapon_value)
     private EditText mValueText;
 
+    @InjectView(R.id.add_weapon_score_selector)
+    private Spinner mScoreSelector;
+
+    @InjectView(R.id.add_weapon_attack_mod)
+    private TextView mHitModifier;
+
     @InjectView(R.id.add_weapon_dice_multiplier)
     private EditText mDamageDiceMultiplier;
 
@@ -74,11 +88,18 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     private EditText mProperties;
 
     private static final String TAG = AddWeaponActivity.class.getSimpleName();
+    private static final int STR_INDEX = 0;
+    private static final int DEX_INDEX = 1;
+
     public static final String EXTRA_WEAPON_ID = "extra_weapon_id";
 
     private CompositeSubscription mCompositeSubscription;
     private Weapon mWeapon;
     private boolean isEditing;
+
+    private int mDex;
+    private int mStr;
+    private int mProficiencyBonus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,6 +222,36 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         return 0;
     }
 
+    /**
+     * Initialize score selector with an adapter and a change listener.
+     */
+    private void initializeScoreSelector() {
+        // Initialize the ability score modifier spinner
+        List<String> scores = new ArrayList<>();
+        String strMod = StatHelper.getStatIndicator(mStr) + mStr;
+        String dexMod = StatHelper.getStatIndicator(mDex) + mDex;
+        scores.add(getString(R.string.add_weapon_str_format, strMod));
+        scores.add(getString(R.string.add_weapon_dex_format, dexMod));
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, scores);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mScoreSelector.setAdapter(spinnerAdapter);
+        mScoreSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mWeapon.setIsStrengthWeapon(position == STR_INDEX);
+                if (isEditing) {
+                    mWeapon.save();
+                }
+                updateDamageSummary();
+                updateHitModifier();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+    }
+
     private void updateWeaponView(Weapon weapon) {
         mWeaponName.setText(weapon.getName());
         if (weapon.isMainHand()) {
@@ -225,6 +276,20 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         mDamageSummary.setText(createDamage().toString());
     }
 
+    private void updateHitModifier() {
+        int mod;
+        if (mWeapon.isStrengthWeapon()) {
+            mScoreSelector.setSelection(STR_INDEX);
+            mod = mStr;
+        } else {
+            mScoreSelector.setSelection(DEX_INDEX);
+            mod = mDex;
+        }
+
+        String hitStr = StatHelper.getStatIndicator(mod) + String.valueOf(mod + mProficiencyBonus);
+        mHitModifier.setText(hitStr);
+    }
+
     /**
      * Update active character's weapon dice to the given value.
      *
@@ -246,7 +311,13 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         Damage damage = new Damage();
         damage.setDiceType(mDamageDiceComponent.getDice());
         damage.setDiceQuantity(getIntFromTextView(mDamageDiceMultiplier));
-        damage.setModifier(getIntFromTextView(mDamageModifier));
+        int modifier = getIntFromTextView(mDamageModifier);
+        if (mWeapon.isStrengthWeapon()) {
+            modifier += mStr;
+        } else {
+            modifier += mDex;
+        }
+        damage.setModifier(modifier);
         return damage;
     }
 
@@ -262,6 +333,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         weapon.setValue(getIntFromTextView(mValueText));
         weapon.setWeight(getIntFromTextView(mWeightText));
         weapon.setIsMainHand(mHandGroup.getCheckedRadioButtonId() == R.id.add_weapon_hand_main_button);
+        weapon.setIsStrengthWeapon(mWeapon.isStrengthWeapon());
         weapon.setProperties(mProperties.getText().toString());
         return weapon;
     }
@@ -440,8 +512,8 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     }
 
     /**
-     * Observer for character events. Right now we don't listen to this, but unsubscribing is a key
-     * component to updating the model.
+     * Observer for character events. This initializes the view with character info such as STR/DEX
+     * and proficiency modifier.
      */
     private class CharacterObserver implements Observer<GameCharacter> {
 
@@ -455,7 +527,13 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
         @Override
         public void onNext(GameCharacter gameCharacter) {
+            mDex = StatHelper.getScoreModifier(gameCharacter.getDefenseStats().getDexScore());
+            mStr = StatHelper.getScoreModifier(gameCharacter.getDefenseStats().getStrScore());
+            mProficiencyBonus = CharacterHelper.getProficiencyBonus(gameCharacter.getInfo().getLevel());
 
+            updateHitModifier();
+            updateDamageSummary();
+            initializeScoreSelector();
         }
     }
 }

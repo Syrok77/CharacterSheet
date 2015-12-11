@@ -40,6 +40,7 @@
     <color name="default_background_gray">#CECECE</color>
     <color name="button_gray">#878787</color>
     <color name="dangerous_red">#da0000</color>
+    <color name="subheader_gray">#89000000</color>
 
     <color name="page_color">#EFEFEF</color>
     <color name="page_section_color">#FDFDFD</color>

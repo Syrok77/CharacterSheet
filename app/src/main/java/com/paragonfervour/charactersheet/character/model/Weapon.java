@@ -17,6 +17,7 @@ public class Weapon extends SugarRecord<Weapon> {
     String mProperties;
 
     boolean isMainHand;
+    boolean isStrengthWeapon;
 
     Long mCharacterId;
 
@@ -28,6 +29,7 @@ public class Weapon extends SugarRecord<Weapon> {
         w.mDamage = Damage.createDefaultWeapon();
         w.mProperties = "Light";
         w.isMainHand = true;
+        w.isStrengthWeapon = true;
         return w;
     }
 
@@ -38,6 +40,7 @@ public class Weapon extends SugarRecord<Weapon> {
         w.mWeight = 1;
         w.mDamage = Damage.createDefaultOffhand();
         w.isMainHand = false;
+        w.isStrengthWeapon = false;
         return w;
     }
 
@@ -93,6 +96,14 @@ public class Weapon extends SugarRecord<Weapon> {
 
     public void setIsMainHand(boolean isMainHand) {
         this.isMainHand = isMainHand;
+    }
+
+    public boolean isStrengthWeapon() {
+        return isStrengthWeapon;
+    }
+
+    public void setIsStrengthWeapon(boolean isStrengthWeapon) {
+        this.isStrengthWeapon = isStrengthWeapon;
     }
 
     public Long getCharacterId() {

@@ -135,6 +135,8 @@
     <string name="add_weapon_hand_off">Off Hand</string>
     <string name="add_weapon_weight">Weight (lb)</string>
     <string name="add_weapon_value">Value (gp)</string>
+    <string name="add_weapon_str_format">STR (%1$s)</string>
+    <string name="add_weapon_dex_format">DEX (%1$s)</string>
 
     <string-array name="classes">
         <item>Rogue</item>

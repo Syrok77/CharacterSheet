@@ -121,6 +121,44 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/subheader_gray"
+                            android:textSize="12sp"
+                            android:text="Attack Modifier"/>
+
+                        <TextView
+                            android:id="@+id/add_weapon_attack_mod"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="4dp"
+                            android:textSize="18sp"
+                            tools:text="6"/>
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/add_weapon_score_selector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"/>
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <TextView
@@ -194,7 +232,7 @@
                             android:gravity="center"
                             android:hint="@string/add_weapon_modifier_hint"
                             android:inputType="number"
-                            tools:text="6"/>
+                            tools:text="2"/>
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -206,9 +244,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
-                    android:text="2 d4 + 6 (TODO)"
                     android:textSize="20sp"
-                    tools:text="2 d4 + 6"/>
+                    tools:text="2 d4 + 4"/>
 
             </LinearLayout>
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="weapon_ability_score_modifiers">
+        <item>STR (%1$s)</item>
+        <item>DEX (%1$s)</item>
+    </string-array>
+</resources>
