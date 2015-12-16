@@ -3,7 +3,6 @@ package com.paragonfervour.charactersheet.offense.component;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.paragonfervour.charactersheet.R;
@@ -60,20 +59,15 @@ public class WeaponListViewComponent extends LinearLayout {
             params.setMargins(0, getResources().getDimensionPixelSize(R.dimen.weapon_list_item_top_margin), 0, 0);
             component.setLayoutParams(params);
 
-            component.setOnClickListener(new EditWeaponComponentClickListener());
+            component.setOnClickListener(v -> {
+                WeaponViewComponent comp = (WeaponViewComponent) v;
+
+                Intent intent = new Intent(getContext(), AddWeaponActivity.class);
+                intent.putExtra(AddWeaponActivity.EXTRA_WEAPON_ID, comp.getWeapon().getId());
+                getContext().startActivity(intent);
+            });
 
             addView(component);
-        }
-    }
-
-    private class EditWeaponComponentClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            WeaponViewComponent comp = (WeaponViewComponent)v;
-
-            Intent intent = new Intent(getContext(), AddWeaponActivity.class);
-            intent.putExtra(AddWeaponActivity.EXTRA_WEAPON_ID, comp.getWeapon().getId());
-            getContext().startActivity(intent);
         }
     }
 }

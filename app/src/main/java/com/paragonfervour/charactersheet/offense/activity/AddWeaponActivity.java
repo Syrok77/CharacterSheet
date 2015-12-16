@@ -111,12 +111,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
                 .subscribe(new CharacterObserver()));
 
         setSupportActionBar(mToolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> onBackPressed());
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
 
         Intent i = getIntent();

@@ -85,7 +85,10 @@ public class OffenseFragment extends ComponentBaseFragment {
                     }
                 }));
 
-        mAddWeaponButton.setOnClickListener(new AddWeaponClickListener());
+        mAddWeaponButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AddWeaponActivity.class);
+            startActivity(intent);
+        });
     }
 
     @Override
@@ -101,13 +104,5 @@ public class OffenseFragment extends ComponentBaseFragment {
         int proficiency = CharacterHelper.getProficiencyBonus(character.getInfo().getLevel());
         String displayableProficiencyBonus= getString(R.string.offense_proficiency_summary, proficiency);
         mProficiencyBonus.setText(displayableProficiencyBonus);
-    }
-
-    private class AddWeaponClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), AddWeaponActivity.class);
-            startActivity(intent);
-        }
     }
 }

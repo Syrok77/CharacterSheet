@@ -106,19 +106,9 @@ public class StatValueViewComponent extends LinearLayout {
 
         mTitleTextView.setText(title);
 
-        valueIncreaseButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeCounter(1);
-            }
-        });
+        valueIncreaseButton.setOnClickListener(v -> changeCounter(1));
 
-        valueDecreaseButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeCounter(-1);
-            }
-        });
+        valueDecreaseButton.setOnClickListener(v -> changeCounter(-1));
     }
 
     /**
@@ -193,14 +183,11 @@ public class StatValueViewComponent extends LinearLayout {
             if (mCurrentDeltaRunner != null) {
                 mCurrentDeltaHandler.removeCallbacks(mCurrentDeltaRunner);
             }
-            mCurrentDeltaRunner = new Runnable() {
-                @Override
-                public void run() {
-                    mCurrentDelta = 0;
-                    mDeltaTextView.animate()
-                            .alpha(0)
-                            .start();
-                }
+            mCurrentDeltaRunner = () -> {
+                mCurrentDelta = 0;
+                mDeltaTextView.animate()
+                        .alpha(0)
+                        .start();
             };
             mCurrentDeltaHandler.postDelayed(mCurrentDeltaRunner, DELTA_COUNTER_DELAY);
         } else {

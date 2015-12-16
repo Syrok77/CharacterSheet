@@ -49,14 +49,13 @@ public class CharacterHeaderComponent extends Component {
         mXpButton = (Button) mHeaderView.findViewById(R.id.drawer_header_xp_button);
 
         View editButton = mHeaderView.findViewById(R.id.drawer_header_edit_character_button);
-        editButton.setOnClickListener(new EditCharacterClickListener());
-
-        mXpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mXpDialogFactory.createAddXpDialog().show();
-            }
+        editButton.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent editCharacter = new Intent(context, EditCharacterFeaturesActivity.class);
+            context.startActivity(editCharacter);
         });
+
+        mXpButton.setOnClickListener(v -> mXpDialogFactory.createAddXpDialog().show());
 
         // dumb view compat stuff
         int color = headerView.getResources().getColor(R.color.secondary_700);
@@ -75,14 +74,5 @@ public class CharacterHeaderComponent extends Component {
         mCharacterName.setText(info.getName());
 
         mXpButton.setText(CharacterHelper.getXpDisplayText(mHeaderView.getContext(), gameCharacter.getInfo().getXp()));
-    }
-
-    private static class EditCharacterClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            Context context = v.getContext();
-            Intent editCharacter = new Intent(context, EditCharacterFeaturesActivity.class);
-            context.startActivity(editCharacter);
-        }
     }
 }

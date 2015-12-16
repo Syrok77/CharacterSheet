@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.support.annotation.ColorInt;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -45,12 +44,7 @@ public class SkillValueViewComponent extends LinearLayout {
 
         mSkillButton = (Button) findViewById(R.id.component_skill_button);
 
-        mSkillButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mClickListener.onClick(v);
-            }
-        });
+        mSkillButton.setOnClickListener(mClickListener::onClick);
 
         if (attrs != null) {
             TypedArray attributes = getContext().obtainStyledAttributes(

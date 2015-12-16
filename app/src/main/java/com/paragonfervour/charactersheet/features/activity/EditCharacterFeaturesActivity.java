@@ -2,7 +2,6 @@ package com.paragonfervour.charactersheet.features.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
 import com.google.inject.Inject;
@@ -13,7 +12,6 @@ import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
 import rx.Subscriber;
-import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -50,29 +48,18 @@ public class EditCharacterFeaturesActivity extends RoboActivity {
         setContentView(R.layout.edit_features_activity);
 
         mCompositeSubscription = new CompositeSubscription();
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> onBackPressed());
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         mToolbar.setTitle(R.string.edit_activity_label);
 
-        mCompositeSubscription.add(mCharacterDAO.getActiveCharacter().subscribe(new Action1<GameCharacter>() {
-            @Override
-            public void call(GameCharacter gameCharacter) {
-                mEditName.setText(gameCharacter.getInfo().getName());
-                mEditRace.setText(gameCharacter.getInfo().getRace());
-                mEditClass.setText(gameCharacter.getInfo().getCharacterClass());
-                mEditLevel.setText(String.valueOf(gameCharacter.getInfo().getLevel()));
-                mEditSpeed.setText(String.valueOf(gameCharacter.getSpeed()));
-            }
-        }, new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-
-            }
+        mCompositeSubscription.add(mCharacterDAO.getActiveCharacter().subscribe(gameCharacter -> {
+            mEditName.setText(gameCharacter.getInfo().getName());
+            mEditRace.setText(gameCharacter.getInfo().getRace());
+            mEditClass.setText(gameCharacter.getInfo().getCharacterClass());
+            mEditLevel.setText(String.valueOf(gameCharacter.getInfo().getLevel()));
+            mEditSpeed.setText(String.valueOf(gameCharacter.getSpeed()));
+        }, throwable -> {
+            // ignore errors
         }));
     }
 

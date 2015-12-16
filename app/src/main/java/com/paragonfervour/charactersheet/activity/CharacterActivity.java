@@ -19,7 +19,6 @@ import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.helper.CharacterHelper;
-import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.component.CharacterHeaderComponent;
 import com.paragonfervour.charactersheet.fragment.CharacterPagerFragment;
 import com.paragonfervour.charactersheet.fragment.EquipmentFragment;
@@ -145,12 +144,7 @@ public class CharacterActivity extends ComponentBaseActivity {
         };
 
         // Defer code dependent on restoration of previous instance state.
-        mDrawerLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mDrawerToggle.syncState();
-            }
-        });
+        mDrawerLayout.post(() -> mDrawerToggle.syncState());
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
@@ -166,12 +160,9 @@ public class CharacterActivity extends ComponentBaseActivity {
 
         mCompositeSubscription.add(mCharacterDAO.getActiveCharacter()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<GameCharacter>() {
-                    @Override
-                    public void call(GameCharacter gameCharacter) {
-                        mHeaderComponent.onActiveCharacter(gameCharacter);
-                        mToolbar.setTitle(CharacterHelper.getToolbarTitle(CharacterActivity.this, gameCharacter));
-                    }
+                .subscribe(gameCharacter -> {
+                    mHeaderComponent.onActiveCharacter(gameCharacter);
+                    mToolbar.setTitle(CharacterHelper.getToolbarTitle(CharacterActivity.this, gameCharacter));
                 }, new CharacterErrorAction()));
 
         mNavigationView.setNavigationItemSelectedListener(new DrawerListener());

@@ -2,7 +2,6 @@ package com.paragonfervour.charactersheet.component;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -44,24 +43,19 @@ public class DicePickerViewComponent extends LinearLayout {
         inflate(getContext(), R.layout.dice_picker_component, this);
 
         mDiceImageView = (ImageView) findViewById(R.id.component_dice_picker_image);
-        mDiceImageView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DiceDialogFactory.createDicePickerDialog(getContext())
-                        .subscribe(new Observer<Dice>() {
-                            @Override
-                            public void onCompleted() {}
+        mDiceImageView.setOnClickListener(v -> DiceDialogFactory.createDicePickerDialog(getContext())
+                .subscribe(new Observer<Dice>() {
+                    @Override
+                    public void onCompleted() {}
 
-                            @Override
-                            public void onError(Throwable e) {}
+                    @Override
+                    public void onError(Throwable e) {}
 
-                            @Override
-                            public void onNext(Dice dice) {
-                                setDice(dice);
-                            }
-                        });
-            }
-        });
+                    @Override
+                    public void onNext(Dice dice) {
+                        setDice(dice);
+                    }
+                }));
 
         if (isInEditMode()) {
             setDice(Dice.D4);

@@ -2,7 +2,6 @@ package com.paragonfervour.charactersheet.stats.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,19 +36,11 @@ public final class DiceDialogFactory {
         AlertDialog dialog = new AlertDialog.Builder(context)
                 .setCancelable(true)
                 .setTitle(R.string.dice_picker_title)
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        dialogResult.onCompleted();
-                    }
+                .setNegativeButton(R.string.cancel, (dialog1, which) -> {
+                    dialog1.dismiss();
+                    dialogResult.onCompleted();
                 })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        dialogResult.onCompleted();
-                    }
-                })
+                .setOnCancelListener(dialog1 -> dialogResult.onCompleted())
                 .setView(customView)
                 .show();
 

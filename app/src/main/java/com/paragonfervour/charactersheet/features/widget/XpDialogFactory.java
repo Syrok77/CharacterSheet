@@ -1,7 +1,6 @@
 package com.paragonfervour.charactersheet.features.widget;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,38 +40,32 @@ public class XpDialogFactory {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
                 .setTitle(R.string.dialog_add_xp_title)
-                .setPositiveButton(R.string.dialog_add_xp_accept, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialog, int which) {
-                        if (!xpAmount.getText().toString().isEmpty()) {
-                            final int amount = Integer.valueOf(xpAmount.getText().toString());
-                            mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
-                                @Override
-                                public void onCompleted() {
-                                }
+                .setPositiveButton(R.string.dialog_add_xp_accept, (dialog, which) -> {
+                    if (!xpAmount.getText().toString().isEmpty()) {
+                        final int amount = Integer.valueOf(xpAmount.getText().toString());
+                        mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+                            @Override
+                            public void onCompleted() {
+                            }
 
-                                @Override
-                                public void onError(Throwable e) {
-                                    dialog.dismiss();
-                                }
+                            @Override
+                            public void onError(Throwable e) {
+                                dialog.dismiss();
+                            }
 
-                                @Override
-                                public void onNext(GameCharacter gameCharacter) {
-                                    int xp = gameCharacter.getInfo().getXp() + amount;
-                                    gameCharacter.getInfo().setXp(xp);
+                            @Override
+                            public void onNext(GameCharacter gameCharacter) {
+                                int xp = gameCharacter.getInfo().getXp() + amount;
+                                gameCharacter.getInfo().setXp(xp);
 
-                                    unsubscribe();
-                                    mCharacterDAO.activeCharacterUpdated();
-                                }
-                            });
-                        }
+                                unsubscribe();
+                                mCharacterDAO.activeCharacterUpdated();
+                            }
+                        });
                     }
                 })
-                .setNegativeButton(R.string.dialog_add_xp_change, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        createChangeXpDialog().show();
-                    }
+                .setNegativeButton(R.string.dialog_add_xp_change, (dialog, which) -> {
+                    createChangeXpDialog().show();
                 })
                 .setView(customView);
 
@@ -90,30 +83,27 @@ public class XpDialogFactory {
 
         return new AlertDialog.Builder(mContext)
                 .setTitle(R.string.dialog_change_xp_title)
-                .setPositiveButton(R.string.dialog_change_xp_accept, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialog, int which) {
-                        if (!xpAmount.getText().toString().isEmpty()) {
-                            final int amount = Integer.valueOf(xpAmount.getText().toString());
-                            mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
-                                @Override
-                                public void onCompleted() {
-                                }
+                .setPositiveButton(R.string.dialog_change_xp_accept, (dialog, which) -> {
+                    if (!xpAmount.getText().toString().isEmpty()) {
+                        final int amount = Integer.valueOf(xpAmount.getText().toString());
+                        mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+                            @Override
+                            public void onCompleted() {
+                            }
 
-                                @Override
-                                public void onError(Throwable e) {
-                                    dialog.dismiss();
-                                }
+                            @Override
+                            public void onError(Throwable e) {
+                                dialog.dismiss();
+                            }
 
-                                @Override
-                                public void onNext(GameCharacter gameCharacter) {
-                                    gameCharacter.getInfo().setXp(amount);
+                            @Override
+                            public void onNext(GameCharacter gameCharacter) {
+                                gameCharacter.getInfo().setXp(amount);
 
-                                    unsubscribe();
-                                    mCharacterDAO.activeCharacterUpdated();
-                                }
-                            });
-                        }
+                                unsubscribe();
+                                mCharacterDAO.activeCharacterUpdated();
+                            }
+                        });
                     }
                 })
                 .setView(customView)

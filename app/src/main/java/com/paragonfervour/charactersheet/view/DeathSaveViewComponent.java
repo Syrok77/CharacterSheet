@@ -54,29 +54,23 @@ public class DeathSaveViewComponent extends LinearLayout {
         mSecondFail = (CheckBox) findViewById(R.id.death_saves_second_fail);
         mThirdFail = (CheckBox) findViewById(R.id.death_saves_third_fail);
 
-        checkboxSection.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mFailCount == 3) {
-                    return;
-                }
+        checkboxSection.setOnClickListener(v -> {
+            if (mFailCount == 3) {
+                return;
+            }
 
-                mFailCount++;
-                mFailureCountSubject.onNext(mFailCount);
+            mFailCount++;
+            mFailureCountSubject.onNext(mFailCount);
 
-                applyFailCountToView();
-                if (mFailCount == 3) {
-                    onFinalFail();
-                }
+            applyFailCountToView();
+            if (mFailCount == 3) {
+                onFinalFail();
             }
         });
 
-        successButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                reset(0);
-                mFailureCountSubject.onNext(0);
-            }
+        successButton.setOnClickListener(v -> {
+            reset(0);
+            mFailureCountSubject.onNext(0);
         });
     }
 

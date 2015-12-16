@@ -12,7 +12,6 @@ import java.util.List;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 
@@ -43,20 +42,12 @@ public class CharacterDAO {
      */
     public Observable<GameCharacter> getActiveCharacter() {
         return mActiveCharacterSubject.asObservable()
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        if (mActiveCharacter == null) {
-                            loadActiveCharacter();
-                        }
+                .doOnSubscribe(() -> {
+                    if (mActiveCharacter == null) {
+                        loadActiveCharacter();
                     }
                 })
-                .doOnUnsubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        mActiveCharacter.save();
-                    }
-                })
+                .doOnUnsubscribe(mActiveCharacter::save)
                 .unsubscribeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

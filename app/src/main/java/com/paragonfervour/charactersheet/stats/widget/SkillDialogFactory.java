@@ -1,7 +1,6 @@
 package com.paragonfervour.charactersheet.stats.widget;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,26 +45,20 @@ public class SkillDialogFactory {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setCancelable(true)
                 .setTitle(R.string.skill_add_new)
-                .setPositiveButton(R.string.skill_new_accept, new AlertDialog.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        final Skill skill = new Skill();
+                .setPositiveButton(R.string.skill_new_accept, (dialog, which) -> {
+                    final Skill skill = new Skill();
 
-                        EditText nameText = (EditText) customView.findViewById(R.id.skill_dialog_name);
-                        EditText valueText = (EditText) customView.findViewById(R.id.skill_dialog_value);
+                    EditText nameText = (EditText) customView.findViewById(R.id.skill_dialog_name);
+                    EditText valueText = (EditText) customView.findViewById(R.id.skill_dialog_value);
 
 
-                        skill.setValue(Integer.valueOf(valueText.getText().toString()));
-                        skill.setName(nameText.getText().toString().toLowerCase());
+                    skill.setValue(Integer.valueOf(valueText.getText().toString()));
+                    skill.setName(nameText.getText().toString().toLowerCase());
 
-                        listener.onSkillCreated(skill);
-                    }
+                    listener.onSkillCreated(skill);
                 })
-                .setNegativeButton(R.string.skill_new_cancel, new AlertDialog.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
+                .setNegativeButton(R.string.skill_new_cancel, (dialog, which) -> {
+                    dialog.dismiss();
                 })
                 .setView(customView);
 
@@ -94,24 +87,18 @@ public class SkillDialogFactory {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setCancelable(true)
                 .setTitle(R.string.skill_add_update)
-                .setPositiveButton(R.string.skill_update_accept, new AlertDialog.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        EditText nameText = (EditText) customView.findViewById(R.id.skill_dialog_name);
-                        EditText valueText = (EditText) customView.findViewById(R.id.skill_dialog_value);
+                .setPositiveButton(R.string.skill_update_accept, (dialog, which) -> {
+                    EditText nameText1 = (EditText) customView.findViewById(R.id.skill_dialog_name);
+                    EditText valueText1 = (EditText) customView.findViewById(R.id.skill_dialog_value);
 
-                        updateSkill.setValue(Integer.valueOf(valueText.getText().toString()));
-                        updateSkill.setName(nameText.getText().toString());
+                    updateSkill.setValue(Integer.valueOf(valueText1.getText().toString()));
+                    updateSkill.setName(nameText1.getText().toString());
 
-                        listener.onSkillUpdated(updateSkill);
-                    }
+                    listener.onSkillUpdated(updateSkill);
                 })
-                .setNegativeButton(R.string.skill_update_remove, new AlertDialog.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        listener.onSkillDeleted(updateSkill);
-                    }
+                .setNegativeButton(R.string.skill_update_remove, (dialog, which) -> {
+                    dialog.dismiss();
+                    listener.onSkillDeleted(updateSkill);
                 })
                 .setView(customView);
 
