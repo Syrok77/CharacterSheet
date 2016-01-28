@@ -2,19 +2,23 @@
 <resources>
 
     <!-- Primary color palette -->
-    <color name="brand_primary">#ff00d4c6</color> <!--00BCD4-->
-    <color name="brand_secondary">#ff00B1A4</color>
-    <color name="brand_bright">#ff55DED4</color>
+    <color name="brand_primary">#00BCD4</color> <!--00BCD4-->
+    <color name="brand_dark">#0097A7</color>
+    <color name="brand_bright">#80DEEA</color>
 
     <!-- Secondary color palette -->
-    <color name="secondary_500">#B44E00</color>
-    <color name="secondary_700">#8A3C00</color>
-    <color name="secondary_200">#FFA763</color>
+    <color name="secondary_accent">#7C4DFF</color>
+
+    <!--<color name="secondary_200">#FFCC80</color>-->
+    <!--<color name="secondary_500">#FF9800</color>-->
+    <!--<color name="secondary_700">#F57C00</color>-->
 
     <!-- Tertiary color palette -->
-    <color name="tertiary_500">#0945BC</color>
-    <color name="tertiary_700">#001F5C</color>
-    <color name="tertiary_200">#6D9AF3</color>
+    <color name="tertiary_accent">#536DFE</color>
+
+    <!--<color name="tertiary_200">#9FA8DA</color>-->
+    <!--<color name="tertiary_500">#3F51B5</color>-->
+    <!--<color name="tertiary_700">#303F9F</color>-->
 
     <color name="blue_500">#1658DA</color>
     <color name="blue_700">#0945BC</color>
@@ -32,6 +36,10 @@
     <color name="brown_500">#795548</color>
     <color name="brown_700">#5D4037</color>
     <color name="brown_200">#BCAAA4</color>
+
+    <!-- Text Colors -->
+    <color name="text_black_secondary">#8A000000</color> <!-- 54% black value is used for captions and huge display sizes -->
+    <color name="text_black">#DE000000</color> <!--  -->
 
     <!-- Other colors -->
     <color name="primary_text_default_light">#de000000</color>

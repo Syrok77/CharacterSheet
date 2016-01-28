@@ -59,7 +59,7 @@
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
-                android:background="@color/secondary_500"/>
+                android:background="@color/secondary_accent"/>
 
         </RelativeLayout>
 
@@ -91,7 +91,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="2dp"
                 android:text="@string/stat_title_health"
-                android:textColor="@color/tertiary_500"
+                android:textColor="@color/tertiary_accent"
                 android:textSize="9dp"/>
 
             <com.paragonfervour.charactersheet.view.StatValueViewComponent
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 app:hapticInterval="10"
-                app:statBackground="@color/tertiary_500"
+                app:statBackground="@color/tertiary_accent"
                 app:statTitle="@string/stat_name_tmp_hp"/>
 
             <com.paragonfervour.charactersheet.view.StatValueViewComponent
@@ -110,7 +110,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 app:hapticInterval="10"
-                app:statBackground="@color/tertiary_500"
+                app:statBackground="@color/tertiary_accent"
                 app:statTitle="@string/stat_name_hp"/>
 
             <com.paragonfervour.charactersheet.view.StatValueViewComponent
@@ -120,7 +120,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 app:hapticInterval="10"
-                app:statBackground="@color/tertiary_500"
+                app:statBackground="@color/tertiary_accent"
                 app:statTitle="@string/stat_name_max_hp"/>
 
             <TextView
@@ -199,7 +199,7 @@
                     android:paddingTop="4dp"
                     android:text="@string/stat_health_hit_dice_roll"
                     android:visibility="gone"
-                    android:textColor="@color/tertiary_200"
+                    android:textColor="@color/tertiary_accent"
                     android:textSize="18sp"/>
 
             </LinearLayout>
@@ -231,7 +231,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="2dp"
                 android:text="@string/stat_title_ability_scores"
-                android:textColor="@color/brand_secondary"
+                android:textColor="@color/brand_dark"
                 android:textSize="9dp"/>
 
             <LinearLayout
@@ -431,7 +431,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="4dp"
-            android:backgroundTint="@color/tertiary_700"
+            android:backgroundTint="@color/tertiary_accent"
             android:elevation="@dimen/button_elevation"
             android:text="@string/skill_add_new"
             android:textColor="@color/default_white"/>

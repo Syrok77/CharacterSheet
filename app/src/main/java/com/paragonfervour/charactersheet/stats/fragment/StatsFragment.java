@@ -196,7 +196,7 @@ public class StatsFragment extends ComponentBaseFragment {
 
         // dumb view compat stuff
         //noinspection deprecation
-        int color = getResources().getColor(R.color.tertiary_700);
+        int color = getResources().getColor(R.color.tertiary_accent);
         ViewCompat.setBackgroundTintList(mAddSkillButton, ColorStateList.valueOf(color));
     }
 
@@ -337,7 +337,7 @@ public class StatsFragment extends ComponentBaseFragment {
         skillView.setSkillModifier(skill.getValue());
 
         //noinspection deprecation
-        skillView.setComponentColor(getResources().getColor(R.color.tertiary_500));
+        skillView.setComponentColor(getResources().getColor(R.color.tertiary_accent));
 
         //android:layout_gravity="end"
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,

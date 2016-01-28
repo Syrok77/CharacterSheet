@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="153dp"
-    android:background="@color/tertiary_700"
+    android:background="?attr/colorAccent"
     android:orientation="vertical">
 
     <!-- Subtitle -->
@@ -47,7 +47,6 @@
         android:layout_marginRight="8dp"
         android:layout_toLeftOf="@+id/drawer_header_edit_character_button"
         android:layout_toStartOf="@+id/drawer_header_edit_character_button"
-        android:backgroundTint="@color/secondary_700"
         android:textColor="@color/default_white"
         tools:text="325 XP"
         />

@@ -9,11 +9,10 @@
         <item name="android:windowBackground">@color/brand_primary</item>
         <item name="colorPrimary">@color/brand_primary</item>
         <item name="colorPrimaryDark">@color/status_bar</item>
-        <item name="colorAccent">@color/secondary_500</item>
+        <item name="colorAccent">@color/secondary_accent</item>
 
-        <item name="android:textColorPrimary">@color/primary_text_default_light</item>
-        <item name="android:textColor">@color/primary_text_default_light</item>
-        <item name="colorControlHighlight">@color/default_background_gray</item>
+        <item name="android:textColorPrimary">@color/text_black</item>
+        <item name="android:textColor">@color/text_black</item>
         <!-- Highlight color for pressed states -->
     </style>
 
@@ -24,22 +23,18 @@
 
         <item name="android:windowBackground">@color/default_background_gray</item>
         <item name="colorPrimary">@color/brand_primary</item>
-        <item name="colorPrimaryDark">@color/brand_secondary</item>
-        <item name="colorAccent">@color/secondary_500</item>
+        <item name="colorPrimaryDark">@color/brand_dark</item>
+        <item name="colorAccent">@color/secondary_accent</item>
 
         <item name="colorControlHighlight">@color/default_background_gray</item>
         <!-- Highlight color for pressed states -->
     </style>
 
-    <!-- Navigation Drawer override of theme, which basically is AppTheme with a different control selected color-->
-    <style name="DrawerAppTheme" parent="AppTheme">
-        <!-- Primary color determines the highlight color of a control -->
-        <item name="colorPrimary">@color/primary_text_default_light</item>
-    </style>
-
     <style name="SectionTitle" >
-        <item name="android:textColor">@color/tertiary_500</item>
-        <item name="android:textSize">@dimen/text_large</item>
+        <item name="android:textSize">@dimen/text_size_subheading</item>
+        <item name="android:layout_height">@dimen/subheader_height</item>
+        <item name="android:fontFamily">@string/font_family_medium</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
 </resources>

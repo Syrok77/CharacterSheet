@@ -13,6 +13,16 @@
     <dimen name="text_medium">16sp</dimen>
     <dimen name="text_large">18sp</dimen>
 
+    <!-- Material text sizes -->
+    <!--<dimen name="text_size_headline">24sp</dimen>-->
+    <!--<dimen name="text_size_title">20sp</dimen>-->
+    <dimen name="text_size_subheading">14sp</dimen>
+    <dimen name="text_size_body">14sp</dimen>
+    <dimen name="text_size_caption">12sp</dimen>
+
+    <!-- Material View heights -->
+    <dimen name="subheader_height">48dp</dimen>
+
     <!-- Elevations -->
     <dimen name="drawer_elevation">16dp</dimen>  <!-- Drawer and bottom sheet -->
     <dimen name="appbar_elevation">4dp</dimen>

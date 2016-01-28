@@ -144,7 +144,7 @@ public class CharacterActivity extends ComponentBaseActivity {
         };
 
         // Defer code dependent on restoration of previous instance state.
-        mDrawerLayout.post(() -> mDrawerToggle.syncState());
+        mDrawerLayout.post(mDrawerToggle::syncState);
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
