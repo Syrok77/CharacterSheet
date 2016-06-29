@@ -7,14 +7,14 @@
     <color name="brand_bright">#80DEEA</color>
 
     <!-- Secondary color palette -->
-    <color name="secondary_accent">#7C4DFF</color>
+    <color name="secondary_accent">#2962FF</color>
 
     <!--<color name="secondary_200">#FFCC80</color>-->
     <!--<color name="secondary_500">#FF9800</color>-->
     <!--<color name="secondary_700">#F57C00</color>-->
 
     <!-- Tertiary color palette -->
-    <color name="tertiary_accent">#536DFE</color>
+    <color name="tertiary_accent">#448AFF</color>
 
     <!--<color name="tertiary_200">#9FA8DA</color>-->
     <!--<color name="tertiary_500">#3F51B5</color>-->
