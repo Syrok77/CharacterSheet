@@ -186,6 +186,7 @@ public class StatsFragment extends ComponentBaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.e(TAG, "Error getting active character", e);
                     }
 
                     @Override

@@ -103,7 +103,8 @@ public class Skill extends SugarRecord {
     public boolean equals(Object o) {
         if (o instanceof Skill) {
             Skill s = (Skill) o;
-            return getName().equals(s.getName()) &&
+            return getName() != null &&
+                    getName().equals(s.getName()) &&
                     getValue() == s.getValue();
         } else {
             return super.equals(o);

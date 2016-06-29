@@ -43,8 +43,7 @@ public class SkillValueViewComponent extends LinearLayout {
         inflate(getContext(), R.layout.skill_value_component, this);
 
         mSkillButton = (Button) findViewById(R.id.component_skill_button);
-
-        mSkillButton.setOnClickListener(mClickListener::onClick);
+        mSkillButton.setOnClickListener((v) -> mClickListener.onClick(v));
 
         if (attrs != null) {
             TypedArray attributes = getContext().obtainStyledAttributes(
