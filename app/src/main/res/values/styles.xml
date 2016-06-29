@@ -30,11 +30,4 @@
         <!-- Highlight color for pressed states -->
     </style>
 
-    <style name="SectionTitle" >
-        <item name="android:textSize">@dimen/text_size_subheading</item>
-        <item name="android:layout_height">@dimen/subheader_height</item>
-        <item name="android:fontFamily">@string/font_family_medium</item>
-        <item name="android:gravity">center_vertical</item>
-    </style>
-
 </resources>

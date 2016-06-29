@@ -50,13 +50,18 @@ public class WeaponListViewComponent extends LinearLayout {
      */
     public void setWeapons(List<Weapon> weapons) {
         removeAllViews();
+        boolean isFirstWeapon = true;
 
         for (Weapon weapon : weapons) {
             WeaponViewComponent component = new WeaponViewComponent(getContext());
             component.applyWeaponModel(weapon);
 
+            // Don't put padding on the first weapon
+            int marginTop = isFirstWeapon ? 0 : getResources().getDimensionPixelSize(R.dimen.weapon_list_item_top_margin);
+            isFirstWeapon = false;
+
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, getResources().getDimensionPixelSize(R.dimen.weapon_list_item_top_margin), 0, 0);
+            params.setMargins(0, marginTop, 0, 0);
             component.setLayoutParams(params);
 
             component.setOnClickListener(v -> {

@@ -12,12 +12,11 @@
         android:layout_height="36dp"
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:background="@drawable/icon_circle_background"
         android:contentDescription="@string/cd_weapon_icon"
         android:scaleType="center"
-        android:tint="@color/default_white"
-        android:src="@drawable/abc_ic_menu_copy_mtrl_am_alpha"/>
+        android:src="@drawable/abc_ic_menu_copy_mtrl_am_alpha"
+        android:tint="@color/default_white"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,9 +32,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:textSize="@dimen/text_large"
-                android:textStyle="bold"
+                android:fontFamily="@string/font_family_medium"
+                android:textSize="@dimen/text_medium"
                 tools:text="Rapier"/>
 
             <TextView
@@ -43,7 +41,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:text="@string/single_dash"
                 android:textSize="@dimen/text_medium"/>
 
@@ -52,7 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
                 android:textSize="@dimen/text_medium"
                 tools:text="Finesse, Light"/>
 
@@ -67,8 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:textSize="@dimen/text_medium"
+                android:textSize="14sp"
                 tools:text="D8 + 2"/>
 
             <TextView
@@ -76,15 +71,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:textSize="@dimen/text_medium"
+                android:textSize="14sp"
                 tools:text="25gp"/>
 
             <TextView
                 android:id="@+id/component_weapon_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_medium"
+                android:textSize="14sp"
                 tools:text="2lb"/>
 
         </LinearLayout>
