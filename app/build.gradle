@@ -30,7 +30,7 @@ String getJavaVersion(Integer v) {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion '23.0.3'
 
     defaultConfig {
         applicationId "com.paragonfervour.charactersheet"
