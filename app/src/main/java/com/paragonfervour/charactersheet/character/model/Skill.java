@@ -1,7 +1,7 @@
 package com.paragonfervour.charactersheet.character.model;
 
-import com.orm.StringUtil;
 import com.orm.SugarRecord;
+import com.orm.util.NamingHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Represent a character's skill. A Skill has a name (i.e. Sneak or
  */
-public class Skill extends SugarRecord<Skill> {
+public class Skill extends SugarRecord {
 
     String mName;
     int mValue;
@@ -55,7 +55,11 @@ public class Skill extends SugarRecord<Skill> {
      * @return StringUtils.toSQLName() for the "Name" field.
      */
     public static String getNameFieldSqlValue() {
-        return StringUtil.toSQLName("mName");
+        try {
+            return NamingHelper.toSQLName(Skill.class.getDeclaredField("mName"));
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
@@ -64,7 +68,11 @@ public class Skill extends SugarRecord<Skill> {
      * @return StringUtils.toSQLName() for the "Character Id" field.
      */
     public static String getCharacterIdFieldSqlValue() {
-        return StringUtil.toSQLName("mCharacterId");
+        try {
+            return NamingHelper.toSQLName(Skill.class.getDeclaredField("mCharacterId"));
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public String getName() {

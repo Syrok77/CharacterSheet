@@ -1,14 +1,15 @@
 package com.paragonfervour.charactersheet.character.model;
 
-import com.orm.StringUtil;
 import com.orm.SugarRecord;
+import com.orm.util.NamingHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Hierarchy of models that contains all the data of a D&D Character.
  */
-public class GameCharacter extends SugarRecord<GameCharacter> {
+public class GameCharacter extends SugarRecord {
 
     // Name, class, race, level, xp
     CharacterInfo mInfo;
@@ -34,12 +35,13 @@ public class GameCharacter extends SugarRecord<GameCharacter> {
     }
 
     @Override
-    public void save() {
-        super.save();
+    public long save() {
+        long id = super.save();
         // Save sub models
         mBioInfo.save();
         mInfo.save();
         mDefenseStats.save();
+        return id;
     }
 
     /**
@@ -48,8 +50,12 @@ public class GameCharacter extends SugarRecord<GameCharacter> {
      * @return a List of all the character's Weapons.
      */
     public List<Weapon> getWeapons() {
-        String varName = StringUtil.toSQLName("mCharacterId");
-        return Weapon.find(Weapon.class, varName + " = ?", String.valueOf(getId()));
+        try {
+            String varName = NamingHelper.toSQLName(Weapon.class.getDeclaredField("mCharacterId"));
+            return Weapon.find(Weapon.class, varName + " = ?", String.valueOf(getId()));
+        } catch (NoSuchFieldException e) {
+            return new ArrayList<>();
+        }
     }
 
     /**
@@ -58,8 +64,13 @@ public class GameCharacter extends SugarRecord<GameCharacter> {
      * @return a List<Weapon> containing Weapons for the main hand.
      */
     public List<Weapon> getMainHandWeapons() {
-        String query = StringUtil.toSQLName("mCharacterId") + " = ? and " + StringUtil.toSQLName("isMainHand") + " = ?";
-        return Weapon.find(Weapon.class, query, String.valueOf(getId()), "1");
+        try {
+            String query = NamingHelper.toSQLName(Weapon.class.getDeclaredField("mCharacterId")) + " = ? " +
+                    "and " + NamingHelper.toSQLName(Weapon.class.getDeclaredField("isMainHand")) + " = ?";
+            return Weapon.find(Weapon.class, query, String.valueOf(getId()), "1");
+        } catch (NoSuchFieldException e) {
+            return new ArrayList<>();
+        }
     }
 
     /**
@@ -68,8 +79,13 @@ public class GameCharacter extends SugarRecord<GameCharacter> {
      * @return a List<Weapon> containing Weapons for the off hand.
      */
     public List<Weapon> getOffHandWeapons() {
-        String query = StringUtil.toSQLName("mCharacterId") + " = ? and " + StringUtil.toSQLName("isMainHand") + " = ?";
-        return Weapon.find(Weapon.class, query, String.valueOf(getId()), "0");
+        try {
+            String query = NamingHelper.toSQLName(Weapon.class.getDeclaredField("mCharacterId")) + " = ? " +
+                    "and " + NamingHelper.toSQLName(Weapon.class.getDeclaredField("isMainHand")) + " = ?";
+            return Weapon.find(Weapon.class, query, String.valueOf(getId()), "0");
+        } catch (NoSuchFieldException e) {
+            return new ArrayList<>();
+        }
     }
 
     public CharacterInfo getInfo() {
@@ -85,8 +101,12 @@ public class GameCharacter extends SugarRecord<GameCharacter> {
     }
 
     public List<Skill> getSkills() {
-        String query = StringUtil.toSQLName("mCharacterId") + " = ?";
-        return Skill.find(Skill.class, query, String.valueOf(getId()));
+        try {
+            String query = NamingHelper.toSQLName(Weapon.class.getDeclaredField("mCharacterId")) + " = ?";
+            return Skill.find(Skill.class, query, String.valueOf(getId()));
+        } catch (NoSuchFieldException e) {
+            return new ArrayList<>();
+        }
     }
 
     public boolean isInspired() {

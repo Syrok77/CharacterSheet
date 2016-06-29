@@ -5,7 +5,7 @@ import com.orm.SugarRecord;
 /**
  * Damage representation. Dice type, # of that dice, and modifier
  */
-public class Damage extends SugarRecord<Damage> {
+public class Damage extends SugarRecord {
 
     int mDiceTypeValue;
     int mDiceQuantity;

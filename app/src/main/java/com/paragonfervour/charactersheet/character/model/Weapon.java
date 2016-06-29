@@ -5,7 +5,7 @@ import com.orm.SugarRecord;
 /**
  * Model representing a Weapon, with a name (i.e. Rapier), damage, value, weight, and properties
  */
-public class Weapon extends SugarRecord<Weapon> {
+public class Weapon extends SugarRecord {
 
     String mName;
 
@@ -45,9 +45,9 @@ public class Weapon extends SugarRecord<Weapon> {
     }
 
     @Override
-    public void save() {
+    public long save() {
         mDamage.save();
-        super.save();
+        return super.save();
     }
 
     public String getName() {

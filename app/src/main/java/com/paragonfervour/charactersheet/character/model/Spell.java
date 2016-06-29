@@ -6,7 +6,7 @@ import com.orm.SugarRecord;
  * Model represents a Spell.
  * Spell name, level, description, casting time, components, range
  */
-public class Spell extends SugarRecord<Spell> {
+public class Spell extends SugarRecord {
 
     String mName;
     int mLevel;

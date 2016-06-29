@@ -3,7 +3,7 @@ package com.paragonfervour.charactersheet.character.model;
 
 import com.orm.SugarRecord;
 
-public class DefenseStats extends SugarRecord<DefenseStats> {
+public class DefenseStats extends SugarRecord {
 
     int mAC;
 

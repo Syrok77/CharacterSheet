@@ -6,7 +6,7 @@ import com.orm.SugarRecord;
  * Model contains background information and character traits.
  * TODO: Unimplemented
  */
-public class BioInfo extends SugarRecord<BioInfo> {
+public class BioInfo extends SugarRecord {
 
     String dummy = "DUMMY";
 

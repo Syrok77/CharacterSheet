@@ -116,26 +116,26 @@ public class CharacterDAO {
     }
 
     private void loadActiveCharacter() {
-        mActiveCharacter = GameCharacter.findById(GameCharacter.class, 1l);
+        mActiveCharacter = GameCharacter.findById(GameCharacter.class, 1L);
 
         if (mActiveCharacter == null) {
             // Create a new one
             mActiveCharacter = GameCharacter.createDefaultCharacter();
-            mActiveCharacter.save();
+            long characterId = mActiveCharacter.save();
 
             // Add default weapons
             Weapon main = Weapon.createDefault();
-            main.setCharacterId(mActiveCharacter.getId());
+            main.setCharacterId(characterId);
             main.save();
 
             Weapon off = Weapon.createOffhand();
-            off.setCharacterId(mActiveCharacter.getId());
+            off.setCharacterId(characterId);
             off.save();
 
             // Create default skills
             List<Skill> skills = Skill.createMaldalairList();
             for (Skill s : skills) {
-                s.setCharacterId(mActiveCharacter.getId());
+                s.setCharacterId(characterId);
                 s.save();
             }
         }
