@@ -7,13 +7,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.paragonfervour.charactersheet.R;
+import com.paragonfervour.charactersheet.character.helper.CharacterHelper;
+import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Weapon;
+import com.paragonfervour.charactersheet.stats.helper.StatHelper;
 
 /**
  * View component that displays, but does not update, a Weapon model.
  */
 public class WeaponViewComponent extends LinearLayout {
 
+    private TextView mAttackBonus;
     private TextView mNameText;
     private TextView mPropertiesText;
     private TextView mDamageText;
@@ -43,6 +47,7 @@ public class WeaponViewComponent extends LinearLayout {
     private void init() {
         inflate(getContext(), R.layout.weapon_component, this);
 
+        mAttackBonus = (TextView) findViewById(R.id.weapon_attack_bonus);
         mNameText = (TextView) findViewById(R.id.component_weapon_name);
         mPropertiesText = (TextView) findViewById(R.id.component_weapon_properties);
         mDamageText = (TextView) findViewById(R.id.component_weapon_damage);
@@ -52,11 +57,11 @@ public class WeaponViewComponent extends LinearLayout {
         mNameSeparator = findViewById(R.id.component_weapon_separator);
 
         if (isInEditMode()) {
-            applyWeaponModel(Weapon.createDefault());
+            applyWeaponModel(Weapon.createDefault(), GameCharacter.createDefaultCharacter());
         }
     }
 
-    public void applyWeaponModel(Weapon weapon) {
+    public void applyWeaponModel(Weapon weapon, GameCharacter gameCharacter) {
         mNameText.setText(weapon.getName());
         mPropertiesText.setText(weapon.getProperties());
         mDamageText.setText(weapon.getDamage().toString());
@@ -65,10 +70,19 @@ public class WeaponViewComponent extends LinearLayout {
 
         if (weapon.getProperties() == null || weapon.getProperties().isEmpty()) {
             mNameSeparator.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             mNameSeparator.setVisibility(View.VISIBLE);
         }
+
+        // Calculate attack bonus
+        int attack = CharacterHelper.getProficiencyBonus(gameCharacter.getInfo().getLevel());
+        if (weapon.isStrengthWeapon()) {
+            attack += StatHelper.getScoreModifier(gameCharacter.getDefenseStats().getStrScore());
+        } else {
+            attack += StatHelper.getScoreModifier(gameCharacter.getDefenseStats().getDexScore());
+        }
+        String displayableAttackModifier = StatHelper.getStatIndicator(attack) + attack;
+        mAttackBonus.setText(displayableAttackModifier);
 
         mWeapon = weapon;
     }

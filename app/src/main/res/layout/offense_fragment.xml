@@ -39,8 +39,7 @@
                 android:id="@+id/offense_main_weapon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/offense_main_title"
-                android:layout_marginStart="16dp"/>
+                android:layout_below="@+id/offense_main_title"/>
 
             <com.paragonfervour.charactersheet.widget.ListSubHeaderComponent
                 android:id="@+id/offense_offhand_title"
@@ -53,8 +52,7 @@
                 android:id="@+id/offense_offhand_weapon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/offense_offhand_title"
-                android:layout_marginStart="16dp"/>
+                android:layout_below="@+id/offense_offhand_title"/>
 
             <Button
                 android:id="@+id/offense_add_weapon_button"

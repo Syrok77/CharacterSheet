@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 import com.paragonfervour.charactersheet.R;
+import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Weapon;
 import com.paragonfervour.charactersheet.offense.activity.AddWeaponActivity;
 import com.paragonfervour.charactersheet.view.WeaponViewComponent;
@@ -39,22 +40,23 @@ public class WeaponListViewComponent extends LinearLayout {
         if (isInEditMode()) {
             List<Weapon> previewWeapons = new ArrayList<>();
             previewWeapons.add(Weapon.createDefault());
-            setWeapons(previewWeapons);
+            setWeapons(previewWeapons, GameCharacter.createDefaultCharacter());
         }
     }
 
     /**
      * Set the List of weapons to display. This will create subviews for the passed in weapons.
      *
-     * @param weapons Weapon list to display inside this view.
+     * @param weapons       Weapon list to display inside this view.
+     * @param gameCharacter the game character who owns the weapons.
      */
-    public void setWeapons(List<Weapon> weapons) {
+    public void setWeapons(List<Weapon> weapons, GameCharacter gameCharacter) {
         removeAllViews();
         boolean isFirstWeapon = true;
 
         for (Weapon weapon : weapons) {
             WeaponViewComponent component = new WeaponViewComponent(getContext());
-            component.applyWeaponModel(weapon);
+            component.applyWeaponModel(weapon, gameCharacter);
 
             // Don't put padding on the first weapon
             int marginTop = isFirstWeapon ? 0 : getResources().getDimensionPixelSize(R.dimen.weapon_list_item_top_margin);

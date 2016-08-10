@@ -98,8 +98,8 @@ public class OffenseFragment extends ComponentBaseFragment {
     }
 
     private void updateUI(GameCharacter character) {
-        mMainHandList.setWeapons(character.getMainHandWeapons());
-        mOffHandList.setWeapons(character.getOffHandWeapons());
+        mMainHandList.setWeapons(character.getMainHandWeapons(), character);
+        mOffHandList.setWeapons(character.getOffHandWeapons(), character);
 
         int proficiency = CharacterHelper.getProficiencyBonus(character.getInfo().getLevel());
         String displayableProficiencyBonus= getString(R.string.offense_proficiency_summary, proficiency);
