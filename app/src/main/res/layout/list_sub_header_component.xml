@@ -20,7 +20,7 @@
         android:fontFamily="@string/font_family_medium"
         android:gravity="center_vertical|start"
         android:padding="16dp"
-        android:textColor="@color/subheader_gray"
+        android:textColor="?attr/colorAccent"
         android:textSize="14sp"
         tools:text="Header"/>
 
