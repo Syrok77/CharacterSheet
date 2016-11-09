@@ -152,7 +152,6 @@ public class StatsFragment extends ComponentBaseFragment {
 
     // endregion
 
-    @SuppressWarnings("unused") // doesn't matter if TAG is unused, it's nice to keep it around.
     private static final String TAG = StatsFragment.class.getSimpleName();
 
     private String mModifierFormat;
