@@ -1,16 +1,15 @@
 package com.paragonfervour.charactersheet.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
 import com.paragonfervour.charactersheet.component.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import roboguice.activity.RoboActionBarActivity;
 
-
-public abstract class ComponentBaseActivity extends RoboActionBarActivity {
+public abstract class ComponentBaseActivity extends ActionBarActivity {
 
     private final List<Component> mComponents = new ArrayList<>();
 

@@ -10,7 +10,7 @@
         tools:replace="android:icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:name="com.orm.SugarApp">
+        android:name=".application.PaperlessApplication">
 
         <!-- Sugar ORM metadata -->
         <meta-data android:name="DATABASE" android:value="character.db" />

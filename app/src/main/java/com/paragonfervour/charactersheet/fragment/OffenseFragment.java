@@ -10,15 +10,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.helper.CharacterHelper;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
+import com.paragonfervour.charactersheet.injection.Injectors;
 import com.paragonfervour.charactersheet.offense.activity.AddWeaponActivity;
 import com.paragonfervour.charactersheet.offense.component.WeaponListViewComponent;
 
-import roboguice.inject.InjectView;
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -30,23 +34,24 @@ import rx.subscriptions.CompositeSubscription;
 public class OffenseFragment extends ComponentBaseFragment {
 
     @Inject
-    private CharacterDAO mCharacterDAO;
+    CharacterDAO mCharacterDAO;
 
-    @InjectView(R.id.offense_proficiency_bonus)
-    private TextView mProficiencyBonus;
+    @BindView(R.id.offense_proficiency_bonus)
+    TextView mProficiencyBonus;
 
-    @InjectView(R.id.offense_main_weapon)
-    private WeaponListViewComponent mMainHandList;
+    @BindView(R.id.offense_main_weapon)
+    WeaponListViewComponent mMainHandList;
 
-    @InjectView(R.id.offense_offhand_weapon)
-    private WeaponListViewComponent mOffHandList;
+    @BindView(R.id.offense_offhand_weapon)
+    WeaponListViewComponent mOffHandList;
 
-    @InjectView(R.id.offense_add_weapon_button)
-    private Button mAddWeaponButton;
+    @BindView(R.id.offense_add_weapon_button)
+    Button mAddWeaponButton;
 
     private static final String TAG = OffenseFragment.class.getSimpleName();
 
     private CompositeSubscription mCompositeSubscription;
+    private Unbinder mUnbinder;
 
     public OffenseFragment() {
         super();
@@ -54,6 +59,12 @@ public class OffenseFragment extends ComponentBaseFragment {
 
     public static OffenseFragment newInstance() {
         return new OffenseFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Injectors.currentActivityComponent().inject(this);
     }
 
     @Nullable
@@ -66,6 +77,7 @@ public class OffenseFragment extends ComponentBaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mCompositeSubscription = new CompositeSubscription();
+        mUnbinder = ButterKnife.bind(this, view);
 
         mCompositeSubscription.add(mCharacterDAO.getActiveCharacter()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -95,6 +107,7 @@ public class OffenseFragment extends ComponentBaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         mCompositeSubscription.unsubscribe();
+        mUnbinder.unbind();
     }
 
     private void updateUI(GameCharacter character) {
@@ -102,7 +115,7 @@ public class OffenseFragment extends ComponentBaseFragment {
         mOffHandList.setWeapons(character.getOffHandWeapons(), character);
 
         int proficiency = CharacterHelper.getProficiencyBonus(character.getInfo().getLevel());
-        String displayableProficiencyBonus= getString(R.string.offense_proficiency_summary, proficiency);
+        String displayableProficiencyBonus = getString(R.string.offense_proficiency_summary, proficiency);
         mProficiencyBonus.setText(displayableProficiencyBonus);
     }
 }

@@ -3,6 +3,7 @@ package com.paragonfervour.charactersheet.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,10 @@ import com.paragonfervour.charactersheet.component.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-import roboguice.fragment.RoboFragment;
-
 /**
  * Fragment that contains a list of Components and forwards in lifecycle events.
  */
-public class ComponentBaseFragment extends RoboFragment {
+public class ComponentBaseFragment extends Fragment {
 
     private final List<Component> mComponents = new ArrayList<>();
 

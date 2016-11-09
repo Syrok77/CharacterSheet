@@ -19,7 +19,6 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.model.Dice;
@@ -28,6 +27,7 @@ import com.paragonfervour.charactersheet.character.model.Skill;
 import com.paragonfervour.charactersheet.component.DicePickerViewComponent;
 import com.paragonfervour.charactersheet.fragment.ComponentBaseFragment;
 import com.paragonfervour.charactersheet.helper.SnackbarHelper;
+import com.paragonfervour.charactersheet.injection.Injectors;
 import com.paragonfervour.charactersheet.stats.helper.StatHelper;
 import com.paragonfervour.charactersheet.stats.observer.UpdateInspirationSubscriber;
 import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateChaSubscriber;
@@ -44,7 +44,11 @@ import com.paragonfervour.charactersheet.view.StatValueViewComponent;
 
 import java.util.List;
 
-import roboguice.inject.InjectView;
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -57,87 +61,87 @@ import rx.subscriptions.CompositeSubscription;
 public class StatsFragment extends ComponentBaseFragment {
 
     @Inject
-    private CharacterDAO mCharacterDAO;
+    CharacterDAO mCharacterDAO;
 
     @Inject
-    private SkillDialogFactory mSkillDialogFactory;
+    SkillDialogFactory mSkillDialogFactory;
 
     // region injected views -----------------------------------------------------------------------
 
-    @InjectView(R.id.stats_speed)
-    private TextView mSpeed;
+    @BindView(R.id.stats_speed)
+    TextView mSpeed;
 
-    @InjectView(R.id.stats_inspriation)
-    private CheckBox mInspiration;
+    @BindView(R.id.stats_inspriation)
+    CheckBox mInspiration;
 
-    @InjectView(R.id.stats_initiative)
-    private TextView mInitiative;
+    @BindView(R.id.stats_initiative)
+    TextView mInitiative;
 
-    @InjectView(R.id.stats_health_stat_component)
-    private StatValueViewComponent mHealthComponent;
+    @BindView(R.id.stats_health_stat_component)
+    StatValueViewComponent mHealthComponent;
 
-    @InjectView(R.id.stats_temp_health_stat_component)
-    private StatValueViewComponent mTempHpComponent;
+    @BindView(R.id.stats_temp_health_stat_component)
+    StatValueViewComponent mTempHpComponent;
 
-    @InjectView(R.id.stats_max_health_stat_component)
-    private StatValueViewComponent mMaxHealthComponent;
+    @BindView(R.id.stats_max_health_stat_component)
+    StatValueViewComponent mMaxHealthComponent;
 
-    @InjectView(R.id.stats_death_saves)
-    private DeathSaveViewComponent mDeathSaveComponent;
+    @BindView(R.id.stats_death_saves)
+    DeathSaveViewComponent mDeathSaveComponent;
 
-    @InjectView(R.id.stats_health_summary_value)
-    private TextView mHealthSummary;
+    @BindView(R.id.stats_health_summary_value)
+    TextView mHealthSummary;
 
-    @InjectView(R.id.stats_health_dice_indicator)
-    private DicePickerViewComponent mHitDicePickerComponent;
+    @BindView(R.id.stats_health_dice_indicator)
+    DicePickerViewComponent mHitDicePickerComponent;
 
-    @InjectView(R.id.stats_health_dice_roll)
-    private TextView mHitDiceRollButton;
+    @BindView(R.id.stats_health_dice_roll)
+    TextView mHitDiceRollButton;
 
-    @InjectView(R.id.stats_score_str_control)
-    private StatValueViewComponent mStrength;
+    @BindView(R.id.stats_score_str_control)
+    StatValueViewComponent mStrength;
 
-    @InjectView(R.id.stats_score_str_mod)
-    private TextView mStrengthModifier;
+    @BindView(R.id.stats_score_str_mod)
+    TextView mStrengthModifier;
 
-    @InjectView(R.id.stats_score_con_control)
-    private StatValueViewComponent mConstitution;
+    @BindView(R.id.stats_score_con_control)
+    StatValueViewComponent mConstitution;
 
-    @InjectView(R.id.stats_score_con_mod)
-    private TextView mConstitutionModifier;
+    @BindView(R.id.stats_score_con_mod)
+    TextView mConstitutionModifier;
 
-    @InjectView(R.id.stats_score_dex_control)
-    private StatValueViewComponent mDexterity;
+    @BindView(R.id.stats_score_dex_control)
+    StatValueViewComponent mDexterity;
 
-    @InjectView(R.id.stats_score_dex_mod)
-    private TextView mDexterityModifier;
+    @BindView(R.id.stats_score_dex_mod)
+    TextView mDexterityModifier;
 
-    @InjectView(R.id.stats_score_int_control)
-    private StatValueViewComponent mIntelligence;
+    @BindView(R.id.stats_score_int_control)
+    StatValueViewComponent mIntelligence;
 
-    @InjectView(R.id.stats_score_int_mod)
-    private TextView mIntelligenceModifier;
+    @BindView(R.id.stats_score_int_mod)
+    TextView mIntelligenceModifier;
 
-    @InjectView(R.id.stats_score_wis_control)
-    private StatValueViewComponent mWisdom;
+    @BindView(R.id.stats_score_wis_control)
+    StatValueViewComponent mWisdom;
 
-    @InjectView(R.id.stats_score_wis_mod)
-    private TextView mWisdomModifier;
+    @BindView(R.id.stats_score_wis_mod)
+    TextView mWisdomModifier;
 
-    @InjectView(R.id.stats_score_cha_control)
-    private StatValueViewComponent mCharisma;
+    @BindView(R.id.stats_score_cha_control)
+    StatValueViewComponent mCharisma;
 
-    @InjectView(R.id.stats_score_cha_mod)
-    private TextView mCharismaModifier;
+    @BindView(R.id.stats_score_cha_mod)
+    TextView mCharismaModifier;
 
-    @InjectView(R.id.stats_skill_section)
-    private ViewGroup mSkillsSection;
+    @BindView(R.id.stats_skill_section)
+    ViewGroup mSkillsSection;
 
-    @InjectView(R.id.stats_skill_passive_wis)
-    private TextView mPassiveWisdom;
+    @BindView(R.id.stats_skill_passive_wis)
+    TextView mPassiveWisdom;
 
-    @InjectView(R.id.stats_add_skill_button)
-    private Button mAddSkillButton;
+    @BindView(R.id.stats_add_skill_button)
+    Button mAddSkillButton;
 
     // endregion
 
@@ -157,8 +161,15 @@ public class StatsFragment extends ComponentBaseFragment {
     private String mModifierFormat;
 
     private CompositeSubscription mCompositeSubscription;
+    private Unbinder mUnbinder;
     private AlertDialog mActiveAlert;
     private AddUpdateSkillListener mSkillListener = new AddUpdateSkillListener();
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Injectors.currentActivityComponent().inject(this);
+    }
 
     @Nullable
     @Override
@@ -169,6 +180,7 @@ public class StatsFragment extends ComponentBaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mUnbinder = ButterKnife.bind(this, view);
 
         mModifierFormat = getString(R.string.stat_ability_score_modifier_format);
         mCompositeSubscription = new CompositeSubscription();
@@ -205,6 +217,7 @@ public class StatsFragment extends ComponentBaseFragment {
         super.onDestroyView();
         mCompositeSubscription.unsubscribe();
         mCompositeSubscription = null;
+        mUnbinder.unbind();
 
         if (mActiveAlert != null) {
             if (mActiveAlert.isShowing()) {

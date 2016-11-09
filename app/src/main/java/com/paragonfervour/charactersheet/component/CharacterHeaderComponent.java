@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.helper.CharacterHelper;
@@ -17,8 +16,10 @@ import com.paragonfervour.charactersheet.character.model.CharacterInfo;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.features.activity.EditCharacterFeaturesActivity;
 import com.paragonfervour.charactersheet.features.widget.XpDialogFactory;
+import com.paragonfervour.charactersheet.injection.Injectors;
 
-import roboguice.RoboGuice;
+import javax.inject.Inject;
+
 
 /**
  * Component that manages the drawer header view, which displays a character's info.
@@ -30,10 +31,10 @@ import roboguice.RoboGuice;
 public class CharacterHeaderComponent extends Component {
 
     @Inject
-    private CharacterDAO mCharacterDAO;
+    CharacterDAO mCharacterDAO;
 
     @Inject
-    private XpDialogFactory mXpDialogFactory;
+    XpDialogFactory mXpDialogFactory;
 
     private final View mHeaderView;
     private final TextView mDescription;
@@ -41,7 +42,7 @@ public class CharacterHeaderComponent extends Component {
     private final Button mXpButton;
 
     public CharacterHeaderComponent(View headerView) {
-        RoboGuice.injectMembers(headerView.getContext(), this);
+        Injectors.currentActivityComponent().inject(this);
 
         // bind views
         mHeaderView = headerView;

@@ -12,13 +12,16 @@ import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.activity.CharacterActivity;
 import com.paragonfervour.charactersheet.adapter.CharacterPagerAdapter;
 
-import roboguice.inject.InjectView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class CharacterPagerFragment extends ComponentBaseFragment {
 
-    @InjectView(R.id.character_view_pager)
-    private ViewPager mViewPager;
+    @BindView(R.id.character_view_pager)
+    ViewPager mViewPager;
+
+    private Unbinder mUnbinder;
 
     public CharacterPagerFragment() {
     }
@@ -36,6 +39,7 @@ public class CharacterPagerFragment extends ComponentBaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mUnbinder = ButterKnife.bind(this, view);
 
         CharacterPagerAdapter pagerAdapter = new CharacterPagerAdapter(getChildFragmentManager(), getActivity());
         mViewPager.setAdapter(pagerAdapter);
@@ -52,6 +56,8 @@ public class CharacterPagerFragment extends ComponentBaseFragment {
         TabLayout tabLayout = activity.getTabLayout();
         tabLayout.setVisibility(View.GONE);
         super.onDestroyView();
+
+        mUnbinder.unbind();
     }
 
 }

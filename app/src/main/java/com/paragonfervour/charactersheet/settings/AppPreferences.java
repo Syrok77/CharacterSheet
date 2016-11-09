@@ -1,24 +1,24 @@
 package com.paragonfervour.charactersheet.settings;
 
-import android.app.Activity;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
-import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
+import com.paragonfervour.charactersheet.injection.PerActivity;
 
-import roboguice.inject.ContextSingleton;
+import javax.inject.Inject;
+
 
 /**
  * Access point for all Settings values!
  */
-@ContextSingleton
+@PerActivity
 public class AppPreferences {
 
     private Context mContext;
 
     @Inject
-    public AppPreferences(Context context, Activity activity) {
+    AppPreferences(Context context) {
         mContext = context;
     }
 

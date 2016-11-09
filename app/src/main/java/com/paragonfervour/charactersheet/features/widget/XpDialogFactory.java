@@ -6,10 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
+
+import javax.inject.Inject;
 
 import rx.Subscriber;
 
@@ -22,7 +23,7 @@ public class XpDialogFactory {
     private Context mContext;
 
     @Inject
-    public XpDialogFactory(CharacterDAO characterDAO, Context context) {
+    XpDialogFactory(CharacterDAO characterDAO, Context context) {
         mCharacterDAO = characterDAO;
         mContext = context;
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -15,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.helper.CharacterHelper;
@@ -23,9 +23,13 @@ import com.paragonfervour.charactersheet.component.CharacterHeaderComponent;
 import com.paragonfervour.charactersheet.fragment.CharacterPagerFragment;
 import com.paragonfervour.charactersheet.fragment.EquipmentFragment;
 import com.paragonfervour.charactersheet.fragment.SpellsFragment;
+import com.paragonfervour.charactersheet.injection.Injectors;
 import com.paragonfervour.charactersheet.settings.SettingsActivity;
 
-import roboguice.inject.InjectView;
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -33,19 +37,19 @@ import rx.subscriptions.CompositeSubscription;
 public class CharacterActivity extends ComponentBaseActivity {
 
     @Inject
-    private CharacterDAO mCharacterDAO;
+    CharacterDAO mCharacterDAO;
 
-    @InjectView(R.id.activity_toolbar)
-    private Toolbar mToolbar;
+    @BindView(R.id.activity_toolbar)
+    Toolbar mToolbar;
 
-    @InjectView(R.id.activity_character_tab)
-    private TabLayout mTabLayout;
+    @BindView(R.id.activity_character_tab)
+    TabLayout mTabLayout;
 
-    @InjectView(R.id.drawer_layout)
-    private DrawerLayout mDrawerLayout;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
 
-    @InjectView(R.id.navigation_view)
-    private NavigationView mNavigationView;
+    @BindView(R.id.navigation_view)
+    NavigationView mNavigationView;
 
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
@@ -59,7 +63,9 @@ public class CharacterActivity extends ComponentBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Injectors.activityComponent(this).inject(this);
         setContentView(R.layout.character_activity);
+        ButterKnife.bind(this);
 
         mHeaderComponent = new CharacterHeaderComponent(mNavigationView.getHeaderView(0));
         add(mHeaderComponent);
@@ -84,7 +90,7 @@ public class CharacterActivity extends ComponentBaseActivity {
 
     private class DrawerListener implements NavigationView.OnNavigationItemSelectedListener {
         @Override
-        public boolean onNavigationItemSelected(MenuItem menuItem) {
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             navigateToTarget(menuItem.getItemId());
             mDrawerLayout.closeDrawers();
             menuItem.setChecked(true);

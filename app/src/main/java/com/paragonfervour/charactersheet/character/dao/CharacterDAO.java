@@ -2,13 +2,14 @@ package com.paragonfervour.charactersheet.character.dao;
 
 import android.util.Log;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Skill;
 import com.paragonfervour.charactersheet.character.model.Weapon;
 
 import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;

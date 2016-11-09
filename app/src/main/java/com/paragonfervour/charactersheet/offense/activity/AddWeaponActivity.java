@@ -19,7 +19,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.activity.ComponentBaseActivity;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
@@ -29,12 +28,16 @@ import com.paragonfervour.charactersheet.character.model.Dice;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Weapon;
 import com.paragonfervour.charactersheet.component.DicePickerViewComponent;
+import com.paragonfervour.charactersheet.injection.Injectors;
 import com.paragonfervour.charactersheet.stats.helper.StatHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import roboguice.inject.InjectView;
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import rx.Observer;
 import rx.Subscriber;
 import rx.subscriptions.CompositeSubscription;
@@ -46,46 +49,46 @@ import rx.subscriptions.CompositeSubscription;
 public class AddWeaponActivity extends ComponentBaseActivity {
 
     @Inject
-    private CharacterDAO mCharacterDAO;
+    CharacterDAO mCharacterDAO;
 
-    @InjectView(R.id.activity_add_weapon_toolbar)
-    private Toolbar mToolbar;
+    @BindView(R.id.activity_add_weapon_toolbar)
+    Toolbar mToolbar;
 
-    @InjectView(R.id.add_weapon_save_button)
-    private Button mSaveButton;
+    @BindView(R.id.add_weapon_save_button)
+    Button mSaveButton;
 
-    @InjectView(R.id.weapon_name)
-    private EditText mWeaponName;
+    @BindView(R.id.weapon_name)
+    EditText mWeaponName;
 
-    @InjectView(R.id.add_weapon_hand_group)
-    private RadioGroup mHandGroup;
+    @BindView(R.id.add_weapon_hand_group)
+    RadioGroup mHandGroup;
 
-    @InjectView(R.id.add_weapon_weight)
-    private EditText mWeightText;
+    @BindView(R.id.add_weapon_weight)
+    EditText mWeightText;
 
-    @InjectView(R.id.add_weapon_value)
-    private EditText mValueText;
+    @BindView(R.id.add_weapon_value)
+    EditText mValueText;
 
-    @InjectView(R.id.add_weapon_score_selector)
-    private Spinner mScoreSelector;
+    @BindView(R.id.add_weapon_score_selector)
+    Spinner mScoreSelector;
 
-    @InjectView(R.id.add_weapon_attack_mod)
-    private TextView mHitModifier;
+    @BindView(R.id.add_weapon_attack_mod)
+    TextView mHitModifier;
 
-    @InjectView(R.id.add_weapon_dice_multiplier)
-    private EditText mDamageDiceMultiplier;
+    @BindView(R.id.add_weapon_dice_multiplier)
+    EditText mDamageDiceMultiplier;
 
-    @InjectView(R.id.add_weapon_modifier)
-    private EditText mDamageModifier;
+    @BindView(R.id.add_weapon_modifier)
+    EditText mDamageModifier;
 
-    @InjectView(R.id.add_weapon_summary_text)
-    private TextView mDamageSummary;
+    @BindView(R.id.add_weapon_summary_text)
+    TextView mDamageSummary;
 
-    @InjectView(R.id.add_weapon_dice_picker)
-    private DicePickerViewComponent mDamageDiceComponent;
+    @BindView(R.id.add_weapon_dice_picker)
+    DicePickerViewComponent mDamageDiceComponent;
 
-    @InjectView(R.id.add_weapon_properties_text)
-    private EditText mProperties;
+    @BindView(R.id.add_weapon_properties_text)
+    EditText mProperties;
 
     private static final String TAG = AddWeaponActivity.class.getSimpleName();
     private static final int STR_INDEX = 0;
@@ -104,7 +107,9 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Injectors.activityComponent(this).inject(this);
         setContentView(R.layout.add_weapon_activity);
+        ButterKnife.bind(this);
 
         mCompositeSubscription = new CompositeSubscription();
         mCompositeSubscription.add(mCharacterDAO.getActiveCharacter()
@@ -241,8 +246,10 @@ public class AddWeaponActivity extends ComponentBaseActivity {
                 updateDamageSummary();
                 updateHitModifier();
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
     }

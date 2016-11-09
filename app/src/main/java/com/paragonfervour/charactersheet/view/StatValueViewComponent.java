@@ -13,11 +13,12 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
+import com.paragonfervour.charactersheet.injection.Injectors;
 import com.paragonfervour.charactersheet.settings.AppPreferences;
 
-import roboguice.RoboGuice;
+import javax.inject.Inject;
+
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
@@ -30,7 +31,7 @@ import rx.subjects.PublishSubject;
 public class StatValueViewComponent extends LinearLayout {
 
     @Inject
-    private AppPreferences mAppPreferences;
+    AppPreferences mAppPreferences;
 
     private static final int DELTA_COUNTER_DELAY = 3000;
 
@@ -64,7 +65,7 @@ public class StatValueViewComponent extends LinearLayout {
 
     public void init(AttributeSet attrs) {
         if (!isInEditMode()) {
-            RoboGuice.injectMembers(getContext(), this);
+            Injectors.currentActivityComponent().inject(this);
         }
 
         LayoutInflater.from(getContext()).inflate(R.layout.stat_value_component, this, true);

@@ -1,51 +1,56 @@
 package com.paragonfervour.charactersheet.features.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
-import com.google.inject.Inject;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
+import com.paragonfervour.charactersheet.injection.Injectors;
 
-import roboguice.activity.RoboActivity;
-import roboguice.inject.InjectView;
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import rx.Subscriber;
 import rx.subscriptions.CompositeSubscription;
 
 /**
  * Activity that allows the user to edit their character's features, such as name, race, class, etc.
  */
-public class EditCharacterFeaturesActivity extends RoboActivity {
+public class EditCharacterFeaturesActivity extends AppCompatActivity {
 
     @Inject
-    private CharacterDAO mCharacterDAO;
+    CharacterDAO mCharacterDAO;
 
-    @InjectView(R.id.edit_character_feature_name)
-    private TextView mEditName;
+    @BindView(R.id.edit_character_feature_name)
+    TextView mEditName;
 
-    @InjectView(R.id.edit_character_feature_race)
-    private TextView mEditRace;
+    @BindView(R.id.edit_character_feature_race)
+    TextView mEditRace;
 
-    @InjectView(R.id.edit_character_feature_class)
-    private TextView mEditClass;
+    @BindView(R.id.edit_character_feature_class)
+    TextView mEditClass;
 
-    @InjectView(R.id.edit_character_feature_level)
-    private TextView mEditLevel;
+    @BindView(R.id.edit_character_feature_level)
+    TextView mEditLevel;
 
-    @InjectView(R.id.edit_character_feature_speed)
-    private TextView mEditSpeed;
+    @BindView(R.id.edit_character_feature_speed)
+    TextView mEditSpeed;
 
-    @InjectView(R.id.activity_edit_feature_toolbar)
-    private Toolbar mToolbar;
+    @BindView(R.id.activity_edit_feature_toolbar)
+    Toolbar mToolbar;
 
     private CompositeSubscription mCompositeSubscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Injectors.activityComponent(this).inject(this);
         setContentView(R.layout.edit_features_activity);
+        ButterKnife.bind(this);
 
         mCompositeSubscription = new CompositeSubscription();
         mToolbar.setNavigationOnClickListener(v -> onBackPressed());
