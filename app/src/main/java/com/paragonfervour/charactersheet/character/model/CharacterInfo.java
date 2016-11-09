@@ -6,6 +6,7 @@ import com.orm.SugarRecord;
 /**
  * Character info model, containing name, class, level, XP, and race info.
  */
+@SuppressWarnings("WeakerAccess")
 public class CharacterInfo extends SugarRecord {
 
     String mCharacterClass; // TODO: Create a CharacterClass model?

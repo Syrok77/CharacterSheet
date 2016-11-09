@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Hierarchy of models that contains all the data of a D&D Character.
  */
+@SuppressWarnings("WeakerAccess")
 public class GameCharacter extends SugarRecord {
 
     // Name, class, race, level, xp

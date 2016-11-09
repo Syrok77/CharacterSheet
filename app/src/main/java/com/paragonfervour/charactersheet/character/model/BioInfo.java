@@ -6,6 +6,7 @@ import com.orm.SugarRecord;
  * Model contains background information and character traits.
  * TODO: Unimplemented
  */
+@SuppressWarnings("WeakerAccess")
 public class BioInfo extends SugarRecord {
 
     String dummy = "DUMMY";

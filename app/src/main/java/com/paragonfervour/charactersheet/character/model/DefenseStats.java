@@ -3,6 +3,7 @@ package com.paragonfervour.charactersheet.character.model;
 
 import com.orm.SugarRecord;
 
+@SuppressWarnings("WeakerAccess")
 public class DefenseStats extends SugarRecord {
 
     int mAC;
