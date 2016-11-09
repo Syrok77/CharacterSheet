@@ -229,10 +229,10 @@ public class StatsFragment extends ComponentBaseFragment {
         mTempHpComponent.initializeValue(character.getDefenseStats().getTempHp());
         mHitDicePickerComponent.setDice(character.getDefenseStats().getHitDice());
         mHitDicePickerComponent.getDiceObservable().subscribe(new HitDicePickerObserver());
-        updateHealthSummary();
         updateDeathSummary(character);
 
         mMaxHealthComponent.initializeValue(character.getDefenseStats().getMaxHp());
+        updateHealthSummary();
 
         int strength = character.getDefenseStats().getStrScore();
         mStrength.initializeValue(strength);
@@ -278,9 +278,7 @@ public class StatsFragment extends ComponentBaseFragment {
         // Show an 'undo' snackbar for this action.
         if (getView() != null) {
             SnackbarHelper.showSnackbar(getActivity(), Snackbar.make(getView(), R.string.toast_skill_removed, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.undo, v -> {
-                        saveSkill(skill, gameCharacter);
-                    }));
+                    .setAction(R.string.undo, v -> saveSkill(skill, gameCharacter)));
         }
 
         // Find the associated view to delete
@@ -470,9 +468,8 @@ public class StatsFragment extends ComponentBaseFragment {
      * Update the health summary text, which shows effective hp / max hp.
      */
     private void updateHealthSummary() {
-        String healthFormat = getString(R.string.stat_health_summary_format);
         int effectiveHp = mTempHpComponent.getValue() + mHealthComponent.getValue();
-        String healthSummary = String.format(healthFormat, effectiveHp, mMaxHealthComponent.getValue());
+        String healthSummary = getString(R.string.stat_health_summary_format, effectiveHp, mMaxHealthComponent.getValue());
 
         SpannableString spannableString = new SpannableString(healthSummary);
         if (effectiveHp < mMaxHealthComponent.getValue() / 2) {
@@ -643,7 +640,7 @@ public class StatsFragment extends ComponentBaseFragment {
 
         private int mWis;
 
-        public UpdateWisSubscriber(int wis) {
+        UpdateWisSubscriber(int wis) {
             mWis = wis;
         }
 

@@ -16,9 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="@string/offense_proficiency_summary"
-            android:textSize="@dimen/text_size_caption"
             tools:text="Proficiency Bonus: 3"/>
 
         <RelativeLayout
@@ -63,7 +62,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@color/brand_primary"
-                android:text="Add"
+                android:text="@string/add"
                 android:textColor="@color/default_white"/>
 
         </RelativeLayout>

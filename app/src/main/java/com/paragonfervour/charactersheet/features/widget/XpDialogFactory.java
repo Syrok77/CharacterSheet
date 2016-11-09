@@ -40,7 +40,7 @@ public class XpDialogFactory {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
                 .setTitle(R.string.dialog_add_xp_title)
-                .setPositiveButton(R.string.dialog_add_xp_accept, (dialog, which) -> {
+                .setPositiveButton(R.string.add, (dialog, which) -> {
                     if (!xpAmount.getText().toString().isEmpty()) {
                         final int amount = Integer.valueOf(xpAmount.getText().toString());
                         mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
