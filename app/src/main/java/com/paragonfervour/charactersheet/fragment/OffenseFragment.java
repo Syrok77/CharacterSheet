@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.paragonfervour.charactersheet.R;
@@ -22,6 +21,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -44,9 +44,6 @@ public class OffenseFragment extends ComponentBaseFragment {
 
     @BindView(R.id.offense_offhand_weapon)
     WeaponListViewComponent mOffHandList;
-
-    @BindView(R.id.offense_add_weapon_button)
-    Button mAddWeaponButton;
 
     private static final String TAG = OffenseFragment.class.getSimpleName();
 
@@ -96,11 +93,6 @@ public class OffenseFragment extends ComponentBaseFragment {
                         updateUI(gameCharacter);
                     }
                 }));
-
-        mAddWeaponButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), AddWeaponActivity.class);
-            startActivity(intent);
-        });
     }
 
     @Override
@@ -108,6 +100,12 @@ public class OffenseFragment extends ComponentBaseFragment {
         super.onDestroyView();
         mCompositeSubscription.unsubscribe();
         mUnbinder.unbind();
+    }
+
+    @OnClick(R.id.offense_add_weapon_button)
+    void onAddWeaponClick() {
+        Intent intent = new Intent(getActivity(), AddWeaponActivity.class);
+        startActivity(intent);
     }
 
     private void updateUI(GameCharacter character) {

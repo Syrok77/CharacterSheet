@@ -38,6 +38,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Observer;
 import rx.Subscriber;
 import rx.subscriptions.CompositeSubscription;
@@ -136,8 +137,6 @@ public class AddWeaponActivity extends ComponentBaseActivity {
             isEditing = true;
         }
         updateWeaponView(mWeapon);
-
-        mSaveButton.setOnClickListener(new SaveButtonClickListener());
 
         if (isEditing) {
             // Set CharacterDAO update text watchers.
@@ -385,30 +384,28 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         }
     }
 
-    private class SaveButtonClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
-                @Override
-                public void onCompleted() {
-                }
+    @OnClick(R.id.add_weapon_save_button)
+    public void onSaveClick() {
+        mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+            @Override
+            public void onCompleted() {
+            }
 
-                @Override
-                public void onError(Throwable e) {
-                }
+            @Override
+            public void onError(Throwable e) {
+            }
 
-                @Override
-                public void onNext(GameCharacter gameCharacter) {
-                    Weapon weapon = createWeapon();
-                    weapon.setCharacterId(gameCharacter.getId());
-                    weapon.save();
+            @Override
+            public void onNext(GameCharacter gameCharacter) {
+                Weapon weapon = createWeapon();
+                weapon.setCharacterId(gameCharacter.getId());
+                weapon.save();
 
-                    mCharacterDAO.activeCharacterUpdated();
-                    unsubscribe();
-                }
-            });
-            finish();
-        }
+                mCharacterDAO.activeCharacterUpdated();
+                unsubscribe();
+            }
+        });
+        finish();
     }
 
     /**

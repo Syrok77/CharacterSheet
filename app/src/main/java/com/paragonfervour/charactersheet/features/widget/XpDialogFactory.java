@@ -35,7 +35,6 @@ public class XpDialogFactory {
      * @return dialog with add xp option.
      */
     public AlertDialog createAddXpDialog() {
-
         View customView = LayoutInflater.from(mContext).inflate(R.layout.add_xp_dialog, null, false);
         final TextView xpAmount = (TextView) customView.findViewById(R.id.dialog_add_xp_amount);
 

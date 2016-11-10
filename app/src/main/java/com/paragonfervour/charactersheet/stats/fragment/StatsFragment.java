@@ -48,6 +48,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import rx.Observable;
 import rx.Observer;
@@ -94,9 +95,6 @@ public class StatsFragment extends ComponentBaseFragment {
 
     @BindView(R.id.stats_health_dice_indicator)
     DicePickerViewComponent mHitDicePickerComponent;
-
-    @BindView(R.id.stats_health_dice_roll)
-    TextView mHitDiceRollButton;
 
     @BindView(R.id.stats_score_str_control)
     StatValueViewComponent mStrength;
@@ -272,10 +270,6 @@ public class StatsFragment extends ComponentBaseFragment {
         updateCounterModifier(charisma, mCharismaModifier);
 
         buildSkillsView(character.getSkills());
-        mAddSkillButton.setOnClickListener(v -> {
-            mActiveAlert = mSkillDialogFactory.createSkillDialog(mSkillListener);
-            mActiveAlert.show();
-        });
     }
 
     /**
@@ -457,8 +451,6 @@ public class StatsFragment extends ComponentBaseFragment {
             updateHealthSummary();
         });
 
-        mHitDiceRollButton.setOnClickListener(v -> mCharacterDAO.getActiveCharacter().subscribe(new RollHitDiceSubscriber()));
-
         mCompositeSubscription.add(Observable.combineLatest(mDeathSaveComponent.getFailuresObservable(), mCharacterDAO.getActiveCharacter(), (failCount, gameCharacter) -> {
             gameCharacter.getDefenseStats().setFailAttempts(failCount);
             return Observable.just(gameCharacter);
@@ -524,15 +516,6 @@ public class StatsFragment extends ComponentBaseFragment {
     }
 
     /**
-     * Update the max health component to the given value.
-     *
-     * @param maxHealth new max health to put into component.
-     */
-    private void updateMaxHp(int maxHealth) {
-        mMaxHealthComponent.setValue(maxHealth);
-    }
-
-    /**
      * Update initiative view with the given dexterity value.
      *
      * @param dexterity character dexterity.
@@ -542,6 +525,12 @@ public class StatsFragment extends ComponentBaseFragment {
     }
 
     // region listeners ----------------------------------------------------------------------------
+
+    @OnClick(R.id.stats_add_skill_button)
+    void onAddSkillClick() {
+        mActiveAlert = mSkillDialogFactory.createSkillDialog(mSkillListener);
+        mActiveAlert.show();
+    }
 
     private class AddUpdateSkillListener implements SkillDialogFactory.SkillListener {
         @Override
@@ -613,38 +602,6 @@ public class StatsFragment extends ComponentBaseFragment {
                             updatePassiveWisdom(gameCharacter);
                         }
                     });
-        }
-    }
-
-    private class RollHitDiceSubscriber extends Subscriber<GameCharacter> {
-
-        @Override
-        public void onCompleted() {
-        }
-
-        @Override
-        public void onError(Throwable e) {
-        }
-
-        @Override
-        public void onNext(GameCharacter gameCharacter) {
-            Dice hitDice = gameCharacter.getDefenseStats().getHitDice();
-            final int roll = hitDice.roll();
-            final int maxHp = gameCharacter.getDefenseStats().getMaxHp();
-
-            updateMaxHp(maxHp + roll);
-
-            // Display the change to the user.
-            String updateToast = String.format(getString(R.string.toast_max_hp_updated_format), roll);
-            if (getView() != null) {
-                SnackbarHelper.showSnackbar(getActivity(), Snackbar.make(getView(), updateToast, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.undo, v -> {
-                            updateMaxHp(maxHp);
-                            updateHealthSummary();
-                        }));
-            }
-
-            unsubscribe();
         }
     }
 

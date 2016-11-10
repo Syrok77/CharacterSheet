@@ -6,7 +6,6 @@ import android.content.res.ColorStateList;
 import android.support.v4.view.ViewCompat;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.paragonfervour.charactersheet.R;
@@ -20,13 +19,15 @@ import com.paragonfervour.charactersheet.injection.Injectors;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 
 /**
  * Component that manages the drawer header view, which displays a character's info.
  * <p/>
  * NOTE: This is not injected. Use the constructor to pass in the header view.
- * TODO: XP automatically leveling a character should be added to Settings. And implemented in the
- * TODO: first place.
  */
 public class CharacterHeaderComponent extends Component {
 
@@ -34,30 +35,28 @@ public class CharacterHeaderComponent extends Component {
     CharacterDAO mCharacterDAO;
 
     @Inject
+    Context mContext;
+
+    @Inject
     XpDialogFactory mXpDialogFactory;
 
+    @BindView(R.id.drawer_header_character_name)
+    TextView mCharacterName;
+
+    @BindView(R.id.drawer_header_class_desc)
+    TextView mDescription;
+
+    @BindView(R.id.drawer_header_xp_button)
+    TextView mXpButton;
+
     private final View mHeaderView;
-    private final TextView mDescription;
-    private final TextView mCharacterName;
-    private final Button mXpButton;
 
     public CharacterHeaderComponent(View headerView) {
         Injectors.currentActivityComponent().inject(this);
 
         // bind views
         mHeaderView = headerView;
-        mDescription = (TextView) mHeaderView.findViewById(R.id.drawer_header_class_desc);
-        mCharacterName = (TextView) mHeaderView.findViewById(R.id.drawer_header_character_name);
-        mXpButton = (Button) mHeaderView.findViewById(R.id.drawer_header_xp_button);
-
-        View editButton = mHeaderView.findViewById(R.id.drawer_header_edit_character_button);
-        editButton.setOnClickListener(v -> {
-            Context context = v.getContext();
-            Intent editCharacter = new Intent(context, EditCharacterFeaturesActivity.class);
-            context.startActivity(editCharacter);
-        });
-
-        mXpButton.setOnClickListener(v -> mXpDialogFactory.createAddXpDialog().show());
+        ButterKnife.bind(this, headerView);
 
         // dumb view compat stuff
         TypedValue typedValue = new TypedValue();
@@ -77,5 +76,16 @@ public class CharacterHeaderComponent extends Component {
         mCharacterName.setText(info.getName());
 
         mXpButton.setText(CharacterHelper.getXpDisplayText(mHeaderView.getContext(), gameCharacter.getInfo().getXp()));
+    }
+
+    @OnClick(R.id.drawer_header_edit_character_button)
+    void onEditButtonClick() {
+        Intent editCharacter = new Intent(mContext, EditCharacterFeaturesActivity.class);
+        mContext.startActivity(editCharacter);
+    }
+
+    @OnClick(R.id.drawer_header_xp_button)
+    void onXpButtonClick() {
+        mXpDialogFactory.createAddXpDialog().show();
     }
 }
