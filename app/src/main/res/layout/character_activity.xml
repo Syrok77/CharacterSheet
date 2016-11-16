@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".OffenseActivity">
+    tools:context=".activity.CharacterActivity">
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
@@ -51,10 +51,34 @@
         </LinearLayout>
 
         <FrameLayout
-            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/default_white"/>
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/default_white"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:fitsSystemWindows="false"
+                android:src="@drawable/ic_add_white_24dp"
+                android:tint="@android:color/white"
+                android:visibility="invisible"
+                app:backgroundTint="?attr/colorAccent"
+                app:borderWidth="0dp"
+                app:elevation="6dp"
+                app:layout_anchorGravity="bottom|right|end"
+                app:pressedTranslationZ="12dp"/>
+
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -67,8 +91,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/default_white"
-        app:itemBackground="@android:color/transparent"
         app:headerLayout="@layout/drawer_header_view"
+        app:itemBackground="@android:color/transparent"
         app:menu="@menu/drawer"/>
 
 </android.support.v4.widget.DrawerLayout>

@@ -11,6 +11,10 @@ import android.view.ViewGroup;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.activity.CharacterActivity;
 import com.paragonfervour.charactersheet.adapter.CharacterPagerAdapter;
+import com.paragonfervour.charactersheet.component.FloatingActionButtonComponent;
+import com.paragonfervour.charactersheet.injection.Injectors;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,16 +22,24 @@ import butterknife.Unbinder;
 
 public class CharacterPagerFragment extends ComponentBaseFragment {
 
+    @Inject
+    FloatingActionButtonComponent mFloatingActionButtonComponent;
+
     @BindView(R.id.character_view_pager)
     ViewPager mViewPager;
 
     private Unbinder mUnbinder;
 
-    public CharacterPagerFragment() {
-    }
-
     public static CharacterPagerFragment newInstance() {
         return new CharacterPagerFragment();
+    }
+
+    // region lifecycle methods --------------------------------------------------------------------
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Injectors.currentActivityComponent().inject(this);
     }
 
     @Nullable
@@ -43,6 +55,7 @@ public class CharacterPagerFragment extends ComponentBaseFragment {
 
         CharacterPagerAdapter pagerAdapter = new CharacterPagerAdapter(getChildFragmentManager(), getActivity());
         mViewPager.setAdapter(pagerAdapter);
+        mViewPager.addOnPageChangeListener(new PageChangeListener());
 
         CharacterActivity activity = (CharacterActivity) getActivity();
         TabLayout tabLayout = activity.getTabLayout();
@@ -59,5 +72,36 @@ public class CharacterPagerFragment extends ComponentBaseFragment {
 
         mUnbinder.unbind();
     }
+
+    // endregion
+
+    // region listeners ----------------------------------------------------------------------------
+
+    private void onSpellsFabClick(View v) {
+        mFloatingActionButtonComponent.showFab(fab -> {
+            // TODO: fab should open up an add spell view.
+        });
+    }
+
+    private class PageChangeListener implements ViewPager.OnPageChangeListener {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            if (position == CharacterPagerAdapter.INDEX_SPELLS) {
+                mFloatingActionButtonComponent.showFab(CharacterPagerFragment.this::onSpellsFabClick);
+            } else {
+                mFloatingActionButtonComponent.hideFab();
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+        }
+    }
+
+    // endregion
 
 }

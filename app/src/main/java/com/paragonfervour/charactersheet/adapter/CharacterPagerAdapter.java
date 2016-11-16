@@ -12,8 +12,22 @@ import com.paragonfervour.charactersheet.fragment.OffenseFragment;
 import com.paragonfervour.charactersheet.fragment.SpellsFragment;
 import com.paragonfervour.charactersheet.stats.fragment.StatsFragment;
 
-
 public class CharacterPagerAdapter extends FragmentPagerAdapter {
+
+    /**
+     * Enum which matches the adapter position to the page type. The order of this enum
+     * dictates the order of Items created by the Adapter: the adapter's position is equal to the
+     * {@link #ordinal()} of the Index.
+     */
+    private enum Index {
+        STATS,
+        OFFENSE,
+        SPELLS,
+        DEFENSE
+    }
+
+    public static final int INDEX_SPELLS = Index.SPELLS.ordinal();
+
     private Context mContext;
 
     public CharacterPagerAdapter(FragmentManager fm, Context context) {
@@ -28,12 +42,18 @@ public class CharacterPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        switch(position) {
-            case 0: return StatsFragment.newInstance();
-            case 1: return OffenseFragment.newInstance();
-            case 2: return SpellsFragment.newInstance();
-            case 3: return DefenseFragment.newInstance();
-            default: return null;
+        Index index = Index.values()[position];
+        switch (index) {
+            case STATS:
+                return StatsFragment.newInstance();
+            case OFFENSE:
+                return OffenseFragment.newInstance();
+            case SPELLS:
+                return SpellsFragment.newInstance();
+            case DEFENSE:
+                return DefenseFragment.newInstance();
+            default:
+                return null;
         }
     }
 
@@ -48,12 +68,18 @@ public class CharacterPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch(position) {
-            case 0: return mContext.getString(R.string.nav_stats_title);
-            case 1: return mContext.getString(R.string.nav_offense_title);
-            case 2: return mContext.getString(R.string.nav_spells_title);
-            case 3: return mContext.getString(R.string.nav_defense_title);
-            default: return null;
+        Index index = Index.values()[position];
+        switch (index) {
+            case STATS:
+                return mContext.getString(R.string.nav_stats_title);
+            case OFFENSE:
+                return mContext.getString(R.string.nav_offense_title);
+            case SPELLS:
+                return mContext.getString(R.string.nav_spells_title);
+            case DEFENSE:
+                return mContext.getString(R.string.nav_defense_title);
+            default:
+                return null;
         }
     }
 }
