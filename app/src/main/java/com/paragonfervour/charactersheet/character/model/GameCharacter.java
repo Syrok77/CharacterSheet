@@ -35,6 +35,9 @@ public class GameCharacter extends SugarRecord {
         return maldalair;
     }
 
+    public GameCharacter() {
+    }
+
     @Override
     public long save() {
         long id = super.save();

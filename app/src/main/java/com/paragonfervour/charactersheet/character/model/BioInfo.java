@@ -14,4 +14,7 @@ public class BioInfo extends SugarRecord {
     public static BioInfo createDefault() {
         return new BioInfo();
     }
+
+    public BioInfo() {
+    }
 }

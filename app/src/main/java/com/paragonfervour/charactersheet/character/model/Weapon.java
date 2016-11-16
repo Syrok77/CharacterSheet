@@ -44,6 +44,9 @@ public class Weapon extends SugarRecord {
         return w;
     }
 
+    public Weapon() {
+    }
+
     @Override
     public long save() {
         mDamage.save();

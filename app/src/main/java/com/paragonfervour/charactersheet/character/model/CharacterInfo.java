@@ -25,6 +25,8 @@ public class CharacterInfo extends SugarRecord {
         return info;
     }
 
+    public CharacterInfo() {
+    }
 
     public String getCharacterClass() {
         return mCharacterClass;

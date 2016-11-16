@@ -31,7 +31,6 @@ public class CharacterDAO {
 
     @Inject
     public CharacterDAO() {
-        loadActiveCharacter();
     }
 
     /**
@@ -42,12 +41,11 @@ public class CharacterDAO {
      * @return Observable that emits the active GameCharacter on the main thread.
      */
     public Observable<GameCharacter> getActiveCharacter() {
+        if (mActiveCharacter == null) {
+            loadActiveCharacter();
+        }
+
         return mActiveCharacterSubject.asObservable()
-                .doOnSubscribe(() -> {
-                    if (mActiveCharacter == null) {
-                        loadActiveCharacter();
-                    }
-                })
                 .doOnUnsubscribe(mActiveCharacter::save)
                 .unsubscribeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())

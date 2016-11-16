@@ -27,6 +27,9 @@ public class Spell extends SugarRecord {
         return s;
     }
 
+    public Spell() {
+    }
+
     public String getName() {
         return mName;
     }

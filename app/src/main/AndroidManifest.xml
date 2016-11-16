@@ -14,9 +14,9 @@
 
         <!-- Sugar ORM metadata -->
         <meta-data android:name="DATABASE" android:value="character.db" />
-        <meta-data android:name="VERSION" android:value="1" />
-        <meta-data android:name="QUERY_LOG" android:value="false" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.paragonfervour" />
+        <meta-data android:name="VERSION" android:value="2" />
+        <meta-data android:name="QUERY_LOG" android:value="true" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.paragonfervour.charactersheet.character.model" />
 
         <activity
             android:name=".activity.CharacterActivity"

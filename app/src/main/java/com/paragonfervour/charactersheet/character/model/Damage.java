@@ -27,6 +27,9 @@ public class Damage extends SugarRecord {
         return d;
     }
 
+    public Damage() {
+    }
+
     /**
      * Represents this Damage as a string.
      *

@@ -14,10 +14,6 @@ public enum Dice {
 
     private final int mValue;
 
-    Dice(int value) {
-        mValue = value;
-    }
-
     public static Dice diceFromValue(int value) {
         switch(value) {
             case 4: return D4;
@@ -31,6 +27,9 @@ public enum Dice {
         }
     }
 
+    Dice(int value) {
+        mValue = value;
+    }
 
     public int getValue() {
         return mValue;

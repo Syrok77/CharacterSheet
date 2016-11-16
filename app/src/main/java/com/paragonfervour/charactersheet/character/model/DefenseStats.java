@@ -78,6 +78,9 @@ public class DefenseStats extends SugarRecord {
         return d;
     }
 
+    public DefenseStats() {
+    }
+
     public int getAC() {
         return mAC;
     }
