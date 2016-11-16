@@ -26,8 +26,10 @@
     <string name="nav_offense_title">Offense</string>
     <string name="nav_defense_title">Defense</string>
     <string name="nav_bio_title">Biography</string>
+    <string name="nav_spells_title">Spells</string>
     <string name="nav_character_title">Stats and Info</string>
     <string name="nav_spells">Spell List</string>
+    <string name="nav_biography">Biography</string>
     <string name="nav_equipment">Equipment</string>
     <string name="nav_settings">Settings</string>
     <string name="nav_add_weapon_title">Add Weapon</string>

@@ -7,9 +7,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
 
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.fragment.BioFragment;
 import com.paragonfervour.charactersheet.fragment.DefenseFragment;
 import com.paragonfervour.charactersheet.fragment.OffenseFragment;
+import com.paragonfervour.charactersheet.fragment.SpellsFragment;
 import com.paragonfervour.charactersheet.stats.fragment.StatsFragment;
 
 
@@ -31,8 +31,8 @@ public class CharacterPagerAdapter extends FragmentPagerAdapter {
         switch(position) {
             case 0: return StatsFragment.newInstance();
             case 1: return OffenseFragment.newInstance();
-            case 2: return DefenseFragment.newInstance();
-            case 3: return BioFragment.newInstance();
+            case 2: return SpellsFragment.newInstance();
+            case 3: return DefenseFragment.newInstance();
             default: return null;
         }
     }
@@ -51,8 +51,8 @@ public class CharacterPagerAdapter extends FragmentPagerAdapter {
         switch(position) {
             case 0: return mContext.getString(R.string.nav_stats_title);
             case 1: return mContext.getString(R.string.nav_offense_title);
-            case 2: return mContext.getString(R.string.nav_defense_title);
-            case 3: return mContext.getString(R.string.nav_bio_title);
+            case 2: return mContext.getString(R.string.nav_spells_title);
+            case 3: return mContext.getString(R.string.nav_defense_title);
             default: return null;
         }
     }

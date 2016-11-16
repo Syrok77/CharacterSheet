@@ -20,9 +20,9 @@ import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
 import com.paragonfervour.charactersheet.character.helper.CharacterHelper;
 import com.paragonfervour.charactersheet.component.CharacterHeaderComponent;
+import com.paragonfervour.charactersheet.fragment.BioFragment;
 import com.paragonfervour.charactersheet.fragment.CharacterPagerFragment;
 import com.paragonfervour.charactersheet.fragment.EquipmentFragment;
-import com.paragonfervour.charactersheet.fragment.SpellsFragment;
 import com.paragonfervour.charactersheet.injection.Injectors;
 import com.paragonfervour.charactersheet.settings.SettingsActivity;
 
@@ -181,8 +181,8 @@ public class CharacterActivity extends ComponentBaseActivity {
             case R.id.navigation_character_info:
                 fragment = CharacterPagerFragment.newInstance();
                 break;
-            case R.id.navigation_spells:
-                fragment = SpellsFragment.newInstance();
+            case R.id.navigation_biography:
+                fragment = BioFragment.newInstance();
                 break;
             case R.id.navigation_equipment:
                 fragment = EquipmentFragment.newInstance();

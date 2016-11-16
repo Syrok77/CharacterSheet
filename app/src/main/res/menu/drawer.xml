@@ -9,10 +9,10 @@
             android:title="@string/nav_character_title"/>
 
         <item
-            android:id="@+id/navigation_spells"
+            android:id="@+id/navigation_biography"
             android:checked="false"
             android:icon="@drawable/ic_remove_black_24dp"
-            android:title="@string/nav_spells"/>
+            android:title="@string/nav_biography"/>
 
         <item
             android:id="@+id/navigation_equipment"
