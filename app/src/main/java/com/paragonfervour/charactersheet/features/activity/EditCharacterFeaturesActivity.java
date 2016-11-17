@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.dao.CharacterDao;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.injection.Injectors;
 
@@ -23,7 +23,7 @@ import rx.subscriptions.CompositeSubscription;
 public class EditCharacterFeaturesActivity extends AppCompatActivity {
 
     @Inject
-    CharacterDAO mCharacterDAO;
+    CharacterDao mCharacterDao;
 
     @BindView(R.id.edit_character_feature_name)
     TextView mEditName;
@@ -57,7 +57,7 @@ public class EditCharacterFeaturesActivity extends AppCompatActivity {
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         mToolbar.setTitle(R.string.edit_activity_label);
 
-        mCompositeSubscription.add(mCharacterDAO.getActiveCharacter().subscribe(gameCharacter -> {
+        mCompositeSubscription.add(mCharacterDao.getActiveCharacter().subscribe(gameCharacter -> {
             mEditName.setText(gameCharacter.getInfo().getName());
             mEditRace.setText(gameCharacter.getInfo().getRace());
             mEditClass.setText(gameCharacter.getInfo().getCharacterClass());
@@ -78,7 +78,7 @@ public class EditCharacterFeaturesActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         // Update character with fields
-        mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+        mCharacterDao.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
             @Override
             public void onCompleted() {
             }
@@ -102,7 +102,7 @@ public class EditCharacterFeaturesActivity extends AppCompatActivity {
                 }
 
                 unsubscribe();
-                mCharacterDAO.activeCharacterUpdated();
+                mCharacterDao.activeCharacterUpdated();
             }
         });
     }

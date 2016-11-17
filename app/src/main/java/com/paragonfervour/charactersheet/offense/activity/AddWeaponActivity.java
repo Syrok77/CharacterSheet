@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.activity.ComponentBaseActivity;
-import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.dao.CharacterDao;
 import com.paragonfervour.charactersheet.character.helper.CharacterHelper;
 import com.paragonfervour.charactersheet.character.model.Damage;
 import com.paragonfervour.charactersheet.character.model.Dice;
@@ -50,7 +50,7 @@ import rx.subscriptions.CompositeSubscription;
 public class AddWeaponActivity extends ComponentBaseActivity {
 
     @Inject
-    CharacterDAO mCharacterDAO;
+    CharacterDao mCharacterDao;
 
     @BindView(R.id.activity_add_weapon_toolbar)
     Toolbar mToolbar;
@@ -113,7 +113,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         ButterKnife.bind(this);
 
         mCompositeSubscription = new CompositeSubscription();
-        mCompositeSubscription.add(mCharacterDAO.getActiveCharacter()
+        mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
                 .subscribe(new CharacterObserver()));
 
         setSupportActionBar(mToolbar);
@@ -122,7 +122,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
         Intent i = getIntent();
         Long weaponId = i.getLongExtra(EXTRA_WEAPON_ID, 0L);
-        mWeapon = mCharacterDAO.getWeaponById(weaponId);
+        mWeapon = mCharacterDao.getWeaponById(weaponId);
 
         if (mWeapon == null) {
             // We are creating a new weapon
@@ -188,7 +188,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     protected void onStop() {
         super.onStop();
         if (isEditing) {
-            mCharacterDAO.activeCharacterUpdated();
+            mCharacterDao.activeCharacterUpdated();
         }
     }
 
@@ -386,7 +386,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
     @OnClick(R.id.add_weapon_save_button)
     public void onSaveClick() {
-        mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+        mCharacterDao.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
             @Override
             public void onCompleted() {
             }
@@ -401,7 +401,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
                 weapon.setCharacterId(gameCharacter.getId());
                 weapon.save();
 
-                mCharacterDAO.activeCharacterUpdated();
+                mCharacterDao.activeCharacterUpdated();
                 unsubscribe();
             }
         });

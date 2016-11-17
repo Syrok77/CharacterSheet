@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.dao.CharacterDao;
 import com.paragonfervour.charactersheet.character.helper.CharacterHelper;
 import com.paragonfervour.charactersheet.component.CharacterHeaderComponent;
 import com.paragonfervour.charactersheet.fragment.BioFragment;
@@ -37,7 +37,7 @@ import rx.subscriptions.CompositeSubscription;
 public class CharacterActivity extends ComponentBaseActivity {
 
     @Inject
-    CharacterDAO mCharacterDAO;
+    CharacterDao mCharacterDao;
 
     @BindView(R.id.activity_toolbar)
     Toolbar mToolbar;
@@ -164,7 +164,7 @@ public class CharacterActivity extends ComponentBaseActivity {
             mDrawerLayout.openDrawer(mNavigationView);
         }
 
-        mCompositeSubscription.add(mCharacterDAO.getActiveCharacter()
+        mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(gameCharacter -> {
                     mHeaderComponent.onActiveCharacter(gameCharacter);

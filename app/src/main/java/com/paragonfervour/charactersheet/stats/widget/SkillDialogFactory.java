@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.dao.CharacterDao;
 import com.paragonfervour.charactersheet.character.model.Skill;
 
 import javax.inject.Inject;
@@ -28,7 +28,7 @@ public class SkillDialogFactory {
     }
 
     @Inject
-    public SkillDialogFactory(Context context, CharacterDAO characterDAO) {
+    public SkillDialogFactory(Context context, CharacterDao characterDao) {
         mContext = context;
     }
 

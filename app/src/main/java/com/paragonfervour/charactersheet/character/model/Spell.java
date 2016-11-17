@@ -6,6 +6,7 @@ import com.orm.SugarRecord;
  * Model represents a Spell.
  * Spell name, level, description, casting time, components, range
  */
+@SuppressWarnings("WeakerAccess")
 public class Spell extends SugarRecord {
 
     String mName;
@@ -15,6 +16,8 @@ public class Spell extends SugarRecord {
     String mComponents;
     String mDuration;
     String mRange;
+
+    Long mCharacterId;
 
     public static Spell createDefault() {
         Spell s = new Spell();
@@ -84,5 +87,13 @@ public class Spell extends SugarRecord {
 
     public void setRange(String range) {
         mRange = range;
+    }
+
+    public Long getCharacterId() {
+        return mCharacterId;
+    }
+
+    public void setCharacterId(Long characterId) {
+        mCharacterId = characterId;
     }
 }

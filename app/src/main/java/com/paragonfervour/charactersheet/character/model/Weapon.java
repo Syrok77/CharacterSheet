@@ -5,6 +5,7 @@ import com.orm.SugarRecord;
 /**
  * Model representing a Weapon, with a name (i.e. Rapier), damage, value, weight, and properties
  */
+@SuppressWarnings("WeakerAccess")
 public class Weapon extends SugarRecord {
 
     String mName;

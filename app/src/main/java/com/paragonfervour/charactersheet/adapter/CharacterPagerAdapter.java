@@ -9,7 +9,7 @@ import android.view.View;
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.fragment.DefenseFragment;
 import com.paragonfervour.charactersheet.fragment.OffenseFragment;
-import com.paragonfervour.charactersheet.fragment.SpellsFragment;
+import com.paragonfervour.charactersheet.spells.fragment.SpellsFragment;
 import com.paragonfervour.charactersheet.stats.fragment.StatsFragment;
 
 public class CharacterPagerAdapter extends FragmentPagerAdapter {

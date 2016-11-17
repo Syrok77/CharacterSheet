@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.dao.CharacterDao;
 import com.paragonfervour.charactersheet.character.helper.CharacterHelper;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.injection.Injectors;
@@ -34,7 +34,7 @@ import rx.subscriptions.CompositeSubscription;
 public class OffenseFragment extends ComponentBaseFragment {
 
     @Inject
-    CharacterDAO mCharacterDAO;
+    CharacterDao mCharacterDao;
 
     @BindView(R.id.offense_proficiency_bonus)
     TextView mProficiencyBonus;
@@ -76,7 +76,7 @@ public class OffenseFragment extends ComponentBaseFragment {
         mCompositeSubscription = new CompositeSubscription();
         mUnbinder = ButterKnife.bind(this, view);
 
-        mCompositeSubscription.add(mCharacterDAO.getActiveCharacter()
+        mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<GameCharacter>() {
                     @Override

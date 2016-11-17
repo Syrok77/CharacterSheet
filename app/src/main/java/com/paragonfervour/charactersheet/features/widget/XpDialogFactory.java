@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.dao.CharacterDao;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 
 import javax.inject.Inject;
@@ -19,12 +19,12 @@ import rx.Subscriber;
  */
 public class XpDialogFactory {
 
-    private CharacterDAO mCharacterDAO;
+    private CharacterDao mCharacterDao;
     private Context mContext;
 
     @Inject
-    XpDialogFactory(CharacterDAO characterDAO, Context context) {
-        mCharacterDAO = characterDAO;
+    XpDialogFactory(CharacterDao characterDao, Context context) {
+        mCharacterDao = characterDao;
         mContext = context;
     }
 
@@ -43,7 +43,7 @@ public class XpDialogFactory {
                 .setPositiveButton(R.string.add, (dialog, which) -> {
                     if (!xpAmount.getText().toString().isEmpty()) {
                         final int amount = Integer.valueOf(xpAmount.getText().toString());
-                        mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+                        mCharacterDao.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
                             @Override
                             public void onCompleted() {
                             }
@@ -59,7 +59,7 @@ public class XpDialogFactory {
                                 gameCharacter.getInfo().setXp(xp);
 
                                 unsubscribe();
-                                mCharacterDAO.activeCharacterUpdated();
+                                mCharacterDao.activeCharacterUpdated();
                             }
                         });
                     }
@@ -86,7 +86,7 @@ public class XpDialogFactory {
                 .setPositiveButton(R.string.dialog_change_xp_accept, (dialog, which) -> {
                     if (!xpAmount.getText().toString().isEmpty()) {
                         final int amount = Integer.valueOf(xpAmount.getText().toString());
-                        mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+                        mCharacterDao.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
                             @Override
                             public void onCompleted() {
                             }
@@ -101,7 +101,7 @@ public class XpDialogFactory {
                                 gameCharacter.getInfo().setXp(amount);
 
                                 unsubscribe();
-                                mCharacterDAO.activeCharacterUpdated();
+                                mCharacterDao.activeCharacterUpdated();
                             }
                         });
                     }

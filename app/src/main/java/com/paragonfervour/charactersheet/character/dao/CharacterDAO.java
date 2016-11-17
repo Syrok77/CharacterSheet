@@ -22,15 +22,15 @@ import rx.subjects.BehaviorSubject;
  * GameCharacter.
  */
 @Singleton
-public class CharacterDAO {
+public class CharacterDao {
 
-    private static final String TAG = CharacterDAO.class.getSimpleName();
+    private static final String TAG = CharacterDao.class.getSimpleName();
 
     private GameCharacter mActiveCharacter;
     private final BehaviorSubject<GameCharacter> mActiveCharacterSubject = BehaviorSubject.create();
 
     @Inject
-    public CharacterDAO() {
+    public CharacterDao() {
     }
 
     /**

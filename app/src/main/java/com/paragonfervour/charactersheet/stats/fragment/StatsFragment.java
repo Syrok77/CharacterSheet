@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.paragonfervour.charactersheet.R;
-import com.paragonfervour.charactersheet.character.dao.CharacterDAO;
+import com.paragonfervour.charactersheet.character.dao.CharacterDao;
 import com.paragonfervour.charactersheet.character.model.Dice;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Skill;
@@ -62,7 +62,7 @@ import rx.subscriptions.CompositeSubscription;
 public class StatsFragment extends ComponentBaseFragment {
 
     @Inject
-    CharacterDAO mCharacterDAO;
+    CharacterDao mCharacterDao;
 
     @Inject
     SkillDialogFactory mSkillDialogFactory;
@@ -187,7 +187,7 @@ public class StatsFragment extends ComponentBaseFragment {
         bindAbilityScores();
         bindAttributes();
 
-        mCompositeSubscription.add(mCharacterDAO.getActiveCharacter()
+        mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
                 .subscribe(new Observer<GameCharacter>() {
                     @Override
                     public void onCompleted() {
@@ -324,7 +324,7 @@ public class StatsFragment extends ComponentBaseFragment {
     }
 
     private void saveSkill(Skill skill, GameCharacter gameCharacter) {
-        if (mCharacterDAO.saveSkill(skill, gameCharacter)) {
+        if (mCharacterDao.saveSkill(skill, gameCharacter)) {
             addSkillView(skill);
         }
 
@@ -368,7 +368,7 @@ public class StatsFragment extends ComponentBaseFragment {
 
     private void bindAttributes() {
         mInspiration.setOnCheckedChangeListener((buttonView, isChecked) ->
-                mCharacterDAO.getActiveCharacter().subscribe(new UpdateInspirationSubscriber(isChecked)));
+                mCharacterDao.getActiveCharacter().subscribe(new UpdateInspirationSubscriber(isChecked)));
     }
 
     /**
@@ -376,19 +376,19 @@ public class StatsFragment extends ComponentBaseFragment {
      */
     private void bindAbilityScores() {
         mStrength.getValueObservable().subscribe(strength -> {
-            mCharacterDAO.getActiveCharacter().subscribe(new UpdateStrSubscriber(strength));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateStrSubscriber(strength));
 
             updateCounterModifier(strength, mStrengthModifier);
         });
 
         mConstitution.getValueObservable().subscribe(constitution -> {
-            mCharacterDAO.getActiveCharacter().subscribe(new UpdateConSubscriber(constitution));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateConSubscriber(constitution));
 
             updateCounterModifier(constitution, mConstitutionModifier);
         });
 
         mDexterity.getValueObservable().subscribe(dexterity -> {
-            mCharacterDAO.getActiveCharacter().subscribe(new UpdateDexSubscriber(dexterity));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateDexSubscriber(dexterity));
 
             updateCounterModifier(dexterity, mDexterityModifier);
 
@@ -396,20 +396,20 @@ public class StatsFragment extends ComponentBaseFragment {
         });
 
         mIntelligence.getValueObservable().subscribe(intelligence -> {
-            mCharacterDAO.getActiveCharacter().subscribe(new UpdateIntSubscriber(intelligence));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateIntSubscriber(intelligence));
 
             updateCounterModifier(intelligence, mIntelligenceModifier);
         });
 
         mWisdom.getValueObservable().subscribe(wisdom -> {
             Log.d(TAG, "Updating wisdom: " + wisdom);
-            mCharacterDAO.getActiveCharacter().subscribe(new UpdateWisSubscriber(wisdom));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateWisSubscriber(wisdom));
 
             updateCounterModifier(wisdom, mWisdomModifier);
         });
 
         mCharisma.getValueObservable().subscribe(charisma -> {
-            mCharacterDAO.getActiveCharacter().subscribe(new UpdateChaSubscriber(charisma));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateChaSubscriber(charisma));
 
             updateCounterModifier(charisma, mCharismaModifier);
         });
@@ -421,7 +421,7 @@ public class StatsFragment extends ComponentBaseFragment {
      */
     private void bindHealthValues() {
         mHealthComponent.getValueObservable().subscribe(hitPoints -> {
-            mCharacterDAO.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+            mCharacterDao.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
                 @Override
                 public void onCompleted() {
                 }
@@ -442,16 +442,16 @@ public class StatsFragment extends ComponentBaseFragment {
         });
 
         mTempHpComponent.getValueObservable().subscribe(tempHitPoints -> {
-            mCharacterDAO.getActiveCharacter().subscribe(new UpdateTempHPSubscriber(tempHitPoints));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateTempHPSubscriber(tempHitPoints));
             updateHealthSummary();
         });
 
         mMaxHealthComponent.getValueObservable().subscribe(maxHealth -> {
-            mCharacterDAO.getActiveCharacter().subscribe(new UpdateMaxHpSubscriber(maxHealth));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateMaxHpSubscriber(maxHealth));
             updateHealthSummary();
         });
 
-        mCompositeSubscription.add(Observable.combineLatest(mDeathSaveComponent.getFailuresObservable(), mCharacterDAO.getActiveCharacter(), (failCount, gameCharacter) -> {
+        mCompositeSubscription.add(Observable.combineLatest(mDeathSaveComponent.getFailuresObservable(), mCharacterDao.getActiveCharacter(), (failCount, gameCharacter) -> {
             gameCharacter.getDefenseStats().setFailAttempts(failCount);
             return Observable.just(gameCharacter);
         }).subscribe());
@@ -535,7 +535,7 @@ public class StatsFragment extends ComponentBaseFragment {
     private class AddUpdateSkillListener implements SkillDialogFactory.SkillListener {
         @Override
         public void onSkillCreated(final Skill skill) {
-            mCharacterDAO.getActiveCharacter()
+            mCharacterDao.getActiveCharacter()
                     .subscribe(new Subscriber<GameCharacter>() {
                         @Override
                         public void onCompleted() {
@@ -558,7 +558,7 @@ public class StatsFragment extends ComponentBaseFragment {
 
         @Override
         public void onSkillUpdated(final Skill skill) {
-            mCharacterDAO.getActiveCharacter()
+            mCharacterDao.getActiveCharacter()
                     .subscribe(new Subscriber<GameCharacter>() {
                         @Override
                         public void onCompleted() {
@@ -582,7 +582,7 @@ public class StatsFragment extends ComponentBaseFragment {
 
         @Override
         public void onSkillDeleted(final Skill skill) {
-            mCharacterDAO.getActiveCharacter()
+            mCharacterDao.getActiveCharacter()
                     .subscribe(new Subscriber<GameCharacter>() {
                         @Override
                         public void onCompleted() {
@@ -646,7 +646,7 @@ public class StatsFragment extends ComponentBaseFragment {
 
         @Override
         public void onNext(final Dice dice) {
-            mCompositeSubscription.add(mCharacterDAO.getActiveCharacter()
+            mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
                     .subscribe(new Subscriber<GameCharacter>() {
                         @Override
                         public void onCompleted() {

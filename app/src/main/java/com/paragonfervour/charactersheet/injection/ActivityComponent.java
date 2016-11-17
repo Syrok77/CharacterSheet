@@ -7,6 +7,7 @@ import com.paragonfervour.charactersheet.features.activity.EditCharacterFeatures
 import com.paragonfervour.charactersheet.fragment.CharacterPagerFragment;
 import com.paragonfervour.charactersheet.fragment.OffenseFragment;
 import com.paragonfervour.charactersheet.offense.activity.AddWeaponActivity;
+import com.paragonfervour.charactersheet.spells.fragment.SpellsFragment;
 import com.paragonfervour.charactersheet.stats.fragment.StatsFragment;
 import com.paragonfervour.charactersheet.view.StatValueViewComponent;
 
@@ -28,6 +29,7 @@ public interface ActivityComponent {
 
     void inject(CharacterPagerFragment characterPagerFragment);
     void inject(OffenseFragment offenseFragment);
+    void inject(SpellsFragment spellsFragment);
     void inject(StatsFragment statsFragment);
 
     // endregion
