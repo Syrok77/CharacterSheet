@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Skill;
+import com.paragonfervour.charactersheet.character.model.Spell;
 import com.paragonfervour.charactersheet.character.model.Weapon;
 
 import java.util.List;
@@ -136,6 +137,13 @@ public class CharacterDao {
             for (Skill s : skills) {
                 s.setCharacterId(characterId);
                 s.save();
+            }
+
+            // Create default spells
+            List<Spell> spells = Spell.createMaldalairList();
+            for (Spell spell : spells) {
+                spell.setCharacterId(characterId);
+                spell.save();
             }
         }
 

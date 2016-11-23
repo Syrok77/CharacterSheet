@@ -2,6 +2,9 @@ package com.paragonfervour.charactersheet.character.model;
 
 import com.orm.SugarRecord;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Model represents a Spell.
  * Spell name, level, description, casting time, components, range
@@ -22,12 +25,32 @@ public class Spell extends SugarRecord {
     public static Spell createDefault() {
         Spell s = new Spell();
         s.mName = "Cloud of Daggers";
+        s.mLevel = 0;
         s.mCastingTime = "1 action";
         s.mRange = "60 feet";
         s.mComponents = "V, S, M (a sliver of glass)";
         s.mDuration = "Concentration, up to 1 minute";
         s.mDescription = "You fill the air with spinning daggers in a cube 5 feet on each side, centered....";
         return s;
+    }
+
+    public static Spell createMagicMissile() {
+        Spell s = new Spell();
+        s.mName = "Magic Missile";
+        s.mLevel = 1;
+        s.mCastingTime = "1 action";
+        s.mRange = "60 feet";
+        s.mComponents = "V, S";
+        s.mDuration = "instant";
+        s.mDescription = "MAGIC MISSILE!";
+        return s;
+    }
+
+    public static List<Spell> createMaldalairList() {
+        List<Spell> spells = new ArrayList<>();
+        spells.add(createDefault());
+        spells.add(createMagicMissile());
+        return spells;
     }
 
     public Spell() {

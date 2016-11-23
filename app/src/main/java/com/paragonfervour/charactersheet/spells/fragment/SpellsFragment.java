@@ -53,7 +53,7 @@ public class SpellsFragment extends ComponentBaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Injectors.currentActivityComponent().inject(this);
-        mSpellsAdapter = new SpellsAdapter();
+        mSpellsAdapter = new SpellsAdapter(getContext());
     }
 
     @Nullable

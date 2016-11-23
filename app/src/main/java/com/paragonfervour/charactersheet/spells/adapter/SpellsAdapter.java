@@ -1,14 +1,21 @@
 package com.paragonfervour.charactersheet.spells.adapter;
 
 
+import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
+import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.model.Spell;
+import com.paragonfervour.charactersheet.widget.ListSubHeaderComponent;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Adapter that displays a given list of Spells, grouped by casting level. Each group is separated by
@@ -16,53 +23,130 @@ import java.util.List;
  */
 public class SpellsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private SparseArray<List<Spell>> mSpells = new SparseArray<>();
+    private final List<StupidDataModel> mSpellData = new ArrayList<>();
+    private final LayoutInflater mLayoutInflater;
+
+    public SpellsAdapter(Context context) {
+        mLayoutInflater = LayoutInflater.from(context);
+    }
 
     // region recycler adapter overrides -----------------------------------------------------------
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        if (viewType == SpellViewHolder.VIEW_TYPE) {
+            return new SpellViewHolder(mLayoutInflater.inflate(R.layout.spells_fragment_spell_item, parent, false));
+        } else {
+            return new HeaderViewHolder(new ListSubHeaderComponent(parent.getContext()));
+        }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        if (holder instanceof SpellViewHolder) {
+            SpellViewHolder spell = (SpellViewHolder) holder;
+            spell.bind(mSpellData.get(position).getSpell());
+        } else if (holder instanceof HeaderViewHolder) {
+            HeaderViewHolder header = (HeaderViewHolder) holder;
+            header.bind(mSpellData.get(position).getSpellLevel());
+        }
     }
 
     @Override
     public int getItemCount() {
-        if (mSpells != null) {
-            return mSpells.size() + getHeaderCount();
+        return mSpellData.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        StupidDataModel data = mSpellData.get(position);
+        if (data.getSpell() == null) {
+            return HeaderViewHolder.VIEW_TYPE;
         } else {
-            return 0;
+            return SpellViewHolder.VIEW_TYPE;
         }
     }
 
     // endregion
 
-    /**
-     * Get the number of headers to display. Since spells are grouped by level, this will be equal
-     * to the number of different spell levels in the character's spell book. For example, if the player
-     * knows X level 0 spells and Y level 2 spells, this will return 2;
-     *
-     * @return the number of headers to be displayed by this adapter.
-     */
-    private int getHeaderCount() {
-        if (mSpells != null) {
-            return mSpells.size();
-        }
-        return 0;
-    }
-
     public void setSpells(List<Spell> spells) {
+        // organize spells by spell level
+        Map<Integer, List<Spell>> spellsByLevel = new LinkedHashMap<>();
         for (Spell spell : spells) {
-            if (mSpells.get(spell.getLevel()) == null) {
-                mSpells.put(spell.getLevel(), new ArrayList<>());
+            //noinspection Java8CollectionsApi
+            if (spellsByLevel.get(spell.getLevel()) == null) {
+                spellsByLevel.put(spell.getLevel(), new ArrayList<>());
             }
 
-            List<Spell> spellsForLevel = mSpells.get(spell.getLevel());
-            spellsForLevel.add(spell);
+            spellsByLevel.get(spell.getLevel()).add(spell);
+        }
+
+        // linearize data for the adapter
+        mSpellData.clear();
+        for (Integer level : spellsByLevel.keySet()) {
+            mSpellData.add(new StupidDataModel(level, null));
+            for (Spell spell : spellsByLevel.get(level)) {
+                mSpellData.add(new StupidDataModel(level, spell));
+            }
+        }
+    }
+
+    private class SpellViewHolder extends RecyclerView.ViewHolder {
+        private static final int VIEW_TYPE = 1;
+
+        SpellViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        public void bind(Spell spell) {
+
+        }
+    }
+
+    private class HeaderViewHolder extends RecyclerView.ViewHolder {
+        private static final int VIEW_TYPE = 2;
+
+        private ListSubHeaderComponent mListSubHeaderComponent;
+
+        HeaderViewHolder(ListSubHeaderComponent itemView) {
+            super(itemView);
+            mListSubHeaderComponent = itemView;
+        }
+
+        public void bind(int spellLevel) {
+            String header;
+            if (spellLevel == 0) {
+                // Level 0 spells are called Cantrips
+                header = itemView.getResources().getString(R.string.spell_header_zero);
+            } else {
+                header = itemView.getResources().getString(R.string.spell_header_level_format, spellLevel);
+            }
+            mListSubHeaderComponent.setHeaderText(header);
+        }
+    }
+
+    /**
+     * Store spell data for the view holders to bind to. This is stupid because linearizing non-linear
+     * data into an easily used adapter data source is obnoxious, and it's dumb to have a model with
+     * fields that you have to just assume are populated or not populated based on the corresponding
+     * ViewType.
+     */
+    private class StupidDataModel {
+        private final int mSpellLevel;
+        private final Spell mSpell;
+
+        StupidDataModel(int spellLevel, Spell spell) {
+            mSpellLevel = spellLevel;
+            mSpell = spell;
+        }
+
+        int getSpellLevel() {
+            return mSpellLevel;
+        }
+
+        @Nullable
+        Spell getSpell() {
+            return mSpell;
         }
     }
 

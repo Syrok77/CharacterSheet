@@ -140,6 +140,10 @@
     <string name="add_weapon_str_format">STR (%1$s)</string>
     <string name="add_weapon_dex_format">DEX (%1$s)</string>
 
+    <!-- Spells -->
+    <string name="spell_header_zero">Cantrips</string>
+    <string name="spell_header_level_format">Level %1$d</string>
+
     <string-array name="classes">
         <item>Rogue</item>
     </string-array>
