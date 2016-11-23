@@ -149,5 +149,4 @@ public class SpellsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             return mSpell;
         }
     }
-
 }
