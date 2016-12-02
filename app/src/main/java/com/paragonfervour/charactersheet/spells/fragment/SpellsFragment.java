@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.dao.CharacterDao;
@@ -35,6 +36,9 @@ public class SpellsFragment extends ComponentBaseFragment {
 
     @BindView(R.id.spells_fragment_recycler_view)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.spells_fragment_empty_spell_list)
+    TextView mEmptySpellListView;
 
     private static final String TAG = SpellsFragment.class.getSimpleName();
 
@@ -88,6 +92,13 @@ public class SpellsFragment extends ComponentBaseFragment {
         List<Spell> spells = gameCharacter.getSpells();
         mSpellsAdapter.setSpells(spells);
         mSpellsAdapter.notifyDataSetChanged();
+
+        // show or hide the empty spell list text
+        if (spells.isEmpty()) {
+            mEmptySpellListView.setVisibility(View.VISIBLE);
+        } else {
+            mEmptySpellListView.setVisibility(View.GONE);
+        }
     }
 
     private void onActiveCharacterError(Throwable e) {
