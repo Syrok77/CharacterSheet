@@ -1,5 +1,6 @@
 package com.paragonfervour.charactersheet.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -13,6 +14,7 @@ import com.paragonfervour.charactersheet.activity.CharacterActivity;
 import com.paragonfervour.charactersheet.adapter.CharacterPagerAdapter;
 import com.paragonfervour.charactersheet.component.FloatingActionButtonComponent;
 import com.paragonfervour.charactersheet.injection.Injectors;
+import com.paragonfervour.charactersheet.spells.activity.AddSpellActivity;
 
 import javax.inject.Inject;
 
@@ -78,9 +80,7 @@ public class CharacterPagerFragment extends ComponentBaseFragment {
     // region listeners ----------------------------------------------------------------------------
 
     private void onSpellsFabClick(View v) {
-        mFloatingActionButtonComponent.showFab(fab -> {
-            // TODO: fab should open up an add spell view.
-        });
+        startActivity(new Intent(getActivity(), AddSpellActivity.class));
     }
 
     private class PageChangeListener implements ViewPager.OnPageChangeListener {

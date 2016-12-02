@@ -39,6 +39,10 @@
         <activity
             android:name=".offense.activity.AddWeaponActivity"
             android:label="@string/nav_add_weapon_title"/>
+
+        <activity
+            android:name=".spells.activity.AddSpellActivity"
+            android:label="@string/nav_add_weapon_title"/>
     </application>
 
 </manifest>

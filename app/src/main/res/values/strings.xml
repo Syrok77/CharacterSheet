@@ -34,6 +34,8 @@
     <string name="nav_settings">Settings</string>
     <string name="nav_add_weapon_title">Add Weapon</string>
     <string name="nav_edit_weapon_title">Edit Weapon</string>
+    <string name="nav_add_spell_title">Add Spell</string>
+    <string name="nav_edit_spell_title">Edit Spell</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -144,6 +146,17 @@
     <string name="spell_header_zero">Cantrips</string>
     <string name="spell_header_level_format">Level %1$d</string>
     <string name="spell_list_empty">Your spellbook is empty!</string>
+
+    <!-- Add/Edit Spell screen -->
+    <string name="add_spell_header">Spell Information</string>
+    <string name="add_spell_name_hint">Name</string>
+    <string name="add_spell_level_hint">Level</string>
+    <string name="add_spell_components_hint">Components</string>
+    <string name="add_spell_casting_time_hint">Casting Time</string>
+    <string name="add_spell_duration_hint">Duration</string>
+    <string name="add_spell_range_hint">Range</string>
+    <string name="add_spell_description_hint">Description</string>
+    <string name="add_spell_add_button">Save</string>
 
     <string-array name="classes">
         <item>Rogue</item>
