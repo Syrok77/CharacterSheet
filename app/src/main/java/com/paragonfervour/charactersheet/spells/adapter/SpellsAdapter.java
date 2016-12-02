@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.model.Spell;
@@ -16,6 +17,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Adapter that displays a given list of Spells, grouped by casting level. Each group is separated by
@@ -91,15 +95,19 @@ public class SpellsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private class SpellViewHolder extends RecyclerView.ViewHolder {
+    class SpellViewHolder extends RecyclerView.ViewHolder {
         private static final int VIEW_TYPE = 1;
+
+        @BindView(R.id.spell_item_name)
+        TextView mName;
 
         SpellViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         public void bind(Spell spell) {
-
+            mName.setText(spell.getName());
         }
     }
 
