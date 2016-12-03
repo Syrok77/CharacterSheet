@@ -22,6 +22,27 @@ public class Spell extends SugarRecord {
 
     Long mCharacterId;
 
+    public Spell() {
+    }
+
+    public Spell(String name,
+                 int level,
+                 String description,
+                 String castingTime,
+                 String components,
+                 String duration,
+                 String range,
+                 long characterId) {
+        mName = name;
+        mLevel = level;
+        mDescription = description;
+        mCastingTime = castingTime;
+        mComponents = components;
+        mDuration = duration;
+        mRange = range;
+        mCharacterId = characterId;
+    }
+
     public static Spell createDefault() {
         Spell s = new Spell();
         s.mName = "Cloud of Daggers";
@@ -53,63 +74,32 @@ public class Spell extends SugarRecord {
         return spells;
     }
 
-    public Spell() {
-    }
-
     public String getName() {
         return mName;
-    }
-
-    public void setName(String name) {
-        mName = name;
     }
 
     public int getLevel() {
         return mLevel;
     }
 
-    public void setLevel(int level) {
-        mLevel = level;
-    }
-
     public String getDescription() {
         return mDescription;
-    }
-
-    public void setDescription(String description) {
-        mDescription = description;
     }
 
     public String getCastingTime() {
         return mCastingTime;
     }
 
-    public void setCastingTime(String castingTime) {
-        mCastingTime = castingTime;
-    }
-
     public String getComponents() {
         return mComponents;
-    }
-
-    public void setComponents(String components) {
-        mComponents = components;
     }
 
     public String getDuration() {
         return mDuration;
     }
 
-    public void setDuration(String duration) {
-        mDuration = duration;
-    }
-
     public String getRange() {
         return mRange;
-    }
-
-    public void setRange(String range) {
-        mRange = range;
     }
 
     public Long getCharacterId() {
