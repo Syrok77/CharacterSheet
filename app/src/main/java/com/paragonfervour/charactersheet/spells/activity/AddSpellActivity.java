@@ -64,8 +64,8 @@ public class AddSpellActivity extends ComponentBaseActivity {
         ButterKnife.bind(this);
         Injectors.activityComponent(this).inject(this);
 
-        mCharacterDao.getActiveCharacter()
-                .subscribe(this::onActiveCharacter, this::onActiveCharacterError);
+        mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
+                .subscribe(this::onActiveCharacter, this::onActiveCharacterError));
     }
 
     @Override
