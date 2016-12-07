@@ -42,9 +42,8 @@ public class AddSpellActivity extends ComponentBaseActivity {
     @BindView(R.id.add_spell_casting_time)
     TextView mCastingTime;
 
-    // TODO:
-//    @BindView(R.id.add_spell_components)
-//    TextView mComponents;
+    @BindView(R.id.add_spell_components)
+    TextView mComponents;
 
     @BindView(R.id.add_spell_duration)
     TextView mDuration;
@@ -59,7 +58,7 @@ public class AddSpellActivity extends ComponentBaseActivity {
     private static final String TAG = AddSpellActivity.class.getSimpleName();
 
     private long mCharacterId;
-    private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
+    private final CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,7 +88,7 @@ public class AddSpellActivity extends ComponentBaseActivity {
         int level = Integer.valueOf(mLevel.getText().toString());
         String description = mDescription.getText().toString();
         String castingTime = mCastingTime.getText().toString();
-        String components = "V, S"; //TODO: mComponents.getText().toString();
+        String components = mComponents.getText().toString();
         String duration = mDuration.getText().toString();
         String range = mRange.getText().toString();
         Spell spell = new Spell(name,
