@@ -2,6 +2,7 @@ package com.paragonfervour.charactersheet.spells.activity;
 
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -28,6 +29,9 @@ public class AddSpellActivity extends ComponentBaseActivity {
 
     @Inject
     CharacterDao mCharacterDao;
+
+    @BindView(R.id.activity_add_spell_toolbar)
+    Toolbar mToolbar;
 
     @BindView(R.id.add_spell_name)
     TextView mName;
@@ -63,6 +67,11 @@ public class AddSpellActivity extends ComponentBaseActivity {
         setContentView(R.layout.add_spell_activity);
         ButterKnife.bind(this);
         Injectors.activityComponent(this).inject(this);
+
+        // setup toolbar
+        mToolbar.setNavigationOnClickListener(v -> onBackPressed());
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        mToolbar.setTitle(getTitle());
 
         mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
                 .subscribe(this::onActiveCharacter, this::onActiveCharacterError));
