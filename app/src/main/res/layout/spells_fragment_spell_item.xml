@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/spell_item_name"
@@ -11,5 +14,118 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         tools:text="Magic Missile"/>
+
+    <RelativeLayout
+        android:id="@+id/spell_item_collapsing_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="16dp"
+            android:visibility="gone"
+            android:background="?attr/colorAccent"/>
+
+        <TextView
+            android:id="@+id/spell_item_range_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="@string/spell_item_range"
+            android:textSize="@dimen/text_size_caption"/>
+
+        <TextView
+            android:id="@+id/spell_item_range"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/spell_item_casting_time"
+            android:layout_toEndOf="@+id/spell_item_range_title"
+            android:paddingBottom="8dp"
+            android:textSize="@dimen/text_size_caption"
+            tools:text="60 ft."/>
+
+        <TextView
+            android:id="@+id/spell_item_casting_time_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spell_item_range_title"
+            android:paddingBottom="8dp"
+            android:text="@string/spell_item_casting_time"
+            android:textSize="@dimen/text_size_caption"/>
+
+        <TextView
+            android:id="@+id/spell_item_casting_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/spell_item_casting_time_title"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/spell_item_casting_time_title"
+            android:textSize="@dimen/text_size_caption"
+            tools:text="1 Action"/>
+
+        <TextView
+            android:id="@+id/spell_item_components_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spell_item_casting_time_title"
+            android:paddingBottom="8dp"
+            android:text="@string/spell_item_components"
+            android:textSize="@dimen/text_size_caption"/>
+
+        <TextView
+            android:id="@+id/spell_item_components"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/spell_item_casting_time"
+            android:layout_alignTop="@+id/spell_item_components_title"
+            android:layout_toEndOf="@+id/spell_item_components_title"
+            android:textSize="@dimen/text_size_caption"
+            tools:text="V, S"/>
+
+        <TextView
+            android:id="@+id/spell_item_duration_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spell_item_components_title"
+            android:paddingBottom="8dp"
+            android:text="@string/spell_item_duration"
+            android:textSize="@dimen/text_size_caption"/>
+
+        <TextView
+            android:id="@+id/spell_item_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/spell_item_casting_time"
+            android:layout_alignTop="@+id/spell_item_duration_title"
+            android:layout_toEndOf="@+id/spell_item_duration_title"
+            android:textSize="@dimen/text_size_caption"
+            tools:text="1 minute, concentration"/>
+
+        <TextView
+            android:id="@+id/spell_item_description_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spell_item_duration_title"
+            android:paddingBottom="8dp"
+            android:text="@string/spell_item_description"
+            android:textSize="@dimen/text_size_caption"/>
+
+        <TextView
+            android:id="@+id/spell_item_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/spell_item_casting_time"
+            android:layout_alignTop="@+id/spell_item_description_title"
+            android:layout_toEndOf="@+id/spell_item_description_title"
+            android:textSize="@dimen/text_size_caption"
+            tools:text="This is a description of what this spell can do. These descriptions are typically very long and wordy, because flavor."/>
+
+    </RelativeLayout>
 
 </LinearLayout>

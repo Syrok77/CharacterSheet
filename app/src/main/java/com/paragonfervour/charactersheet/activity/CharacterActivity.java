@@ -63,8 +63,8 @@ public class CharacterActivity extends ComponentBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Injectors.activityComponent(this).inject(this);
         setContentView(R.layout.character_activity);
+        Injectors.activityComponent(this).inject(this);
         ButterKnife.bind(this);
 
         mHeaderComponent = new CharacterHeaderComponent(mNavigationView.getHeaderView(0));

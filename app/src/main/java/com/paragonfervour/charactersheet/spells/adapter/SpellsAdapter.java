@@ -101,6 +101,24 @@ public class SpellsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         @BindView(R.id.spell_item_name)
         TextView mName;
 
+        @BindView(R.id.spell_item_collapsing_section)
+        View mCollapsingSection;
+
+        @BindView(R.id.spell_item_range)
+        TextView mRange;
+
+        @BindView(R.id.spell_item_casting_time)
+        TextView mCastingTime;
+
+        @BindView(R.id.spell_item_components)
+        TextView mComponents;
+
+        @BindView(R.id.spell_item_duration)
+        TextView mDuration;
+
+        @BindView(R.id.spell_item_description)
+        TextView mDescription;
+
         SpellViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -108,6 +126,14 @@ public class SpellsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         public void bind(Spell spell) {
             mName.setText(spell.getName());
+            mRange.setText(spell.getRange());
+            mCastingTime.setText(spell.getCastingTime());
+            mComponents.setText(spell.getComponents());
+            mDuration.setText(spell.getDuration());
+            mDescription.setText(spell.getDescription());
+
+            itemView.setOnClickListener(v ->
+                    mCollapsingSection.setVisibility(mCollapsingSection.getVisibility() == View.GONE ? View.VISIBLE : View.GONE));
         }
     }
 

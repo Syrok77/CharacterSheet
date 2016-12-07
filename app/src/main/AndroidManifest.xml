@@ -42,7 +42,7 @@
 
         <activity
             android:name=".spells.activity.AddSpellActivity"
-            android:label="@string/nav_add_weapon_title"/>
+            android:label="@string/nav_add_spell_title"/>
     </application>
 
 </manifest>

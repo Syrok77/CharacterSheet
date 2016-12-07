@@ -157,6 +157,11 @@
     <string name="add_spell_range_hint">Range</string>
     <string name="add_spell_description_hint">Description</string>
     <string name="add_spell_add_button">Save</string>
+    <string name="spell_item_range">Range:</string>
+    <string name="spell_item_casting_time">Casting Time:</string>
+    <string name="spell_item_components">Components:</string>
+    <string name="spell_item_duration">Duration:</string>
+    <string name="spell_item_description">Description:</string>
 
     <string-array name="classes">
         <item>Rogue</item>
