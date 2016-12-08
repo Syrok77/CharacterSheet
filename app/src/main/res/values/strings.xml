@@ -162,6 +162,7 @@
     <string name="spell_item_components">Components:</string>
     <string name="spell_item_duration">Duration:</string>
     <string name="spell_item_description">Description:</string>
+    <string name="spell_item_edit_button">Edit</string>
 
     <string-array name="classes">
         <item>Rogue</item>

@@ -2,6 +2,7 @@ package com.paragonfervour.charactersheet.spells.adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.paragonfervour.charactersheet.R;
 import com.paragonfervour.charactersheet.character.model.Spell;
+import com.paragonfervour.charactersheet.spells.activity.AddSpellActivity;
 import com.paragonfervour.charactersheet.widget.ListSubHeaderComponent;
 
 import java.util.ArrayList;
@@ -104,6 +106,9 @@ public class SpellsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         @BindView(R.id.spell_item_collapsing_section)
         View mCollapsingSection;
 
+        @BindView(R.id.spell_item_edit_button)
+        View mEditButton;
+
         @BindView(R.id.spell_item_range)
         TextView mRange;
 
@@ -132,8 +137,17 @@ public class SpellsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             mDuration.setText(spell.getDuration());
             mDescription.setText(spell.getDescription());
 
-            itemView.setOnClickListener(v ->
-                    mCollapsingSection.setVisibility(mCollapsingSection.getVisibility() == View.GONE ? View.VISIBLE : View.GONE));
+            itemView.setOnClickListener(v -> {
+                int visibility = mCollapsingSection.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
+                mCollapsingSection.setVisibility(visibility);
+                mEditButton.setVisibility(visibility);
+            });
+            mEditButton.setOnClickListener(v -> {
+                Context context = v.getContext();
+                Intent editSpell = new Intent(context, AddSpellActivity.class);
+                editSpell.putExtra(AddSpellActivity.KEY_SPELL_ID, spell.getId());
+                context.startActivity(editSpell);
+            });
         }
     }
 
