@@ -20,8 +20,9 @@
         android:fontFamily="@string/font_family_medium"
         android:gravity="center_vertical|start"
         android:padding="16dp"
-        android:textColor="?attr/colorAccent"
+        android:textColor="?attr/colorPrimary"
         android:textSize="14sp"
+        tools:textColor="@color/default_white"
         tools:text="Header"/>
 
 </LinearLayout>
