@@ -171,13 +171,13 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.add_weapon, menu);
+        inflater.inflate(R.menu.menu_delete, menu);
         return isEditing;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.add_weapon_menu_delete && isEditing) {
+        if (item.getItemId() == R.id.action_delete && isEditing) {
             mWeapon.delete();
             finish();
         }

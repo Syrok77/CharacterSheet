@@ -1,5 +1,6 @@
 package com.paragonfervour.charactersheet.character.dao;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
@@ -54,11 +55,26 @@ public class CharacterDao {
     }
 
     /**
+     * Get the {@link Spell} with the given Id.
+     *
+     * @param id spell's id.
+     * @return Spell matching the given id, or null if there is no Spell with that id.
+     */
+    @Nullable
+    public Spell getSpell(Long id) {
+        if (id != null) {
+            return Spell.findById(Spell.class, id);
+        }
+        return null;
+    }
+
+    /**
      * Get a weapon by the model's ID.
      *
      * @param id Weapon model's ID.
      * @return Weapon matching the ID, or null if it doesn't exist.
      */
+    @Nullable
     public Weapon getWeaponById(Long id) {
         if (id != null) {
             return Weapon.findById(Weapon.class, id);
