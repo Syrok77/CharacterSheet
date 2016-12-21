@@ -30,13 +30,13 @@ public class GameCharacter extends SugarRecord {
 
     // Temp - create a default character
     public static GameCharacter createDefaultCharacter() {
-        GameCharacter maldalair = new GameCharacter();
-        maldalair.mInfo = CharacterInfo.createDefault();
-        maldalair.mDefenseStats = DefenseStats.createMaldalair();
-        maldalair.mBioInfo = BioInfo.createDefault();
-        maldalair.isInspired = false;
-        maldalair.mSpeed = 30;
-        return maldalair;
+        GameCharacter frédéric = new GameCharacter();
+        frédéric.mInfo = CharacterInfo.createDefault();
+        frédéric.mDefenseStats = DefenseStats.createFrederic();
+        frédéric.mBioInfo = BioInfo.createDefault();
+        frédéric.isInspired = false;
+        frédéric.mSpeed = 30;
+        return frédéric;
     }
 
     public GameCharacter() {

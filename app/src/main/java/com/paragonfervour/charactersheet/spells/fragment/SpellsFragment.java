@@ -90,7 +90,7 @@ public class SpellsFragment extends ComponentBaseFragment {
     private void onActiveCharacter(GameCharacter gameCharacter) {
         // update view to display the current character
         List<Spell> spells = gameCharacter.getSpells();
-        mSpellsAdapter.setSpells(spells);
+        mSpellsAdapter.setSpells(spells, gameCharacter);
         mSpellsAdapter.notifyDataSetChanged();
 
         // show or hide the empty spell list text

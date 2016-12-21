@@ -9,23 +9,33 @@ import com.orm.SugarRecord;
 @SuppressWarnings("WeakerAccess")
 public class CharacterInfo extends SugarRecord {
 
+    int mCastingAbility;
     String mCharacterClass; // TODO: Create a CharacterClass model?
-    String mRace;
     int mLevel;
     String mName;
+    String mRace;
     int mXp;
 
     public static CharacterInfo createDefault() {
         CharacterInfo info = new CharacterInfo();
         info.mCharacterClass = "Rogue";
         info.mRace = "Elf";
-        info.mLevel = 4;
-        info.mName = "Maldalair";
-        info.mXp = 4500;
+        info.mLevel = 2;
+        info.mName = "Frédéric Lacroix";
+        info.mXp = 435;
+        info.mCastingAbility = Ability.CHA.ordinal();
         return info;
     }
 
     public CharacterInfo() {
+    }
+
+    public int getCastingAbility() {
+        return mCastingAbility;
+    }
+
+    public void setCastingAbility(int castingAbility) {
+        mCastingAbility = castingAbility;
     }
 
     public String getCharacterClass() {
@@ -34,14 +44,6 @@ public class CharacterInfo extends SugarRecord {
 
     public void setCharacterClass(String mCharacterClass) {
         this.mCharacterClass = mCharacterClass;
-    }
-
-    public String getRace() {
-        return mRace;
-    }
-
-    public void setRace(String mRace) {
-        this.mRace = mRace;
     }
 
     public int getLevel() {
@@ -58,6 +60,14 @@ public class CharacterInfo extends SugarRecord {
 
     public void setName(String name) {
         this.mName = name;
+    }
+
+    public String getRace() {
+        return mRace;
+    }
+
+    public void setRace(String mRace) {
+        this.mRace = mRace;
     }
 
     public int getXp() {

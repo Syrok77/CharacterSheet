@@ -5,6 +5,7 @@ import com.orm.SugarRecord;
 /**
  * Damage representation. Dice type, # of that dice, and modifier
  */
+@SuppressWarnings("WeakerAccess")
 public class Damage extends SugarRecord {
 
     int mDiceTypeValue;
@@ -13,9 +14,9 @@ public class Damage extends SugarRecord {
 
     public static Damage createDefaultWeapon() {
         Damage d = new Damage();
-        d.setDiceType(Dice.D8);
+        d.setDiceType(Dice.D6);
         d.mDiceQuantity = 1;
-        d.mModifier = 2;
+        d.mModifier = 0;
         return d;
     }
 
@@ -23,7 +24,15 @@ public class Damage extends SugarRecord {
         Damage d = new Damage();
         d.setDiceType(Dice.D4);
         d.mDiceQuantity = 1;
-        d.mModifier = 2;
+        d.mModifier = 0;
+        return d;
+    }
+
+    public static Damage createDefaultShortbow() {
+        Damage d = new Damage();
+        d.setDiceType(Dice.D6);
+        d.mDiceQuantity = 1;
+        d.mModifier = 0;
         return d;
     }
 

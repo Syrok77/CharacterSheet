@@ -148,6 +148,10 @@ public class CharacterDao {
             off.setCharacterId(characterId);
             off.save();
 
+            Weapon bow = Weapon.createShortbow();
+            bow.setCharacterId(characterId);
+            bow.save();
+
             // Create default skills
             List<Skill> skills = Skill.createMaldalairList();
             for (Skill s : skills) {

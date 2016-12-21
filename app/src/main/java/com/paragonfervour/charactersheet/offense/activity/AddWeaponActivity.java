@@ -97,7 +97,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
     public static final String EXTRA_WEAPON_ID = "extra_weapon_id";
 
-    private CompositeSubscription mCompositeSubscription;
+    private final CompositeSubscription mCompositeSubscription = new CompositeSubscription();
     private Weapon mWeapon;
     private boolean isEditing;
 
@@ -111,10 +111,6 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         Injectors.activityComponent(this).inject(this);
         setContentView(R.layout.add_weapon_activity);
         ButterKnife.bind(this);
-
-        mCompositeSubscription = new CompositeSubscription();
-        mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
-                .subscribe(new CharacterObserver()));
 
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationOnClickListener(v -> onBackPressed());
@@ -137,6 +133,8 @@ public class AddWeaponActivity extends ComponentBaseActivity {
             isEditing = true;
         }
         updateWeaponView(mWeapon);
+        mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
+                .subscribe(new CharacterObserver()));
 
         if (isEditing) {
             // Set CharacterDAO update text watchers.
@@ -195,7 +193,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mCompositeSubscription.unsubscribe();
+        mCompositeSubscription.clear();
     }
 
     /**
@@ -530,9 +528,9 @@ public class AddWeaponActivity extends ComponentBaseActivity {
             mStr = StatHelper.getScoreModifier(gameCharacter.getDefenseStats().getStrScore());
             mProficiencyBonus = CharacterHelper.getProficiencyBonus(gameCharacter.getInfo().getLevel());
 
+            initializeScoreSelector();
             updateHitModifier();
             updateDamageSummary();
-            initializeScoreSelector();
         }
     }
 }

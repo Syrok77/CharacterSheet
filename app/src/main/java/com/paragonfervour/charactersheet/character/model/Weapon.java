@@ -24,13 +24,13 @@ public class Weapon extends SugarRecord {
 
     public static Weapon createDefault() {
         Weapon w = new Weapon();
-        w.mName = "Short Sword";
-        w.mValue = 25;
+        w.mName = "Scimitar";
+        w.mValue = 30;
         w.mWeight = 2;
         w.mDamage = Damage.createDefaultWeapon();
-        w.mProperties = "Light";
+        w.mProperties = "Finesse, light";
         w.isMainHand = true;
-        w.isStrengthWeapon = true;
+        w.isStrengthWeapon = false;
         return w;
     }
 
@@ -40,7 +40,19 @@ public class Weapon extends SugarRecord {
         w.mValue = 2;
         w.mWeight = 1;
         w.mDamage = Damage.createDefaultOffhand();
+        w.mProperties = "Finesse, light, thrown";
         w.isMainHand = false;
+        w.isStrengthWeapon = false;
+        return w;
+    }
+
+    public static Weapon createShortbow() {
+        Weapon w = new Weapon();
+        w.mName = "Shortbow";
+        w.mValue = 15;
+        w.mWeight = 5;
+        w.mDamage = Damage.createDefaultShortbow();
+        w.isMainHand = true;
         w.isStrengthWeapon = false;
         return w;
     }

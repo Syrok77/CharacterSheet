@@ -163,8 +163,17 @@
     <string name="spell_item_duration">Duration:</string>
     <string name="spell_item_description">Description:</string>
     <string name="spell_item_edit_button">Edit</string>
+    <string name="spell_casting_summary_save_dc">Save DC:</string>
+    <string name="spell_casting_summary_attack">Attack:</string>
+    <string name="spell_casting_summary_ability">Ability:</string>
+    <string-array name="spell_abilities">
+        <item>INT</item>
+        <item>WIS</item>
+        <item>CHA</item>
+    </string-array>
 
     <string-array name="classes">
         <item>Rogue</item>
     </string-array>
+
 </resources>

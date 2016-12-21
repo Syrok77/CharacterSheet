@@ -53,23 +53,23 @@ public class DefenseStats extends SugarRecord {
     }
 
     /**
-     * Create default model for Maldalair test rogue
+     * Create default model for Frédéric test rogue
      *
      * @return default rogue stats
      */
-    public static DefenseStats createMaldalair() {
+    public static DefenseStats createFrederic() {
         DefenseStats d = new DefenseStats();
         d.mAC = 16;
-        d.mStrScore = 11;
-        d.mDexScore = 16;
-        d.mConScore = 13;
+        d.mStrScore = 7;
+        d.mDexScore = 17;
+        d.mConScore = 12;
         d.mIntScore = 11;
         d.mWisScore = 12;
-        d.mChaScore = 8;
+        d.mChaScore = 12;
 
-        d.mHitPoints = 22;
+        d.mHitPoints = 17;
         d.mTempHp = 0;
-        d.mMaxHp = 24;
+        d.mMaxHp = 17;
         d.setHitDice(Dice.D8);
 
         d.mSuccessAttempts = 0;
