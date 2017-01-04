@@ -14,6 +14,7 @@ import com.paragonfervour.charactersheet.activity.CharacterActivity;
 import com.paragonfervour.charactersheet.adapter.CharacterPagerAdapter;
 import com.paragonfervour.charactersheet.component.FloatingActionButtonComponent;
 import com.paragonfervour.charactersheet.injection.Injectors;
+import com.paragonfervour.charactersheet.offense.activity.AddWeaponActivity;
 import com.paragonfervour.charactersheet.spells.activity.AddSpellActivity;
 
 import javax.inject.Inject;
@@ -79,8 +80,22 @@ public class CharacterPagerFragment extends ComponentBaseFragment {
 
     // region listeners ----------------------------------------------------------------------------
 
+    /**
+     * Handle FAB click in the spell fragment. This will open the {@link AddSpellActivity}.
+     *
+     * @param v view that was clicked.
+     */
     private void onSpellsFabClick(View v) {
         startActivity(new Intent(getActivity(), AddSpellActivity.class));
+    }
+
+    /**
+     * Handle FAB click in the offense fragment. This will open the {@link AddWeaponActivity}.
+     *
+     * @param v view that was clicked.
+     */
+    private void onOffenseFabClick(View v) {
+        startActivity(new Intent(getActivity(), AddWeaponActivity.class));
     }
 
     private class PageChangeListener implements ViewPager.OnPageChangeListener {
@@ -92,6 +107,8 @@ public class CharacterPagerFragment extends ComponentBaseFragment {
         public void onPageSelected(int position) {
             if (position == CharacterPagerAdapter.INDEX_SPELLS) {
                 mFloatingActionButtonComponent.showFab(CharacterPagerFragment.this::onSpellsFabClick);
+            } else if (position == CharacterPagerAdapter.INDEX_OFFENSE) {
+                mFloatingActionButtonComponent.showFab(CharacterPagerFragment.this::onOffenseFabClick);
             } else {
                 mFloatingActionButtonComponent.hideFab();
             }

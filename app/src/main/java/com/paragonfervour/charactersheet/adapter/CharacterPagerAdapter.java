@@ -27,6 +27,7 @@ public class CharacterPagerAdapter extends FragmentPagerAdapter {
     }
 
     public static final int INDEX_SPELLS = Index.SPELLS.ordinal();
+    public static final int INDEX_OFFENSE = Index.OFFENSE.ordinal();
 
     private Context mContext;
 

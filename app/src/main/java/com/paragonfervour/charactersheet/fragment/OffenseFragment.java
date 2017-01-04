@@ -1,6 +1,5 @@
 package com.paragonfervour.charactersheet.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -14,14 +13,12 @@ import com.paragonfervour.charactersheet.character.dao.CharacterDao;
 import com.paragonfervour.charactersheet.character.helper.CharacterHelper;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.injection.Injectors;
-import com.paragonfervour.charactersheet.offense.activity.AddWeaponActivity;
 import com.paragonfervour.charactersheet.offense.component.WeaponListViewComponent;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -100,12 +97,6 @@ public class OffenseFragment extends ComponentBaseFragment {
         super.onDestroyView();
         mCompositeSubscription.unsubscribe();
         mUnbinder.unbind();
-    }
-
-    @OnClick(R.id.offense_add_weapon_button)
-    void onAddWeaponClick() {
-        Intent intent = new Intent(getActivity(), AddWeaponActivity.class);
-        startActivity(intent);
     }
 
     private void updateUI(GameCharacter character) {

@@ -53,18 +53,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/offense_offhand_title"/>
 
-            <Button
-                android:id="@+id/offense_add_weapon_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/offense_offhand_weapon"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/brand_primary"
-                android:text="@string/add"
-                android:textColor="@color/default_white"/>
-
         </RelativeLayout>
 
     </LinearLayout>
