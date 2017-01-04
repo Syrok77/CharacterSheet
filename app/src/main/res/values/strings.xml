@@ -23,7 +23,7 @@
 
     <!-- Navigation -->
     <string name="nav_stats_title">Stats</string>
-    <string name="nav_offense_title">Offense</string>
+    <string name="nav_offense_title">Weapons</string>
     <string name="nav_defense_title">Defense</string>
     <string name="nav_bio_title">Biography</string>
     <string name="nav_spells_title">Spells</string>

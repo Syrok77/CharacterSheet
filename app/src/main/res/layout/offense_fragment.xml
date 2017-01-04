@@ -20,6 +20,15 @@
             android:text="@string/offense_proficiency_summary"
             tools:text="Proficiency Bonus: 3"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="bottom"
+            android:background="@color/secondary_accent"/>
+
         <RelativeLayout
             android:id="@+id/offense_weapon_layout"
             android:layout_width="match_parent"
