@@ -21,9 +21,9 @@ public class CharacterPagerAdapter extends FragmentPagerAdapter {
      */
     private enum Index {
         STATS,
+        DEFENSE,
         OFFENSE,
-        SPELLS,
-        DEFENSE
+        SPELLS
     }
 
     public static final int INDEX_SPELLS = Index.SPELLS.ordinal();
