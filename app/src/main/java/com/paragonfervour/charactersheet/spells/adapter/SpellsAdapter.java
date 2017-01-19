@@ -20,6 +20,7 @@ import com.paragonfervour.charactersheet.character.model.DefenseStats;
 import com.paragonfervour.charactersheet.character.model.GameCharacter;
 import com.paragonfervour.charactersheet.character.model.Spell;
 import com.paragonfervour.charactersheet.spells.activity.AddSpellActivity;
+import com.paragonfervour.charactersheet.spells.component.SpellSlotIndicator;
 import com.paragonfervour.charactersheet.stats.helper.StatHelper;
 import com.paragonfervour.charactersheet.widget.ListSubHeaderComponent;
 
@@ -60,7 +61,7 @@ public class SpellsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         } else if (viewType == ViewType.CASTING_SUMMARY.ordinal()) {
             return new CastingSummaryViewHolder(mLayoutInflater.inflate(R.layout.spell_casting_summary, parent, false));
         } else {
-            return new HeaderViewHolder(new ListSubHeaderComponent(parent.getContext()));
+            return new HeaderViewHolder(mLayoutInflater.inflate(R.layout.spells_header_spell_slot, parent, false));
         }
     }
 
@@ -239,12 +240,16 @@ public class SpellsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private class HeaderViewHolder extends RecyclerView.ViewHolder {
-        private ListSubHeaderComponent mListSubHeaderComponent;
+    class HeaderViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.spells_header_spell_slot_header)
+        ListSubHeaderComponent mListSubHeaderComponent;
 
-        HeaderViewHolder(ListSubHeaderComponent itemView) {
+        @BindView(R.id.spells_header_spell_slot_indicator)
+        SpellSlotIndicator mSpellSlotIndicator;
+
+        HeaderViewHolder(View itemView) {
             super(itemView);
-            mListSubHeaderComponent = itemView;
+            ButterKnife.bind(this, itemView);
         }
 
         public void bind(int spellLevel) {
@@ -252,8 +257,14 @@ public class SpellsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if (spellLevel == 0) {
                 // Level 0 spells are called Cantrips
                 header = itemView.getResources().getString(R.string.spell_header_zero);
+
+                // Cantrips do not require spell slots
+                mSpellSlotIndicator.setVisibility(View.GONE);
             } else {
                 header = itemView.getResources().getString(R.string.spell_header_level_format, spellLevel);
+
+                // Leveled spells require spell slots
+                mSpellSlotIndicator.setVisibility(View.VISIBLE);
             }
             mListSubHeaderComponent.setHeaderText(header);
         }

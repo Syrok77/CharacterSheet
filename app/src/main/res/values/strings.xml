@@ -166,6 +166,7 @@
     <string name="spell_casting_summary_save_dc">Save DC:</string>
     <string name="spell_casting_summary_attack">Attack:</string>
     <string name="spell_casting_summary_ability">Ability:</string>
+    <string name="spells_header_add_spell_level">Increase spell slots</string>
     <string-array name="spell_abilities">
         <item>INT</item>
         <item>WIS</item>
