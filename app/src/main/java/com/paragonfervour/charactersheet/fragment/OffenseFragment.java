@@ -73,7 +73,7 @@ public class OffenseFragment extends ComponentBaseFragment {
         mCompositeSubscription = new CompositeSubscription();
         mUnbinder = ButterKnife.bind(this, view);
 
-        mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
+        mCompositeSubscription.add(mCharacterDao.getActiveCharacterStream()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<GameCharacter>() {
                     @Override

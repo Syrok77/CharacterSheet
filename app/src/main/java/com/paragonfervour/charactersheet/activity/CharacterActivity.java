@@ -161,7 +161,7 @@ public class CharacterActivity extends ComponentBaseActivity {
             mDrawerLayout.openDrawer(mNavigationView);
         }
 
-        mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
+        mCompositeSubscription.add(mCharacterDao.getActiveCharacterStream()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(gameCharacter -> {
                     mHeaderComponent.onActiveCharacter(gameCharacter);

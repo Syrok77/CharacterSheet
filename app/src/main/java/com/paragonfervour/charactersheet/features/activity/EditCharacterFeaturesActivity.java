@@ -57,7 +57,7 @@ public class EditCharacterFeaturesActivity extends AppCompatActivity {
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         mToolbar.setTitle(R.string.edit_activity_label);
 
-        mCompositeSubscription.add(mCharacterDao.getActiveCharacter().subscribe(gameCharacter -> {
+        mCompositeSubscription.add(mCharacterDao.getActiveCharacterStream().subscribe(gameCharacter -> {
             mEditName.setText(gameCharacter.getInfo().getName());
             mEditRace.setText(gameCharacter.getInfo().getRace());
             mEditClass.setText(gameCharacter.getInfo().getCharacterClass());
@@ -78,7 +78,7 @@ public class EditCharacterFeaturesActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         // Update character with fields
-        mCharacterDao.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+        mCharacterDao.getActiveCharacterStream().subscribe(new Subscriber<GameCharacter>() {
             @Override
             public void onCompleted() {
             }

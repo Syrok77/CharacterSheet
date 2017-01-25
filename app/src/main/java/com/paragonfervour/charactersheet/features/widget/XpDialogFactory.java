@@ -43,7 +43,7 @@ public class XpDialogFactory {
                 .setPositiveButton(R.string.add, (dialog, which) -> {
                     if (!xpAmount.getText().toString().isEmpty()) {
                         final int amount = Integer.valueOf(xpAmount.getText().toString());
-                        mCharacterDao.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+                        mCharacterDao.getActiveCharacterStream().subscribe(new Subscriber<GameCharacter>() {
                             @Override
                             public void onCompleted() {
                             }
@@ -86,7 +86,7 @@ public class XpDialogFactory {
                 .setPositiveButton(R.string.dialog_change_xp_accept, (dialog, which) -> {
                     if (!xpAmount.getText().toString().isEmpty()) {
                         final int amount = Integer.valueOf(xpAmount.getText().toString());
-                        mCharacterDao.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+                        mCharacterDao.getActiveCharacterStream().subscribe(new Subscriber<GameCharacter>() {
                             @Override
                             public void onCompleted() {
                             }

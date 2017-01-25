@@ -29,14 +29,14 @@ import com.paragonfervour.charactersheet.fragment.ComponentBaseFragment;
 import com.paragonfervour.charactersheet.helper.SnackbarHelper;
 import com.paragonfervour.charactersheet.injection.Injectors;
 import com.paragonfervour.charactersheet.stats.helper.StatHelper;
-import com.paragonfervour.charactersheet.stats.observer.UpdateInspirationSubscriber;
-import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateChaSubscriber;
-import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateConSubscriber;
-import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateDexSubscriber;
-import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateIntSubscriber;
-import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateStrSubscriber;
-import com.paragonfervour.charactersheet.stats.observer.health.UpdateMaxHpSubscriber;
-import com.paragonfervour.charactersheet.stats.observer.health.UpdateTempHPSubscriber;
+import com.paragonfervour.charactersheet.stats.observer.UpdateInspirationObserver;
+import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateChaObserver;
+import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateConObserver;
+import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateDexObserver;
+import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateIntObserver;
+import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateStrObserver;
+import com.paragonfervour.charactersheet.stats.observer.health.UpdateMaxHpObserver;
+import com.paragonfervour.charactersheet.stats.observer.health.UpdateTempHPObserver;
 import com.paragonfervour.charactersheet.stats.widget.SkillDialogFactory;
 import com.paragonfervour.charactersheet.view.DeathSaveViewComponent;
 import com.paragonfervour.charactersheet.view.SkillValueViewComponent;
@@ -52,7 +52,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import rx.Observable;
 import rx.Observer;
-import rx.Subscriber;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -158,7 +157,7 @@ public class StatsFragment extends ComponentBaseFragment {
 
     private String mModifierFormat;
 
-    private CompositeSubscription mCompositeSubscription;
+    private final CompositeSubscription mCompositeSubscription = new CompositeSubscription();
     private Unbinder mUnbinder;
     private AlertDialog mActiveAlert;
     private AddUpdateSkillListener mSkillListener = new AddUpdateSkillListener();
@@ -181,13 +180,12 @@ public class StatsFragment extends ComponentBaseFragment {
         mUnbinder = ButterKnife.bind(this, view);
 
         mModifierFormat = getString(R.string.stat_ability_score_modifier_format);
-        mCompositeSubscription = new CompositeSubscription();
 
         bindHealthValues();
         bindAbilityScores();
         bindAttributes();
 
-        mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
+        mCompositeSubscription.add(mCharacterDao.getActiveCharacterStream()
                 .subscribe(new Observer<GameCharacter>() {
                     @Override
                     public void onCompleted() {
@@ -213,8 +211,7 @@ public class StatsFragment extends ComponentBaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mCompositeSubscription.unsubscribe();
-        mCompositeSubscription = null;
+        mCompositeSubscription.clear();
         mUnbinder.unbind();
 
         if (mActiveAlert != null) {
@@ -368,7 +365,7 @@ public class StatsFragment extends ComponentBaseFragment {
 
     private void bindAttributes() {
         mInspiration.setOnCheckedChangeListener((buttonView, isChecked) ->
-                mCharacterDao.getActiveCharacter().subscribe(new UpdateInspirationSubscriber(isChecked)));
+                mCharacterDao.getActiveCharacter().subscribe(new UpdateInspirationObserver(isChecked)));
     }
 
     /**
@@ -376,19 +373,19 @@ public class StatsFragment extends ComponentBaseFragment {
      */
     private void bindAbilityScores() {
         mStrength.getValueObservable().subscribe(strength -> {
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateStrSubscriber(strength));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateStrObserver(strength));
 
             updateCounterModifier(strength, mStrengthModifier);
         });
 
         mConstitution.getValueObservable().subscribe(constitution -> {
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateConSubscriber(constitution));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateConObserver(constitution));
 
             updateCounterModifier(constitution, mConstitutionModifier);
         });
 
         mDexterity.getValueObservable().subscribe(dexterity -> {
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateDexSubscriber(dexterity));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateDexObserver(dexterity));
 
             updateCounterModifier(dexterity, mDexterityModifier);
 
@@ -396,20 +393,20 @@ public class StatsFragment extends ComponentBaseFragment {
         });
 
         mIntelligence.getValueObservable().subscribe(intelligence -> {
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateIntSubscriber(intelligence));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateIntObserver(intelligence));
 
             updateCounterModifier(intelligence, mIntelligenceModifier);
         });
 
         mWisdom.getValueObservable().subscribe(wisdom -> {
             Log.d(TAG, "Updating wisdom: " + wisdom);
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateWisSubscriber(wisdom));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateWisObserver(wisdom));
 
             updateCounterModifier(wisdom, mWisdomModifier);
         });
 
         mCharisma.getValueObservable().subscribe(charisma -> {
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateChaSubscriber(charisma));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateChaObserver(charisma));
 
             updateCounterModifier(charisma, mCharismaModifier);
         });
@@ -421,7 +418,7 @@ public class StatsFragment extends ComponentBaseFragment {
      */
     private void bindHealthValues() {
         mHealthComponent.getValueObservable().subscribe(hitPoints -> {
-            mCharacterDao.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+            mCharacterDao.getActiveCharacter().subscribe(new Observer<GameCharacter>() {
                 @Override
                 public void onCompleted() {
                 }
@@ -433,25 +430,23 @@ public class StatsFragment extends ComponentBaseFragment {
                 @Override
                 public void onNext(GameCharacter gameCharacter) {
                     gameCharacter.getDefenseStats().setHitPoints(hitPoints);
-
                     updateDeathSummary(gameCharacter);
-                    unsubscribe();
                 }
             });
             updateHealthSummary();
         });
 
         mTempHpComponent.getValueObservable().subscribe(tempHitPoints -> {
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateTempHPSubscriber(tempHitPoints));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateTempHPObserver(tempHitPoints));
             updateHealthSummary();
         });
 
         mMaxHealthComponent.getValueObservable().subscribe(maxHealth -> {
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateMaxHpSubscriber(maxHealth));
+            mCharacterDao.getActiveCharacter().subscribe(new UpdateMaxHpObserver(maxHealth));
             updateHealthSummary();
         });
 
-        mCompositeSubscription.add(Observable.combineLatest(mDeathSaveComponent.getFailuresObservable(), mCharacterDao.getActiveCharacter(), (failCount, gameCharacter) -> {
+        mCompositeSubscription.add(Observable.combineLatest(mDeathSaveComponent.getFailuresObservable(), mCharacterDao.getActiveCharacterStream(), (failCount, gameCharacter) -> {
             gameCharacter.getDefenseStats().setFailAttempts(failCount);
             return Observable.just(gameCharacter);
         }).subscribe());
@@ -536,21 +531,17 @@ public class StatsFragment extends ComponentBaseFragment {
         @Override
         public void onSkillCreated(final Skill skill) {
             mCharacterDao.getActiveCharacter()
-                    .subscribe(new Subscriber<GameCharacter>() {
+                    .subscribe(new Observer<GameCharacter>() {
                         @Override
                         public void onCompleted() {
-
                         }
 
                         @Override
                         public void onError(Throwable e) {
-
                         }
 
                         @Override
                         public void onNext(GameCharacter gameCharacter) {
-                            unsubscribe();
-
                             saveSkill(skill, gameCharacter);
                         }
                     });
@@ -559,7 +550,7 @@ public class StatsFragment extends ComponentBaseFragment {
         @Override
         public void onSkillUpdated(final Skill skill) {
             mCharacterDao.getActiveCharacter()
-                    .subscribe(new Subscriber<GameCharacter>() {
+                    .subscribe(new Observer<GameCharacter>() {
                         @Override
                         public void onCompleted() {
 
@@ -572,8 +563,6 @@ public class StatsFragment extends ComponentBaseFragment {
 
                         @Override
                         public void onNext(GameCharacter gameCharacter) {
-                            unsubscribe();
-
                             updateSkill(skill, gameCharacter);
                             updatePassiveWisdom(gameCharacter);
                         }
@@ -583,21 +572,17 @@ public class StatsFragment extends ComponentBaseFragment {
         @Override
         public void onSkillDeleted(final Skill skill) {
             mCharacterDao.getActiveCharacter()
-                    .subscribe(new Subscriber<GameCharacter>() {
+                    .subscribe(new Observer<GameCharacter>() {
                         @Override
                         public void onCompleted() {
-
                         }
 
                         @Override
                         public void onError(Throwable e) {
-
                         }
 
                         @Override
                         public void onNext(GameCharacter gameCharacter) {
-                            unsubscribe();
-
                             removeSkill(skill, gameCharacter);
                             updatePassiveWisdom(gameCharacter);
                         }
@@ -605,11 +590,11 @@ public class StatsFragment extends ComponentBaseFragment {
         }
     }
 
-    public class UpdateWisSubscriber extends Subscriber<GameCharacter> {
+    public class UpdateWisObserver implements Observer<GameCharacter> {
 
         private int mWis;
 
-        UpdateWisSubscriber(int wis) {
+        UpdateWisObserver(int wis) {
             mWis = wis;
         }
 
@@ -628,8 +613,6 @@ public class StatsFragment extends ComponentBaseFragment {
             Log.d(TAG, "Update wisdom");
             gameCharacter.getDefenseStats().setWisScore(mWis);
             updatePassiveWisdom(gameCharacter);
-
-            unsubscribe();
         }
     }
 
@@ -647,21 +630,18 @@ public class StatsFragment extends ComponentBaseFragment {
         @Override
         public void onNext(final Dice dice) {
             mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
-                    .subscribe(new Subscriber<GameCharacter>() {
+                    .subscribe(new Observer<GameCharacter>() {
                         @Override
                         public void onCompleted() {
-
                         }
 
                         @Override
                         public void onError(Throwable e) {
-
                         }
 
                         @Override
                         public void onNext(GameCharacter gameCharacter) {
                             gameCharacter.getDefenseStats().setHitDice(dice);
-                            unsubscribe();
                         }
                     }));
         }

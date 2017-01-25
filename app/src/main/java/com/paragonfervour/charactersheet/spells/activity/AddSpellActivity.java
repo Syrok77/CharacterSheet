@@ -95,7 +95,7 @@ public class AddSpellActivity extends ComponentBaseActivity {
             mSaveButton.setVisibility(View.GONE);
         }
 
-        mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
+        mCompositeSubscription.add(mCharacterDao.getActiveCharacterStream()
                 .subscribe(this::onActiveCharacter, this::onActiveCharacterError));
     }
 

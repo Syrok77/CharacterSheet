@@ -74,7 +74,7 @@ public class SpellsFragment extends ComponentBaseFragment {
         // set up recycler view
         mRecyclerView.setAdapter(mSpellsAdapter);
 
-        mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
+        mCompositeSubscription.add(mCharacterDao.getActiveCharacterStream()
                 .subscribe(this::onActiveCharacter, this::onActiveCharacterError));
     }
 

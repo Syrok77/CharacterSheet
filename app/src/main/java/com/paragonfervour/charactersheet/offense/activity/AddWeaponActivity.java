@@ -133,7 +133,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
             isEditing = true;
         }
         updateWeaponView(mWeapon);
-        mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
+        mCompositeSubscription.add(mCharacterDao.getActiveCharacterStream()
                 .subscribe(new CharacterObserver()));
 
         if (isEditing) {
@@ -384,7 +384,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
     @OnClick(R.id.add_weapon_save_button)
     public void onSaveClick() {
-        mCharacterDao.getActiveCharacter().subscribe(new Subscriber<GameCharacter>() {
+        mCharacterDao.getActiveCharacterStream().subscribe(new Subscriber<GameCharacter>() {
             @Override
             public void onCompleted() {
             }

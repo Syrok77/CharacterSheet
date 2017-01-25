@@ -42,7 +42,7 @@ public class CharacterDao {
      *
      * @return Observable that emits the active GameCharacter on the main thread.
      */
-    public Observable<GameCharacter> getActiveCharacter() {
+    public Observable<GameCharacter> getActiveCharacterStream() {
         if (mActiveCharacter == null) {
             loadActiveCharacter();
         }
@@ -52,6 +52,20 @@ public class CharacterDao {
                 .unsubscribeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Get the active character through an Observable. The Observable operates on a background thread
+     * but observes on the main thread, so all observer callbacks here will come back on the main
+     * Android thread. Unlike {@link #getActiveCharacterStream()}, this will only emit ONCE and then
+     * it will emit a terminal signal. If you want to listen for updates, use {@link #getActiveCharacterStream()}.
+     *
+     * @return Observable that emits the active GameCharacter on the main thread and then terminates
+     * the stream.
+     */
+    public Observable<GameCharacter> getActiveCharacter() {
+        return getActiveCharacterStream()
+                .limit(1);
     }
 
     /**
