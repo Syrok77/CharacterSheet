@@ -53,7 +53,6 @@ public class CharacterActivity extends ComponentBaseActivity {
 
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
-    private CharSequence mTitle;
     private boolean mUserLearnedDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private CharacterHeaderComponent mHeaderComponent;
@@ -70,10 +69,8 @@ public class CharacterActivity extends ComponentBaseActivity {
         mHeaderComponent = new CharacterHeaderComponent(mNavigationView.getHeaderView(0));
         add(mHeaderComponent);
 
-        mTitle = getTitle();
-
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        mToolbar.setTitle(mTitle);
+        mToolbar.setTitle(getTitle());
         setSupportActionBar(mToolbar);
 
         setUpDrawer(savedInstanceState);
@@ -157,7 +154,7 @@ public class CharacterActivity extends ComponentBaseActivity {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
 
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
         // If the user hasn't 'learned' about the drawer, open it to introduce them to the drawer,
         // per the navigation drawer design guidelines.
         if (!mUserLearnedDrawer && savedInstanceState == null) {
