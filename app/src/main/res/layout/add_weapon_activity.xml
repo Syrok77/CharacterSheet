@@ -46,7 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <EditText
+                    <android.support.design.widget.TextInputEditText
                         android:id="@+id/weapon_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
 
-                        <EditText
+                        <android.support.design.widget.TextInputEditText
                             android:id="@+id/add_weapon_value"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
 
-                        <EditText
+                        <android.support.design.widget.TextInputEditText
                             android:id="@+id/add_weapon_weight"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -139,8 +139,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
-                            android:text="Attack Modifier"
+                            android:text="@string/add_weapon_attack_modifier"
                             android:textColor="@color/subheader_gray"
                             android:textSize="12sp"/>
 
@@ -191,7 +190,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
-                        <EditText
+                        <android.support.design.widget.TextInputEditText
                             android:id="@+id/add_weapon_dice_multiplier"
                             android:layout_width="64dp"
                             android:layout_height="wrap_content"
@@ -226,7 +225,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
-                        <EditText
+                        <android.support.design.widget.TextInputEditText
                             android:id="@+id/add_weapon_modifier"
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
@@ -271,7 +270,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp">
 
-                    <EditText
+                    <android.support.design.widget.TextInputEditText
                         android:id="@+id/add_weapon_properties_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

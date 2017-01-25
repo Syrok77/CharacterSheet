@@ -126,6 +126,7 @@
     <string name="edit_activity_label">Edit Character</string>
 
     <!-- Add/Edit Weapon screen -->
+    <string name="add_weapon_attack_modifier">Attack Modifier</string>
     <string name="add_weapon_damage_summary">Damage Summary</string>
     <string name="add_weapon_dice_multiplier_hint">X Dice</string>
     <string name="add_weapon_modifier_hint">Modifier</string>
