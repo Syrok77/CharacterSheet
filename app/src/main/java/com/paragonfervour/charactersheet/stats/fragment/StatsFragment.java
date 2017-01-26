@@ -550,30 +550,6 @@ public class StatsFragment extends ComponentBaseFragment {
         }
     }
 
-    public class UpdateWisObserver implements Observer<GameCharacter> {
-
-        private int mWis;
-
-        UpdateWisObserver(int wis) {
-            mWis = wis;
-        }
-
-        @Override
-        public void onCompleted() {
-        }
-
-        @Override
-        public void onError(Throwable e) {
-        }
-
-        @Override
-        public void onNext(GameCharacter gameCharacter) {
-            Log.d(TAG, "Update wisdom");
-            gameCharacter.getDefenseStats().setWisScore(mWis);
-            updatePassiveWisdom(gameCharacter);
-        }
-    }
-
     private class HitDicePickerObserver implements Observer<Dice> {
         @Override
         public void onCompleted() {
