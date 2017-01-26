@@ -29,14 +29,6 @@ import com.paragonfervour.charactersheet.fragment.ComponentBaseFragment;
 import com.paragonfervour.charactersheet.helper.SnackbarHelper;
 import com.paragonfervour.charactersheet.injection.Injectors;
 import com.paragonfervour.charactersheet.stats.helper.StatHelper;
-import com.paragonfervour.charactersheet.stats.observer.UpdateInspirationObserver;
-import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateChaObserver;
-import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateConObserver;
-import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateDexObserver;
-import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateIntObserver;
-import com.paragonfervour.charactersheet.stats.observer.abilityscore.UpdateStrObserver;
-import com.paragonfervour.charactersheet.stats.observer.health.UpdateMaxHpObserver;
-import com.paragonfervour.charactersheet.stats.observer.health.UpdateTempHPObserver;
 import com.paragonfervour.charactersheet.stats.widget.SkillDialogFactory;
 import com.paragonfervour.charactersheet.view.DeathSaveViewComponent;
 import com.paragonfervour.charactersheet.view.SkillValueViewComponent;
@@ -186,21 +178,7 @@ public class StatsFragment extends ComponentBaseFragment {
         bindAttributes();
 
         mCompositeSubscription.add(mCharacterDao.getActiveCharacterStream()
-                .subscribe(new Observer<GameCharacter>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, "Error getting active character", e);
-                    }
-
-                    @Override
-                    public void onNext(GameCharacter gameCharacter) {
-                        initializeView(gameCharacter);
-                    }
-                }));
+                .subscribe(this::initializeView, this::onGameCharacterLoadError));
 
         // dumb view compat stuff
         //noinspection deprecation
@@ -365,7 +343,9 @@ public class StatsFragment extends ComponentBaseFragment {
 
     private void bindAttributes() {
         mInspiration.setOnCheckedChangeListener((buttonView, isChecked) ->
-                mCharacterDao.getActiveCharacter().subscribe(new UpdateInspirationObserver(isChecked)));
+                mCharacterDao.getActiveCharacter()
+                        .subscribe(gameCharacter -> gameCharacter.setIsInspired(isChecked),
+                                this::onGameCharacterLoadError));
     }
 
     /**
@@ -373,19 +353,26 @@ public class StatsFragment extends ComponentBaseFragment {
      */
     private void bindAbilityScores() {
         mStrength.getValueObservable().subscribe(strength -> {
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateStrObserver(strength));
+            mCharacterDao.getActiveCharacter()
+                    .subscribe(gameCharacter ->
+                                    gameCharacter.getDefenseStats().setStrScore(strength),
+                            this::onGameCharacterLoadError);
 
             updateCounterModifier(strength, mStrengthModifier);
         });
 
         mConstitution.getValueObservable().subscribe(constitution -> {
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateConObserver(constitution));
+            mCharacterDao.getActiveCharacter()
+                    .subscribe(gameCharacter -> gameCharacter.getDefenseStats().setConScore(constitution),
+                            this::onGameCharacterLoadError);
 
             updateCounterModifier(constitution, mConstitutionModifier);
         });
 
         mDexterity.getValueObservable().subscribe(dexterity -> {
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateDexObserver(dexterity));
+            mCharacterDao.getActiveCharacter()
+                    .subscribe(gameCharacter -> gameCharacter.getDefenseStats().setDexScore(dexterity),
+                            this::onGameCharacterLoadError);
 
             updateCounterModifier(dexterity, mDexterityModifier);
 
@@ -393,20 +380,29 @@ public class StatsFragment extends ComponentBaseFragment {
         });
 
         mIntelligence.getValueObservable().subscribe(intelligence -> {
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateIntObserver(intelligence));
+            mCharacterDao.getActiveCharacter().subscribe(gameCharacter ->
+                            gameCharacter.getDefenseStats().setIntScore(intelligence),
+                    this::onGameCharacterLoadError);
 
             updateCounterModifier(intelligence, mIntelligenceModifier);
         });
 
         mWisdom.getValueObservable().subscribe(wisdom -> {
             Log.d(TAG, "Updating wisdom: " + wisdom);
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateWisObserver(wisdom));
+            mCharacterDao.getActiveCharacter()
+                    .subscribe(gameCharacter -> {
+                        Log.d(TAG, "Update wisdom");
+                        gameCharacter.getDefenseStats().setWisScore(wisdom);
+                        updatePassiveWisdom(gameCharacter);
+                    }, this::onGameCharacterLoadError);
 
             updateCounterModifier(wisdom, mWisdomModifier);
         });
 
         mCharisma.getValueObservable().subscribe(charisma -> {
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateChaObserver(charisma));
+            mCharacterDao.getActiveCharacter()
+                    .subscribe(gameCharacter -> gameCharacter.getDefenseStats().setChaScore(charisma),
+                            this::onGameCharacterLoadError);
 
             updateCounterModifier(charisma, mCharismaModifier);
         });
@@ -418,38 +414,38 @@ public class StatsFragment extends ComponentBaseFragment {
      */
     private void bindHealthValues() {
         mHealthComponent.getValueObservable().subscribe(hitPoints -> {
-            mCharacterDao.getActiveCharacter().subscribe(new Observer<GameCharacter>() {
-                @Override
-                public void onCompleted() {
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                }
-
-                @Override
-                public void onNext(GameCharacter gameCharacter) {
-                    gameCharacter.getDefenseStats().setHitPoints(hitPoints);
-                    updateDeathSummary(gameCharacter);
-                }
-            });
+            mCharacterDao.getActiveCharacter()
+                    .subscribe(gameCharacter -> {
+                        gameCharacter.getDefenseStats().setHitPoints(hitPoints);
+                        updateDeathSummary(gameCharacter);
+                    }, this::onGameCharacterLoadError);
             updateHealthSummary();
         });
 
-        mTempHpComponent.getValueObservable().subscribe(tempHitPoints -> {
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateTempHPObserver(tempHitPoints));
-            updateHealthSummary();
-        });
+        mTempHpComponent.getValueObservable()
+                .subscribe(tempHitPoints -> {
+                    mCharacterDao.getActiveCharacter()
+                            .subscribe(gameCharacter -> gameCharacter.getDefenseStats().setTempHp(tempHitPoints),
+                                    this::onGameCharacterLoadError);
+                    updateHealthSummary();
+                });
 
-        mMaxHealthComponent.getValueObservable().subscribe(maxHealth -> {
-            mCharacterDao.getActiveCharacter().subscribe(new UpdateMaxHpObserver(maxHealth));
-            updateHealthSummary();
-        });
+        mMaxHealthComponent.getValueObservable()
+                .subscribe(maxHealth -> {
+                    mCharacterDao.getActiveCharacter()
+                            .subscribe(gameCharacter -> gameCharacter.getDefenseStats().setMaxHp(maxHealth),
+                                    this::onGameCharacterLoadError);
+                    updateHealthSummary();
+                });
 
         mCompositeSubscription.add(Observable.combineLatest(mDeathSaveComponent.getFailuresObservable(), mCharacterDao.getActiveCharacterStream(), (failCount, gameCharacter) -> {
             gameCharacter.getDefenseStats().setFailAttempts(failCount);
             return Observable.just(gameCharacter);
         }).subscribe());
+    }
+
+    private void onGameCharacterLoadError(Throwable e) {
+        Log.i(TAG, "There was an error loading the character", e);
     }
 
     /**
@@ -531,62 +527,26 @@ public class StatsFragment extends ComponentBaseFragment {
         @Override
         public void onSkillCreated(final Skill skill) {
             mCharacterDao.getActiveCharacter()
-                    .subscribe(new Observer<GameCharacter>() {
-                        @Override
-                        public void onCompleted() {
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                        }
-
-                        @Override
-                        public void onNext(GameCharacter gameCharacter) {
-                            saveSkill(skill, gameCharacter);
-                        }
-                    });
+                    .subscribe(gameCharacter -> saveSkill(skill, gameCharacter),
+                            StatsFragment.this::onGameCharacterLoadError);
         }
 
         @Override
         public void onSkillUpdated(final Skill skill) {
             mCharacterDao.getActiveCharacter()
-                    .subscribe(new Observer<GameCharacter>() {
-                        @Override
-                        public void onCompleted() {
-
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onNext(GameCharacter gameCharacter) {
-                            updateSkill(skill, gameCharacter);
-                            updatePassiveWisdom(gameCharacter);
-                        }
-                    });
+                    .subscribe(gameCharacter -> {
+                        updateSkill(skill, gameCharacter);
+                        updatePassiveWisdom(gameCharacter);
+                    }, StatsFragment.this::onGameCharacterLoadError);
         }
 
         @Override
         public void onSkillDeleted(final Skill skill) {
             mCharacterDao.getActiveCharacter()
-                    .subscribe(new Observer<GameCharacter>() {
-                        @Override
-                        public void onCompleted() {
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                        }
-
-                        @Override
-                        public void onNext(GameCharacter gameCharacter) {
-                            removeSkill(skill, gameCharacter);
-                            updatePassiveWisdom(gameCharacter);
-                        }
-                    });
+                    .subscribe(gameCharacter -> {
+                        removeSkill(skill, gameCharacter);
+                        updatePassiveWisdom(gameCharacter);
+                    }, StatsFragment.this::onGameCharacterLoadError);
         }
     }
 
@@ -600,12 +560,10 @@ public class StatsFragment extends ComponentBaseFragment {
 
         @Override
         public void onCompleted() {
-
         }
 
         @Override
         public void onError(Throwable e) {
-
         }
 
         @Override
@@ -619,31 +577,17 @@ public class StatsFragment extends ComponentBaseFragment {
     private class HitDicePickerObserver implements Observer<Dice> {
         @Override
         public void onCompleted() {
-
         }
 
         @Override
         public void onError(Throwable e) {
-
         }
 
         @Override
         public void onNext(final Dice dice) {
             mCompositeSubscription.add(mCharacterDao.getActiveCharacter()
-                    .subscribe(new Observer<GameCharacter>() {
-                        @Override
-                        public void onCompleted() {
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                        }
-
-                        @Override
-                        public void onNext(GameCharacter gameCharacter) {
-                            gameCharacter.getDefenseStats().setHitDice(dice);
-                        }
-                    }));
+                    .subscribe(gameCharacter -> gameCharacter.getDefenseStats().setHitDice(dice),
+                            StatsFragment.this::onGameCharacterLoadError));
         }
     }
 
