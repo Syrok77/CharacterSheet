@@ -70,11 +70,20 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     @BindView(R.id.add_weapon_value)
     EditText mValueText;
 
+    @BindView(R.id.add_weapon_magic_bonus)
+    EditText mMagicBonusEdit;
+
     @BindView(R.id.add_weapon_score_selector)
     Spinner mScoreSelector;
 
     @BindView(R.id.add_weapon_attack_mod)
     TextView mHitModifier;
+
+    @BindView(R.id.add_weapon_attack_magic_bonus)
+    TextView mMagicBonusAttackValue;
+
+    @BindView(R.id.add_weapon_attack_proficiency)
+    TextView mProficiencyBonusView;
 
     @BindView(R.id.add_weapon_dice_multiplier)
     EditText mDamageDiceMultiplier;
@@ -141,6 +150,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
             mWeaponName.addTextChangedListener(new NameTextWatcher());
             mWeightText.addTextChangedListener(new WeightTextWatcher());
             mValueText.addTextChangedListener(new ValueTextWatcher());
+            mMagicBonusEdit.addTextChangedListener(new MagicBonusTextWatcher());
             mProperties.addTextChangedListener(new PropertiesTextWatcher());
         }
         // These watchers are used whether we are editing or not.
@@ -260,6 +270,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         }
         mWeightText.setText(String.valueOf(weapon.getWeight()));
         mValueText.setText(String.valueOf(weapon.getValue()));
+        mMagicBonusEdit.setText(String.valueOf(weapon.getMagicBonus()));
         mDamageDiceMultiplier.setText(String.valueOf(weapon.getDamage().getDiceQuantity()));
         mDamageModifier.setText(String.valueOf(weapon.getDamage().getModifier()));
         mDamageSummary.setText(weapon.getDamage().toString());
@@ -285,7 +296,10 @@ public class AddWeaponActivity extends ComponentBaseActivity {
             mod = mDex;
         }
 
-        String hitStr = StatHelper.getStatIndicator(mod) + String.valueOf(mod + mProficiencyBonus);
+        mMagicBonusAttackValue.setText(String.valueOf(mWeapon.getMagicBonus()));
+        mProficiencyBonusView.setText(String.valueOf(mProficiencyBonus));
+
+        String hitStr = StatHelper.getStatIndicator(mod) + String.valueOf(mod + mProficiencyBonus + mWeapon.getMagicBonus());
         mHitModifier.setText(hitStr);
     }
 
@@ -471,6 +485,19 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         @Override
         public void updateValue(Weapon weapon, String value) {
             weapon.setValue(getIntFromString(value));
+        }
+    }
+
+    /**
+     * Update the weapon's magic bonus value in the Game Character. This will also update corresponding Views.
+     */
+    private class MagicBonusTextWatcher extends UpdateTextWatcher {
+        @Override
+        public void updateValue(Weapon weapon, String value) {
+            weapon.setMagicBonus(getIntFromString(value));
+
+            // Update related Views
+            updateHitModifier();
         }
     }
 

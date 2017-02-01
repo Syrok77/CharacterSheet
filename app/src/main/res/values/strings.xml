@@ -127,11 +127,13 @@
 
     <!-- Add/Edit Weapon screen -->
     <string name="add_weapon_attack_modifier">Attack Modifier</string>
+    <string name="add_weapon_attack_proficiency">Proficiency Bonus</string>
     <string name="add_weapon_damage_summary">Damage Summary</string>
     <string name="add_weapon_dice_multiplier_hint">X Dice</string>
     <string name="add_weapon_modifier_hint">Modifier</string>
     <string name="add_weapon_weapon_name_hint">Weapon Name</string>
     <string name="add_weapon_properties_hint">Properties</string>
+    <string name="add_weapon_magic_bonus_hint">Magic Bonus</string>
     <string name="add_weapon_damage_title">Weapon Damage</string>
     <string name="add_weapon_stats_title">Weapon Information</string>
     <string name="add_weapon_properties_title">Weapon Properties</string>

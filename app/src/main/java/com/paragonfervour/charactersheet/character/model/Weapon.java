@@ -13,6 +13,7 @@ public class Weapon extends SugarRecord {
     int mValue;
     int mWeight;
 
+    int mMagicBonus;
     Damage mDamage;
 
     String mProperties;
@@ -27,6 +28,7 @@ public class Weapon extends SugarRecord {
         w.mName = "Scimitar";
         w.mValue = 30;
         w.mWeight = 2;
+        w.mMagicBonus = 0;
         w.mDamage = Damage.createDefaultWeapon();
         w.mProperties = "Finesse, light";
         w.isMainHand = true;
@@ -39,6 +41,7 @@ public class Weapon extends SugarRecord {
         w.mName = "Dagger";
         w.mValue = 2;
         w.mWeight = 1;
+        w.mMagicBonus = 0;
         w.mDamage = Damage.createDefaultOffhand();
         w.mProperties = "Finesse, light, thrown";
         w.isMainHand = false;
@@ -51,6 +54,7 @@ public class Weapon extends SugarRecord {
         w.mName = "Shortbow";
         w.mValue = 15;
         w.mWeight = 5;
+        w.mMagicBonus = 0;
         w.mDamage = Damage.createDefaultShortbow();
         w.isMainHand = true;
         w.isStrengthWeapon = false;
@@ -88,6 +92,14 @@ public class Weapon extends SugarRecord {
 
     public void setWeight(int weight) {
         mWeight = weight;
+    }
+
+    public int getMagicBonus() {
+        return mMagicBonus;
+    }
+
+    public void setMagicBonus(int magicBonus) {
+        mMagicBonus = magicBonus;
     }
 
     public Damage getDamage() {
