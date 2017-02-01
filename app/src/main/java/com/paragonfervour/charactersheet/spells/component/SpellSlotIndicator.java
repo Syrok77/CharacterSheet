@@ -3,6 +3,7 @@ package com.paragonfervour.charactersheet.spells.component;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
@@ -17,6 +18,12 @@ import butterknife.OnLongClick;
 public class SpellSlotIndicator extends FrameLayout {
 
     private static final int MAX_SPELL_SLOTS = 5;
+
+    @BindView(R.id.spell_slot_indicator_remove)
+    View mSpellSlotRemove;
+
+    @BindView(R.id.spell_slot_indicator_add)
+    View mSpellSlotAdd;
 
     @BindView(R.id.spell_slot_indicator_checkbox_container)
     ViewGroup mCheckBoxContainer;
@@ -39,6 +46,8 @@ public class SpellSlotIndicator extends FrameLayout {
     private void init() {
         inflate(getContext(), R.layout.spells_spell_slot_component, this);
         ButterKnife.bind(this);
+
+        updateControl();
     }
 
     @OnClick(R.id.spell_slot_indicator_remove)
@@ -48,7 +57,7 @@ public class SpellSlotIndicator extends FrameLayout {
             mCheckBoxContainer.removeViewAt(childCount - 1);
         }
 
-        // TODO: hide the remove button if child count is now 0?
+        updateControl();
     }
 
     @OnClick(R.id.spell_slot_indicator_add)
@@ -59,6 +68,8 @@ public class SpellSlotIndicator extends FrameLayout {
             checkBox.setClickable(false);
             mCheckBoxContainer.addView(checkBox, mCheckBoxContainer.getChildCount());
         }
+
+        updateControl();
     }
 
     /**
@@ -66,7 +77,7 @@ public class SpellSlotIndicator extends FrameLayout {
      * slots as used. If all spell slots are used, this will reset to zero used slots.
      */
     @OnClick(R.id.spell_slot_indicator_checkbox_container)
-    public void onSpellSlotClick() {
+    void onSpellSlotClick() {
         boolean didCheck = false;
         for (int i = 0; i < mCheckBoxContainer.getChildCount(); ++i) {
             CheckBox checkBox = (CheckBox) mCheckBoxContainer.getChildAt(i);
@@ -86,7 +97,7 @@ public class SpellSlotIndicator extends FrameLayout {
      * A long press on this component will clear any spent spell slots.
      */
     @OnLongClick(R.id.spell_slot_indicator_checkbox_container)
-    public boolean onSpellSlotLongPress() {
+    boolean onSpellSlotLongPress() {
         for (int i = 0; i < mCheckBoxContainer.getChildCount(); ++i) {
             CheckBox checkBox = (CheckBox) mCheckBoxContainer.getChildAt(i);
             checkBox.setChecked(false);
@@ -101,5 +112,15 @@ public class SpellSlotIndicator extends FrameLayout {
      * @param spellSlots number of spell slots to display
      */
     public void setSpellSlots(int spellSlots) {
+    }
+
+    private void updateControl() {
+        final int childCount = mCheckBoxContainer.getChildCount();
+        if (childCount == 0) {
+            // If there are no spell slots left, remove the '-' button.
+            mSpellSlotRemove.setVisibility(View.GONE);
+        } else {
+            mSpellSlotRemove.setVisibility(View.VISIBLE);
+        }
     }
 }
