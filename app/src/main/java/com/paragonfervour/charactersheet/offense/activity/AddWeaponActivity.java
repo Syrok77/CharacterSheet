@@ -88,8 +88,11 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     @BindView(R.id.add_weapon_dice_multiplier)
     EditText mDamageDiceMultiplier;
 
-    @BindView(R.id.add_weapon_modifier)
-    EditText mDamageModifier;
+    @BindView(R.id.add_weapon_damage_magic_bonus)
+    TextView mDamageMagicBonus;
+
+    @BindView(R.id.add_weapon_damage_ability_bonus)
+    TextView mDamageAbilityModifier;
 
     @BindView(R.id.add_weapon_summary_text)
     TextView mDamageSummary;
@@ -155,7 +158,6 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         }
         // These watchers are used whether we are editing or not.
         mDamageDiceMultiplier.addTextChangedListener(new DamageDiceMultiplierTextWatcher());
-        mDamageModifier.addTextChangedListener(new DamageModifierTextWatcher());
 
         mDamageDiceComponent.getDiceObservable().subscribe(new Observer<Dice>() {
             @Override
@@ -271,8 +273,8 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         mWeightText.setText(String.valueOf(weapon.getWeight()));
         mValueText.setText(String.valueOf(weapon.getValue()));
         mMagicBonusEdit.setText(String.valueOf(weapon.getMagicBonus()));
+        mDamageMagicBonus.setText(String.valueOf(weapon.getMagicBonus()));
         mDamageDiceMultiplier.setText(String.valueOf(weapon.getDamage().getDiceQuantity()));
-        mDamageModifier.setText(String.valueOf(weapon.getDamage().getModifier()));
         mDamageSummary.setText(weapon.getDamage().toString());
         mDamageDiceComponent.setDice(weapon.getDamage().getDiceType());
         mProperties.setText(weapon.getProperties());
@@ -284,6 +286,15 @@ public class AddWeaponActivity extends ComponentBaseActivity {
     private void updateDamageSummary() {
         Log.d(TAG, "Updating damage summary text.");
         mDamageSummary.setText(createDamage().toString());
+
+        String abilityModifier;
+        if (mWeapon.isStrengthWeapon()) {
+            // StatHelper.getStatIndicator(mStr) + mStr;
+            abilityModifier = getString(R.string.add_weapon_str_format, StatHelper.getStatIndicator(mStr) + mStr);
+        } else {
+            abilityModifier = getString(R.string.add_weapon_dex_format, StatHelper.getStatIndicator(mDex) + mDex);
+        }
+        mDamageAbilityModifier.setText(abilityModifier);
     }
 
     private void updateHitModifier() {
@@ -324,7 +335,7 @@ public class AddWeaponActivity extends ComponentBaseActivity {
         Damage damage = new Damage();
         damage.setDiceType(mDamageDiceComponent.getDice());
         damage.setDiceQuantity(getIntFromTextView(mDamageDiceMultiplier));
-        int modifier = getIntFromTextView(mDamageModifier);
+        int modifier = getIntFromTextView(mMagicBonusEdit);
         if (mWeapon.isStrengthWeapon()) {
             modifier += mStr;
         } else {
@@ -462,25 +473,6 @@ public class AddWeaponActivity extends ComponentBaseActivity {
      * Update the weapon's value in the GameCharacter. If we are creating a new Weapon, this class
      * ignores the GameCharacter update and just updates the Damage Summary.
      */
-    private class DamageModifierTextWatcher extends UpdateTextWatcher {
-        @Override
-        public void updateValue(Weapon weapon, String value) {
-            weapon.getDamage().setModifier(getIntFromString(value));
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            if (isEditing) {
-                super.afterTextChanged(s);
-            }
-            updateDamageSummary();
-        }
-    }
-
-    /**
-     * Update the weapon's value in the GameCharacter. If we are creating a new Weapon, this class
-     * ignores the GameCharacter update and just updates the Damage Summary.
-     */
     private class ValueTextWatcher extends UpdateTextWatcher {
         @Override
         public void updateValue(Weapon weapon, String value) {
@@ -498,6 +490,8 @@ public class AddWeaponActivity extends ComponentBaseActivity {
 
             // Update related Views
             updateHitModifier();
+            mDamageMagicBonus.setText(value);
+            updateDamageSummary();
         }
     }
 

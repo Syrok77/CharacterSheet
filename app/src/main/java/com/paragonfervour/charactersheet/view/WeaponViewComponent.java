@@ -81,6 +81,7 @@ public class WeaponViewComponent extends LinearLayout {
         } else {
             attack += StatHelper.getScoreModifier(gameCharacter.getDefenseStats().getDexScore());
         }
+        attack += weapon.getMagicBonus();
         String displayableAttackModifier = StatHelper.getStatIndicator(attack) + attack;
         mAttackBonus.setText(displayableAttackModifier);
 

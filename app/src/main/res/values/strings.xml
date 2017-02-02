@@ -16,7 +16,7 @@
     <string name="save">Save</string>
     <string name="standard_value">gp</string>
     <string name="standard_weight">lb</string>
-    <string name="standard_weight_format">%1$s lbs</string>
+    <string name="standard_weight_format">%1$d lbs</string>
     <string name="standard_distance">feet</string>
     <string name="plus">+</string>
     <string name="delete">delete</string>
@@ -134,6 +134,7 @@
     <string name="add_weapon_weapon_name_hint">Weapon Name</string>
     <string name="add_weapon_properties_hint">Properties</string>
     <string name="add_weapon_magic_bonus_hint">Magic Bonus</string>
+    <string name="add_weapon_damage_ability_hint">Ability Modifier</string>
     <string name="add_weapon_damage_title">Weapon Damage</string>
     <string name="add_weapon_stats_title">Weapon Information</string>
     <string name="add_weapon_properties_title">Weapon Properties</string>
