@@ -182,7 +182,7 @@ public class StatsFragment extends ComponentBaseFragment {
 
         // dumb view compat stuff
         //noinspection deprecation
-        int color = getResources().getColor(R.color.tertiary_accent);
+        int color = getResources().getColor(R.color.secondary_accent);
         ViewCompat.setBackgroundTintList(mAddSkillButton, ColorStateList.valueOf(color));
     }
 
